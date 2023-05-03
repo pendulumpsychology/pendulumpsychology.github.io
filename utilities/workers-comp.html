@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acute Stress Disorder and Adjustment Disorder Quiz</title>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Acute Stress Disorder and Adjustment Disorder Quiz</h1>
+        <div id="question"></div>
+        <div id="options-container"></div>
+        <div id="outcome" class="outcome"></div>
+    </div>
+</body>
+</html>
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+#quiz-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#question {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.options {
+    display: block;
+    background-color: #eee;
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.options:hover {
+    background-color: #ccc;
+}
+
+.outcome {
+  font-size: 1.2em;
+  text-align: center;
+  margin-top: 20px;
+}
+
+</style>
+
+<script>
+    const questionElement = document.getElementById('question');
+const optionsContainer = document.getElementById('options-container');
+
+const questions = [
+  {
+    question: 'Has the client had exposure to actual or threatened death, serious injury, or sexual assault?',
+    options: [
+      'Direct experience',
+      'Witnessing the event in person',
+      'Learning that the event happened to a close family or friend',
+      'Experienced repeated or exposure to aversive details of the traumatic event(s)',
+      'The stressor was not at this level of severity'
+    ],
+    nextQuestions: [4, 4, 4, 4, 1]
+  },
+  //Adjustment Disorder questions
+  {
+    question: 'Are the symptoms clinically significant?',
+    options: [
+      'The distress is out of proportion to the stressor, taking contextual factors into account',
+      'Significant impairment in social, occupational, or other areas of functioning',
+      'The symptoms are not at this level of significance',
+    ],
+    nextQuestions: [2, 2, -1],
+    answerType: 'AD'
+  },
+  {
+    question: 'Are the symptoms accounted for by bereavement or prolonged grief disorder?',
+    options: [
+      'Yes',
+      'No',
+    ],
+    nextQuestions: [-1, 3],
+    answerType: 'AD'
+  },
+  {
+    question: 'Which presentation is more characteristic?',
+    options: [
+      'Low mood, tearfulness, or feelings of hopelessness are predominant',
+      'Nervousness, worry, jitteriness, or separation anxiety is predominant',
+      'A combination of depression and anxiety is predominant',
+      'Disturbance of conduct is predominant',
+      'Both emotional symptoms and a disturbance of conduct are predominant',
+      'Other',
+    ],
+    nextQuestions: [-2, -3, -4, -5, -6, -7],
+    answerType: 'AD'
+  },
+
+  // Acute Stress Disorder questions
+  {
+    question: 'Does the client experience recurrent, involuntary, and intrusive distressing memories of the traumatic event(s)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [5, 5],
+    answerType: 'ASD'
+  },
+  // ... (Add the rest of the ASD questions similarly)
+  {
+    question: 'Does the client experience recurrent distressing dreams in which the content and/or affect of the dream are related to the event(s)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [6, 6],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client experience dissociative reactions (e.g., flashbacks) in which the individual feels or acts as if the traumatic event(s) were recurring?',
+    options: ['Yes', 'No'],
+    nextQuestions: [7, 7],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client experience intense or prolonged psychological distress or marked physiological reactions in response to internal or external cues that symbolize or resemble an aspect of the traumatic event(s)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [8, 8],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client experience a persistent inability to experience positive emotions (e.g., inability to experience happiness, satisfaction, or loving feelings)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [9, 9],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client experience an altered sense of the reality of one\'s surroundings or oneself (e.g., seeing oneself from another\'s perspective, being in a daze, time slowing)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [10, 10],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client experience an inability to remember an important aspect of the traumatic event(s) (typically due to dissociative amnesia and not to other factors such as head injury, alcohol, or drugs)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [11, 11],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client engage in efforts to avoid distressing memories, thoughts, or feelings about or closely associated with the traumatic event(s)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [12, 12],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client engage in efforts to avoid external reminders (people, places, conversations, activities, objects, situations) that arouse distressing memories, thoughts, or feelings about or closely associated with the traumatic event(s)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [13, 13],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client experience sleep disturbance (e.g., difficulty falling or staying asleep, restless sleep)?',
+    options: ['Yes', 'No'],
+    nextQuestions: [14, 14],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client demonstrate irritable behavior and angry outbursts (with little or no provocation), typically expressed as verbal or physical aggression toward people or objects?',
+    options: ['Yes', 'No'],
+    nextQuestions: [15, 15],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client experience hypervigilance?',
+    options: ['Yes', 'No'],
+    nextQuestions: [16, 16],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client experience problems with concentration?',
+    options: ['Yes', 'No'],
+    nextQuestions: [17, 17],
+    answerType: 'ASD'
+  },
+
+  {
+    question: 'Does the client demonstrate an exaggerated startle response?',
+    options: ['Yes', 'No'],
+    nextQuestions: [18, 18],
+    answerType: 'ASD'
+  },
+];
+
+let currentQuestionIndex = 0;
+let yesAnswersCount = 0;
+
+function showQuestion() {
+  const question = questions[currentQuestionIndex];
+  questionElement.textContent = question.question;
+
+  optionsContainer.innerHTML = '';
+  for (let i = 0; i < question.options.length; i++) {
+    const option = document.createElement('button');
+    option.textContent = question.options[i];
+    option.classList.add('options');
+    option.addEventListener('click', () => {
+      if (question.answerType === 'ASD') {
+        yesAnswersCount += i === 0 ? 1 : 0;
+        const remainingQuestions = questions.length - currentQuestionIndex - 1;
+        if (remainingQuestions + yesAnswersCount < 9) {
+          // Default to Adjustment Disorder followup questions
+          currentQuestionIndex = 1;// index of the next Adjustment Disorder question;
+        } else {
+          currentQuestionIndex = question.nextQuestions[i];
+        }
+      } else {
+        currentQuestionIndex = question.nextQuestions[i];
+      }
+
+      if (currentQuestionIndex >= 0 && currentQuestionIndex < questions.length) {
+        showQuestion();
+    } else {
+        endQuiz();
+    }
+    });
+
+    optionsContainer.appendChild(option);
+  }
+}
+
+function endQuiz() {
+  const outcomeElement = document.getElementById('outcome');
+  optionsContainer.innerHTML = ''; // Clear the options container
+
+  if (yesAnswersCount >= 9) {
+    outcomeElement.textContent = 'Acute Stress Disorder is an appropriate diagnosis.';
+  } else if (currentQuestionIndex == -1) {
+    outcomeElement.textContent = 'Neither Acute Stress Disorder nor Adjustment Disorder is appropriate.';
+  } else {
+    const diagnosis = [
+      'Adjustment Disorder with depressed mood',
+      'Adjustment Disorder with anxiety',
+      'Adjustment Disorder with mixed anxiety and depressed mood',
+      'Adjustment Disorder with disturbance of conduct',
+      'Adjustment Disorder with mixed disturbance of emotions and conduct',
+      'Adjustment Disorder unspecified',
+    ][-(currentQuestionIndex + 2)];
+    outcomeElement.textContent = diagnosis + ' is an appropriate diagnosis.';
+  }
+
+  questionElement.style.display = 'none'; // Hide the question element
+}
+
+
+
+showQuestion();
+
+</script>
