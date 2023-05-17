@@ -1,0 +1,248 @@
+:root {
+    --yinblack: #272727;
+    --yangwhite: #F6F6F6;
+    --balancepurple: #8D6AA8;
+    --harmonygreen: #7EB984;
+    --serenitylavender: #C0B1D9;
+    --growthlime: #C8D95B;
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Maven Pro';
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }  
+  
+  #navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--yangwhite);
+    color: var(--yinblack);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    z-index: 100;
+  }
+  
+  .navbar-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--yinblack);
+    background-color: var(--yangwhite);
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    flex: 1;
+    min-height: 50px;
+  }
+
+  .navbar-element:hover .logo {
+    filter: invert(1);
+  }
+
+  .logo {
+    padding: 0 17.5px;
+  }
+
+  #toggle {
+    display: none;
+  }
+  
+  .navbar-element:hover {
+    background-color: var(--balancepurple);
+    color: var(--yangwhite);
+  }
+
+  .random-quote {
+    font-size: 1.2em;
+    font-style: italic;
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  
+  main {
+    margin-top: 38px;
+    flex: 1;
+    /* Add more padding if needed depending on the navbar height */
+  }
+  
+
+  #hero {
+    height: calc(100vh - 50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .hero-content {
+    text-align: center;
+    color: var(--yangwhite);
+    max-width: 80%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tagline {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--yangwhite);
+    color: var(--yinblack);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .cta-button:hover {
+    background-color: var(--balancepurple);
+    color: var(--yangwhite);
+  }
+
+  footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: stretch;
+    flex-wrap: wrap;
+    background-color: var(--yinblack);
+    color: var(--yangwhite);
+    padding: 2.5vh 2.5vw;
+    box-sizing: border-box;
+}
+  
+  .footer-block {
+    width: 30vw;
+    box-sizing: border-box;
+    padding: 2.5vh 2.5vw;
+    text-align: left;
+}
+
+footer a {
+    color: var(--harmonygreen);
+    text-decoration: none;
+  }
+
+  main a{
+    color: var(--balancepurple);
+    text-decoration: none;
+  }
+
+footer a:hover {
+    color: var(--growthlime); /* Apply the same hover color as other links */
+  }
+  
+  main a:hover {
+    color: var(--serenitylavender);
+  }
+
+.avatar {
+    margin: 0 30px 0 0;
+    border-radius: 50%;
+    max-width: 20%;
+    max-height: 20%;
+    float: left;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 700px;
+    margin: 0 auto; /* Centers the paragraph if it's inside a wider container */
+  }
+h2{
+    max-width: 700px;
+    margin: 0 auto 15px auto; /* Centers the paragraph if it's inside a wider container */
+}
+
+section {
+    padding: 1rem;
+}
+
+.booking-container {
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.location-button {
+    background-color: transparent;
+    border: 1px solid var(--balancepurple);
+    color: var(--yinblack);
+    cursor: pointer;
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 16px;
+    margin: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .location-button:hover {
+    background-color: var(--balancepurple);
+    color: var(--yangwhite);
+  }
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+@media (max-width: 767px) {
+    #navbar {
+      flex-direction: column;
+      width: 100%;
+    }
+    #toggle {
+        display: flex;
+      }
+    .nav-button {
+        display: none;
+    }
+    footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-block {
+        width: 80vw;
+        text-align: center;
+    }
+
+    .logo {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .nav-button {
+      display: flex !important;
+    }
+  }
+  
