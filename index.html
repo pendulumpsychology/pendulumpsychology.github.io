@@ -34,9 +34,30 @@
                 "@type" : "PostalAddress",
                 "streetAddress" : "Unit 5, 10 Thesiger Court",
                 "addressLocality" : "Deakin",
-                "postalCode" : "2600
+                "postalCode" : "2600"
             },
-            "url" : "https://pendulumpsychology.com.au/"
+            "url" : "https://pendulumpsychology.com.au/",
+            "image" : "https://pendulumpsychology.com.au/android-chrome-512x512.png",
+            "priceRange" : "$260",
+            "openingHoursSpecification" : [
+            {
+                "@type" : "OpeningHoursSpecification",
+                "dayOfWeek" : [
+                    "Tuesday",
+                    "Thursday"
+                ],
+                "opens" : "10:00",
+                "closes" : "16:00"
+            },
+            {
+                "@type" : "OpeningHoursSpecification",
+                "dayOfWeek" : [
+                    "Wednesday"
+                ],
+                "opens" : "10:00",
+                "closes" : "17:30"
+            }
+        ]
             }
         </script>
     </head>
@@ -56,11 +77,11 @@
             <!-- About Section -->
 <section id="about">
     <h2>About</h2>
-    <p><img src="profile.webp" alt="image" class="avatar" title="Here is a photo of me, in case you were wondering">
+    <p><img src="profile.webp" alt="photo of David" class="avatar" title="Here is a photo of me, in case you were wondering">
                 Hello! My name is David O'Donohue, and I am a registered psychologist and clinical psychology registrar.
                 I am currently accepting new clients (note that I do not provide assessment services, and am not accepting
                 new clients under the age of 18). New and existing clients can make appointments either online
-                through <router-link to="/Booking">the booking page</router-link>, or through the
+                through <a href="https://pendulumpsychology.com.au/booking.html">the booking page</router-link>, or through the
                 <a href="https://www.halaxy.com/profile/virtus-psychology/location/626281" target="_blank">Halaxy online portal</a>.
                 To make an inquiry, or for assistance in booking an appointment, please contact me via email at
                 <a href="mailto:pendulumpsychology@gmail.com">pendulumpsychology@gmail.com</a>. 
@@ -78,9 +99,10 @@ In essence, my approach to therapy is about guiding clients towards greater self
   
   <!-- Services Section -->
   <section id="services">
-    <h2>Services</h2>
+    <h2>Psychological Services</h2>
     <p>I offer psychological therapy to adult clients (clients aged 18 and over).<br>
-    I do not offer psychological assessments. I also do not offer therapeutic services to clients under the age of 18.</p>
+    I do not offer psychological assessments or medico-legal reports. I also do not offer therapeutic services to clients under
+    the age of 18.</p>
   </section>
         </main>
         <div id="footer-container"></div>
