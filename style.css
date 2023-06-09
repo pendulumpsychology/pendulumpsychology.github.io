@@ -5,6 +5,12 @@
     --harmonygreen: #7EB984;
     --serenitylavender: #C0B1D9;
     --growthlime: #C8D95B;
+
+    --persianindigo: #541675;
+    --purpleheart: #7E38B7;
+    --lightslateblue: #9C89FF;
+    --cornflour: #99CCED;
+    --lightcyan: #C4FEFF;
   }
 
 * {
@@ -62,7 +68,7 @@
   }
   
   .navbar-element:hover {
-    background-color: var(--balancepurple);
+    background-color: var(--persianindigo);
     color: var(--yangwhite);
   }
 
@@ -123,7 +129,7 @@
   }
   
   .cta-button:hover {
-    background-color: var(--balancepurple);
+    background-color: var(--persianindigo);
     color: var(--yangwhite);
   }
 
@@ -133,7 +139,7 @@
     justify-content: space-evenly;
     align-items: stretch;
     flex-wrap: wrap;
-    background-color: var(--yinblack);
+    background-color: var(--persianindigo);
     color: var(--yangwhite);
     padding: 2.5vh 2.5vw;
     box-sizing: border-box;
@@ -146,23 +152,25 @@
     text-align: left;
 }
 
-footer a {
-    color: var(--harmonygreen);
+  main a{
+    color: var(--purpleheart);
     text-decoration: none;
   }
 
-  main a{
-    color: var(--balancepurple);
+    
+  main a:hover {
+    color: var(--lightslateblue);
+  }
+
+  footer a {
+    color: var(--cornflour);
     text-decoration: none;
   }
 
 footer a:hover {
-    color: var(--growthlime); /* Apply the same hover color as other links */
+    color: var(--lightslateblue); /* Apply the same hover color as other links */
   }
-  
-  main a:hover {
-    color: var(--serenitylavender);
-  }
+
 
 .avatar {
     margin: 0 30px 0 0;
@@ -195,7 +203,7 @@ section {
 
 .location-button {
     background-color: transparent;
-    border: 1px solid var(--balancepurple);
+    border: 1px solid var(--persianindigo);
     color: var(--yinblack);
     cursor: pointer;
     font-family: 'Maven Pro', sans-serif;
@@ -207,7 +215,7 @@ section {
   }
   
   .location-button:hover {
-    background-color: var(--balancepurple);
+    background-color: var(--persianindigo);
     color: var(--yangwhite);
   }
 
@@ -234,17 +242,6 @@ ul {
       }
     .nav-button {
         display: none;
-    }
-    footer {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      align-items: stretch;
-      flex-wrap: wrap;
-      background-color: var(--yinblack);
-      color: var(--yangwhite);
-      padding: 2.5vh 2.5vw;
-      box-sizing: border-box;
     }
 
     .footer-block {
