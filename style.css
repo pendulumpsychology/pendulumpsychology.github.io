@@ -73,10 +73,12 @@
   }
 
   .random-quote {
-    font-size: 1.2em;
     font-style: italic;
     text-align: center;
-    margin: 20px 0;
+    margin: 15px 0;
+    display: block;
+    font-size: 1.2em;
+    transition: opacity 1s;
   }
   
   
@@ -92,10 +94,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-position: center;
+    position: relative;
+    /* background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-attachment: fixed;
+    background-attachment: fixed; */
   }
   
   .hero-content {
@@ -105,6 +108,31 @@
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
+    position: relative; /* This ensures the z-index applies */
+    z-index: 1; /* This positions the content above the background images */
+  }
+  
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    transition: opacity 1s;
+  }
+  
+  #hero-bg1 {
+    z-index: 1;
+    opacity: 1;
+  }
+  
+  #hero-bg2 {
+    z-index: 0;
+    opacity: 0;
   }
   
   .hero-content h1 {
@@ -231,8 +259,13 @@ ul {
   padding-left: 20px;
 }
 
+@media (max-width: 790px) {
+  .random-quote{
+    display: none;
+  }
+}
 
-@media (max-width: 767px) {
+@media (max-width: 790px) {
     #navbar {
       flex-direction: column;
       width: 100%;
@@ -254,7 +287,7 @@ ul {
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 790px) {
     .nav-button {
       display: flex !important;
     }

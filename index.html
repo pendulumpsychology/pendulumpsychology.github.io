@@ -83,13 +83,16 @@
           <div class="content-container">
           <main>
             <section id="hero">
-                <div class="hero-content">
-                <h1>David O'Donohue</h1>
-                <p class="tagline">Psychologist | Clinical Psychology Registrar</p>
-                <p id="random-quote" class="random-quote"></p>
-                <a href="booking.html" class="cta-button">Book an Appointment</a>
-                </div>
-            </section>
+              <div id="hero-bg1" class="hero-bg"></div>
+              <div id="hero-bg2" class="hero-bg"></div>
+              <div class="hero-content">
+                  <h1>David O'Donohue</h1>
+                  <p class="tagline">Psychologist | Clinical Psychology Registrar</p>
+                  <p id="random-quote" class="random-quote"></p>
+                  <a href="https://pendulumpsychology.com.au/booking.html" class="cta-button">Book an Appointment</a>
+              </div>
+          </section>
+          
 
             <!-- About Section -->
 <section id="about">
@@ -176,99 +179,159 @@ In essence, my approach to therapy is about guiding clients towards greater self
         </div>
         <script src="script.js"></script>
         <script>
-function setRandomHeroImage() {
-  const imagesList = [
-    "./assets/yoga.webp",
-    "./assets/balance.webp",
-    "./assets/lotus.webp",
-    "./assets/ripple.webp",
-    "./assets/lotus2.webp",
-    "./assets/turtle.webp",
-    "./assets/waterfall.webp",
-    "./assets/nightsky.webp",
-    "./assets/night.webp",
-    "./assets/japan.webp",
-    "./assets/lake.webp",
-    "./assets/meditation.webp",
-    "./assets/sunset1.webp"
-  ];
+          const imagesList = [
+"./assets/yoga.webp",
+  "./assets/balance.webp",
+  "./assets/lotus.webp",
+  "./assets/ripple.webp",
+  "./assets/lotus2.webp",
+  "./assets/turtle.webp",
+  "./assets/waterfall.webp",
+  "./assets/nightsky.webp",
+  "./assets/night.webp",
+  "./assets/japan.webp",
+  "./assets/lake.webp",
+  "./assets/meditation.webp",
+  "./assets/sunset1.webp"
+];
+          // Preload the images immediately when the script is parsed
+imagesList.forEach((imageURL) => {
+  const img = new Image();
+  img.src = imageURL;
+});
+          let currentBackground = 1;
 
-  const heroSection = document.getElementById('hero');
-  const randomImageIndex = Math.floor(Math.random() * imagesList.length);
-  const selectedImage = imagesList[randomImageIndex];
-  heroSection.style.backgroundImage = `url('${selectedImage}')`;
-}
-
-function displayRandomQuote() {
-  const quotes = [
-    "Opposition brings concord. Out of discord comes the fairest harmony. - Heraclitus",
-    "The curious paradox is that when I accept myself just as I am, then I can change. - Carl Rogers",
-    "Seek the coldness of the moon and ye shall find the heat of the sun. - Socrates",
-    "Paradox is the natural medium for expressing transconscious facts. - Carl Jung",
-    "If you wish to weaken it, you must first strengthen it. - Lao Tzu",
-    "The desire for a more positive experience is itself a negative experience. And, paradoxically, the acceptance of one's negative experience is itself a positive experience. - Mark Manson",
-    "When people see some things as beautiful, other things become ugly. When people see some things as good, other things become bad. - Lao Tzu",
-    "Yield and overcome; Bend and be straight; Empty and be full; Wear out and be new; Have little and gain; Have much and be confused. - Lao Tzu",
-    "For every action, there is an equal and opposite reaction. - Isaac Newton",
-    "The path out of hell is through misery. By refusing to accept the misery that is part of climbing out of hell, you fall back into hell. - Marsha Linehan",
-    "When an extreme, one-sided tendency dominates conscious life; in time an equally powerful counterposition is built up which first inhibits the conscious performance and subsequently breaks through the conscious control. - Carl Jung",
-    "For in all chaos there is a cosmos, in all disorder a secret order, in all caprice a fixed law, for everything that works is grounded on its opposite. - Carl Jung",
-    "There is nothing in nature which does not contain as much evil as good. - Gerhard Dorn",
-    "All things are poison, and nothing is without poison; only the dose permits something not to be poisonous. - Paracelsus",
-    "Slow is smooth and smooth is fast. - US Navy Seals",
-    "There is no light without shadow, and no psychic wholeness without imperfection. - Carl Jung",
-    "The greater the contrast, the greater the potential. Great energy only comes from a correspondingly great tension of opposites. - Carl Jung",
-    "Every adversity, every failure, every heartache carries with it the seed of an equal or greater benefit. - Napoleon Hill",
-    "Life is a balance between holding on and letting go. - Rumi",
-    "Without contraries there is no progression. - William Blake",
-    "The soul would have no rainbow if the eyes had no tears. - Native American Proverb",
-    "Out of clutter, find simplicity. From discord, find harmony. In the middle of difficulty lies opportunity. - Albert Einstein",
-    "I know that I am intelligent, because I know that I know nothing. - Socrates",
-    "Those who know do not speak. Those who speak do not know. - Lao Tzu",
-    "Everything popular is wrong. - Oscar Wilde",
-    "What you resist, persists. - Carl Jung",
-    "The one who does most to avoid suffering is, in the end, the one who suffers most. - Thomas Merton",
-    "There is no coming to consciousness without pain. - Carl Jung",
-    "Know the theories, master all the techniques, but as you touch a human soul be just another human soul. - Carl Jung",
-    "The cure for pain is in the pain. - Rumi",
-    "These pains you feel are messengers. Listen to them. - Rumi",
-    "If you desire healing, let yourself fall ill. - Rumi",
-    "The moon stays bright when it doesn't avoid the light. - Rumi",
-    "Sell your cleverness and buy bewilderment. Cleverness is mere opinion, bewilderment is intuition. - Rumi",
-    "Learn the alchemy true human beings know. The moment you accept what troubles you've been given, the door will open. - Rumi",
-    "It\'s your road, and yours alone. Others may walk it with you, but no one can walk it for you. - Rumi",
-    "All darkness is followed by sunshine. - Rumi",
+const quotes = [
+  "Opposition brings concord. Out of discord comes the fairest harmony. - Heraclitus",
+  "The curious paradox is that when I accept myself just as I am, then I can change. - Carl Rogers",
+  "Seek the coldness of the moon and ye shall find the heat of the sun. - Socrates",
+  "Paradox is the natural medium for expressing transconscious facts. - Carl Jung",
+  "If you wish to weaken it, you must first strengthen it. - Lao Tzu",
+  "The desire for a more positive experience is itself a negative experience. And, paradoxically, the acceptance of one's negative experience is itself a positive experience. - Mark Manson",
+  "When people see some things as beautiful, other things become ugly. When people see some things as good, other things become bad. - Lao Tzu",
+  "Yield and overcome; Bend and be straight; Empty and be full; Wear out and be new; Have little and gain; Have much and be confused. - Lao Tzu",
+  "For every action, there is an equal and opposite reaction. - Isaac Newton",
+  "The path out of hell is through misery. By refusing to accept the misery that is part of climbing out of hell, you fall back into hell. - Marsha Linehan",
+  "When an extreme, one-sided tendency dominates conscious life; in time an equally powerful counterposition is built up which first inhibits the conscious performance and subsequently breaks through the conscious control. - Carl Jung",
+  "For in all chaos there is a cosmos, in all disorder a secret order, in all caprice a fixed law, for everything that works is grounded on its opposite. - Carl Jung",
+  "There is nothing in nature which does not contain as much evil as good. - Gerhard Dorn",
+  "There is no light without shadow, and no psychic wholeness without imperfection. - Carl Jung",
+  "The greater the contrast, the greater the potential. Great energy only comes from a correspondingly great tension of opposites. - Carl Jung",
+  "Every adversity, every failure, every heartache carries with it the seed of an equal or greater benefit. - Napoleon Hill",
+  "Life is a balance between holding on and letting go. - Rumi",
+  "Without contraries there is no progression. - William Blake",
+  "The soul would have no rainbow if the eyes had no tears. - Native American Proverb",
+  "Out of clutter, find simplicity. From discord, find harmony. In the middle of difficulty lies opportunity. - Albert Einstein",
+  "What you resist, persists. - Carl Jung",
+  "The one who does most to avoid suffering is, in the end, the one who suffers most. - Thomas Merton",
+  "There is no coming to consciousness without pain. - Carl Jung",
+  "Know the theories, master all the techniques, but as you touch a human soul be just another human soul. - Carl Jung",
+  "The cure for pain is in the pain. - Rumi",
+  "These pains you feel are messengers. Listen to them. - Rumi",
+  "If you desire healing, let yourself fall ill. - Rumi",
+  "The moon stays bright when it doesn't avoid the light. - Rumi",
+  "Learn the alchemy true human beings know. The moment you accept what troubles you've been given, the door will open. - Rumi",
+  "All darkness is followed by sunshine. - Rumi",
 
 
-    "Perfectly balanced, but only half the time",
-    "Should we strive to be nonstriving?",
-    "Should we be attached to the idea of not being attached?",
-    "Should we criticise ourselves for being self-critical?",
-    "Should we be openminded about being closeminded?",
-    "Should we be inflexibly flexible?",
-    "Should we stop using \"shoulds\"?",
-    "Is it good to stop judging things as \"good\" or \"bad\"?",
-    "Are we really accepting the present moment if we are rejecting our resistance to it?",
-    "Can we think \"positively\" about our \"negative\" thoughts?",
-    "The brighter the light, the darker the shadow",
-    "Everything that exists turns into its opposite",
-  ];
 
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  const randomQuote = quotes[randomIndex];
-  const quoteElement = document.getElementById("random-quote");
+  "Should we strive to be nonstriving?",
+  "Should we be attached to the idea of not being attached?",
+  "Should we criticise ourselves for being self-critical?",
+  "Should we be openminded about being closeminded?",
+  "Should we be inflexibly flexible?",
+  "Should we stop using \"shoulds\"?",
+  "Is it good to stop judging things as \"good\" or \"bad\"?",
+  "Are we really accepting the present moment if we are rejecting our resistance to it?",
+  "Can we think \"positively\" about our \"negative\" thoughts?",
+  "The brighter the light, the darker the shadow",
 
-  if (quoteElement) {
-    quoteElement.textContent = randomQuote;
-  } else {
-    console.warn("Error: random-quote element not found");
-  }
-}
+  // "Perfectly balanced, but only half the time",
+  // "Everything that exists turns into its opposite",
+  // "It\'s your road, and yours alone. Others may walk it with you, but no one can walk it for you. - Rumi",
+  // "Sell your cleverness and buy bewilderment. Cleverness is mere opinion, bewilderment is intuition. - Rumi",
+  // "Everything popular is wrong. - Oscar Wilde",
+  // "I know that I am intelligent, because I know that I know nothing. - Socrates",
+  // "Those who know do not speak. Those who speak do not know. - Lao Tzu",
+  // "All things are poison, and nothing is without poison; only the dose permits something not to be poisonous. - Paracelsus",
+  // "Slow is smooth and smooth is fast. - US Navy Seals",
+];
+
+let currentImageIndex = 0;
+let currentImageElementId = "hero-bg1";
+let nextImageElementId = "hero-bg2";
+
 
 document.addEventListener("DOMContentLoaded", function () {
-  setRandomHeroImage();
-  displayRandomQuote();
+
+  // Set the initial image
+  const initialImageElement = document.getElementById(currentImageElementId);
+  initialImageElement.style.backgroundImage = `url('${imagesList[currentImageIndex]}')`;
+
+  // Add event listener to change the image when the hero section is clicked
+  const heroSection = document.getElementById('hero');
+  const quoteElement = document.getElementById("random-quote");
+  const heroContent = document.querySelector(".hero-content");
+  heroContent.addEventListener('click', function(event) {
+    event.stopPropagation();
+  });
+
+  // Set the initial image and quote
+  updateQuote(quoteElement);
+
+  // Add event listeners to change the image and quote when clicked
+  heroSection.addEventListener("click", setNextHeroImage);
+  quoteElement.addEventListener("click", (event) => changeQuote(event, quoteElement));
 });
+
+function updateQuote(quoteElement) {
+  let randomIndex, randomQuote;
+
+  do {
+    randomIndex = Math.floor(Math.random() * quotes.length);
+    randomQuote = quotes[randomIndex];
+  } while (randomQuote === quoteElement.textContent);
+
+  quoteElement.textContent = randomQuote;
+}
+
+function changeQuote(event, quoteElement) {
+
+  quoteElement.style.opacity = 0;
+
+  setTimeout(() => {
+    updateQuote(quoteElement);
+    quoteElement.style.opacity = 1;
+  }, 1000);
+}
+
+let previousImageIndex = null;
+
+function setNextHeroImage() {
+  // Pick the next image from the list
+  let nextImageIndex;
+
+  do {
+    nextImageIndex = Math.floor(Math.random() * imagesList.length);
+  } while (nextImageIndex === previousImageIndex);
+
+  previousImageIndex = nextImageIndex;
+  const nextImage = imagesList[nextImageIndex];
+
+  // Set the next image on the next image element
+  const nextImageElement = document.getElementById(nextImageElementId);
+  nextImageElement.style.backgroundImage = `url('${nextImage}')`;
+
+  // Transition the opacity of the current and next image elements
+  const currentImageElement = document.getElementById(currentImageElementId);
+  currentImageElement.style.opacity = "0";
+  nextImageElement.style.opacity = "1";
+
+  // Swap the current and next image element IDs for next time
+  const temp = currentImageElementId;
+  currentImageElementId = nextImageElementId;
+  nextImageElementId = temp;
+}
 
           </script>
     </body>
