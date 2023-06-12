@@ -179,8 +179,101 @@ In essence, my approach to therapy is about guiding clients towards greater self
         </div>
         <script src="script.js"></script>
         <script>
-          const imagesList = [
-"./assets/yoga.webp",
+  // Preload images function
+  function preloadImages(imagesList) {
+    imagesList.forEach((imageURL) => {
+      const img = new Image();
+      img.src = imageURL;
+    });
+  }
+
+  // Update quote function
+  function updateQuote(quoteElement, quotes, fade = false) {
+    if (quotes.length <= 1) {
+    return;
+  }
+  if (fade) {
+    quoteElement.style.opacity = 0;
+  }
+
+  setTimeout(() => {
+    let randomIndex, randomQuote;
+
+    do {
+      randomIndex = Math.floor(Math.random() * quotes.length);
+      randomQuote = quotes[randomIndex];
+    } while (randomQuote === quoteElement.textContent);
+
+    quoteElement.textContent = randomQuote;
+
+    if (fade) {
+      quoteElement.style.opacity = 1;
+    }
+  }, fade ? 1000 : 0);
+}
+
+
+
+  // Set next hero image function
+  function setNextHeroImage(imagesList, currentImageElementId, nextImageElementId, currentImageIndex) {
+    if (imagesList.length <= 1) {
+    return [currentImageElementId, nextImageElementId, currentImageIndex];
+  }
+  let nextImageIndex;
+
+  do {
+    nextImageIndex = Math.floor(Math.random() * imagesList.length);
+  } while (nextImageIndex === currentImageIndex);
+
+  currentImageIndex = nextImageIndex;
+  const nextImage = imagesList[nextImageIndex];
+
+  const nextImageElement = document.getElementById(nextImageElementId);
+  nextImageElement.style.backgroundImage = `url('${nextImage}')`;
+
+  const currentImageElement = document.getElementById(currentImageElementId);
+  currentImageElement.style.opacity = "0";
+  nextImageElement.style.opacity = "1";
+
+  const temp = currentImageElementId;
+  currentImageElementId = nextImageElementId;
+  nextImageElementId = temp;
+
+  return [currentImageElementId, nextImageElementId, currentImageIndex];
+}
+
+
+  // Main function to set up event listeners and initial states
+  function setupHeroBackgroundAndQuotes(imagesList, quotes) {
+  let currentImageElementId = "hero-bg1";
+  let nextImageElementId = "hero-bg2";
+  let currentImageIndex = 0;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const initialImageElement = document.getElementById(currentImageElementId);
+    initialImageElement.style.backgroundImage = `url('${imagesList[currentImageIndex]}')`;
+
+    const heroSection = document.getElementById('hero');
+    const quoteElement = document.getElementById("random-quote");
+    const heroContent = document.querySelector(".hero-content");
+
+    heroContent.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+
+    updateQuote(quoteElement, quotes);
+
+    heroSection.addEventListener("click", () => {
+      [currentImageElementId, nextImageElementId, currentImageIndex] = setNextHeroImage(imagesList, currentImageElementId, nextImageElementId, currentImageIndex);
+    });
+
+    quoteElement.addEventListener("click", (event) => updateQuote(quoteElement, quotes, true));
+  });
+}
+
+
+  const imagesList = [
+  "./assets/yoga.webp",
   "./assets/balance.webp",
   "./assets/lotus.webp",
   "./assets/ripple.webp",
@@ -193,15 +286,9 @@ In essence, my approach to therapy is about guiding clients towards greater self
   "./assets/lake.webp",
   "./assets/meditation.webp",
   "./assets/sunset1.webp"
-];
-          // Preload the images immediately when the script is parsed
-imagesList.forEach((imageURL) => {
-  const img = new Image();
-  img.src = imageURL;
-});
-          let currentBackground = 1;
+  ];
 
-const quotes = [
+  const quotes = [
   "Opposition brings concord. Out of discord comes the fairest harmony. - Heraclitus",
   "The curious paradox is that when I accept myself just as I am, then I can change. - Carl Rogers",
   "Seek the coldness of the moon and ye shall find the heat of the sun. - Socrates",
@@ -255,84 +342,10 @@ const quotes = [
   // "Those who know do not speak. Those who speak do not know. - Lao Tzu",
   // "All things are poison, and nothing is without poison; only the dose permits something not to be poisonous. - Paracelsus",
   // "Slow is smooth and smooth is fast. - US Navy Seals",
-];
+  ];
 
-let currentImageIndex = 0;
-let currentImageElementId = "hero-bg1";
-let nextImageElementId = "hero-bg2";
-
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  // Set the initial image
-  const initialImageElement = document.getElementById(currentImageElementId);
-  initialImageElement.style.backgroundImage = `url('${imagesList[currentImageIndex]}')`;
-
-  // Add event listener to change the image when the hero section is clicked
-  const heroSection = document.getElementById('hero');
-  const quoteElement = document.getElementById("random-quote");
-  const heroContent = document.querySelector(".hero-content");
-  heroContent.addEventListener('click', function(event) {
-    event.stopPropagation();
-  });
-
-  // Set the initial image and quote
-  updateQuote(quoteElement);
-
-  // Add event listeners to change the image and quote when clicked
-  heroSection.addEventListener("click", setNextHeroImage);
-  quoteElement.addEventListener("click", (event) => changeQuote(event, quoteElement));
-});
-
-function updateQuote(quoteElement) {
-  let randomIndex, randomQuote;
-
-  do {
-    randomIndex = Math.floor(Math.random() * quotes.length);
-    randomQuote = quotes[randomIndex];
-  } while (randomQuote === quoteElement.textContent);
-
-  quoteElement.textContent = randomQuote;
-}
-
-function changeQuote(event, quoteElement) {
-
-  quoteElement.style.opacity = 0;
-
-  setTimeout(() => {
-    updateQuote(quoteElement);
-    quoteElement.style.opacity = 1;
-  }, 1000);
-}
-
-let previousImageIndex = null;
-
-function setNextHeroImage() {
-  // Pick the next image from the list
-  let nextImageIndex;
-
-  do {
-    nextImageIndex = Math.floor(Math.random() * imagesList.length);
-  } while (nextImageIndex === previousImageIndex);
-
-  previousImageIndex = nextImageIndex;
-  const nextImage = imagesList[nextImageIndex];
-
-  // Set the next image on the next image element
-  const nextImageElement = document.getElementById(nextImageElementId);
-  nextImageElement.style.backgroundImage = `url('${nextImage}')`;
-
-  // Transition the opacity of the current and next image elements
-  const currentImageElement = document.getElementById(currentImageElementId);
-  currentImageElement.style.opacity = "0";
-  nextImageElement.style.opacity = "1";
-
-  // Swap the current and next image element IDs for next time
-  const temp = currentImageElementId;
-  currentImageElementId = nextImageElementId;
-  nextImageElementId = temp;
-}
-
+  preloadImages(imagesList);
+  setupHeroBackgroundAndQuotes(imagesList, quotes);
           </script>
     </body>
 </html>
