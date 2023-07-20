@@ -6,19 +6,20 @@ def create_html_file(file_name):
 <html lang="en-AU">
     <head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0'>
-        <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
-        <link rel="manifest" href="./site.webmanifest">
-        <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="apple-touch-icon" sizes="180x180" href="https://pendulumpsychology.com.au/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="https://pendulumpsychology.com.au/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://pendulumpsychology.com.au/favicon-16x16.png">
+        <link rel="manifest" href="https://pendulumpsychology.com.au/site.webmanifest">
+        <link rel="mask-icon" href="https://pendulumpsychology.com.au/safari-pinned-tab.svg" color="#5bbad5">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Maven+Pro">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://pendulumpsychology.com.au/style.css">
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
         <title>TODO | Pendulum Psychology</title>
         <meta name="description" content="TODO."/>
         <meta name="robots" content="index, follow">
-        <link rel="canonical" href="https://pendulumpsychology.com.au/TODO" hreflang="en-AU">
+        <link rel="canonical" href="https://pendulumpsychology.com.au/TODO">
+        <link rel="alternate" href="https://pendulumpsychology.com.au/TODO.html" hreflang="en-AU">
         <meta charset="utf-8"/>
         <meta property="og:locale" content="en_AU">
         <meta property="og:title" content="TODO | Pendulum Psychology" />
@@ -42,7 +43,7 @@ TODO
         </main>
         <!-- START_FOOTER -->
         <!-- END_FOOTER -->
-        <script src="script.js"></script>
+        <script src="https://pendulumpsychology.com.au/script.js"></script>
     </body>
 </html>
 """

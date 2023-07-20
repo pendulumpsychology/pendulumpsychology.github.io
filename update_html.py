@@ -7,7 +7,7 @@ with open('footer.html', 'r', encoding='utf8') as file:
     footer_content = file.read()
 
 # Find all HTML files in the current directory
-for filename in glob.glob('*.html'):
+for filename in glob.glob('*.html') + glob.glob('articles/*.html'):
     with open(filename, 'r', encoding='utf8') as file:
         content = file.read()
     
