@@ -257,12 +257,6 @@ section {
     color: var(--yangwhite);
   }
 
-.content-container{
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
 ul {
   max-width: 700px;
   margin: 0 auto;
