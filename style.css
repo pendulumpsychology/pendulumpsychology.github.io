@@ -229,6 +229,8 @@ h1, h2{
 
 section {
     padding: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .booking-container {
