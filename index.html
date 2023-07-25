@@ -82,7 +82,6 @@
   <a href="https://pendulumpsychology.com.au/alternatives.html" class="navbar-element nav-button">Alternatives</a>
 </nav>
 <!-- END_NAVBAR -->
-          <div class="content-container">
           <main>
             <div id="hero">
               <div id="hero-bg1" class="hero-bg"></div>
@@ -178,7 +177,6 @@ In essence, my approach to therapy is about guiding clients towards greater self
         Fax: +61 2 9182 5418
     </div>
 </footer><!-- END_FOOTER -->
-        </div>
         <script src="script.js"></script>
         <script>
   // Preload images function
@@ -249,7 +247,7 @@ In essence, my approach to therapy is about guiding clients towards greater self
   function setupHeroBackgroundAndQuotes(imagesList, quotes) {
   let currentImageElementId = "hero-bg1";
   let nextImageElementId = "hero-bg2";
-  let currentImageIndex = 0;
+  let currentImageIndex = Math.floor(Math.random() * imagesList.length);
 
   document.addEventListener("DOMContentLoaded", function () {
     const initialImageElement = document.getElementById(currentImageElementId);
