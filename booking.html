@@ -107,14 +107,7 @@
     <!-- <p>Please also note that I am not currently accepting new clients.
   </p> -->
 </section>
-<section class="booking-container">
-    <p class="location-select">Which location would you like to make a booking for?</p>
-    <button data-location-id="Deakin" class="location-button location-select">Deakin</button>
-    <button data-location-id="OConnor" class="location-button location-select">O'Connor</button>
-</section>
-    <iframe src="https://www.halaxy.com/book/widget/psychologist/mr-david-odonohue/724811/837311" data-location-id="Deakin" class="location-content" style="display: none; width: 100%; height: 1000px"></iframe>
-    <iframe src="https://www.halaxy.com/book/widget/psychologist/mr-david-odonohue/724811/626281" data-location-id="OConnor" class="location-content" style="display: none; width: 100%; height: 1000px"></iframe>
-
+  <iframe src="https://www.halaxy.com/book/widget/psychologist/mr-david-odonohue/724811/837311" data-location-id="Deakin" style="width: 100vw; height: 750px"></iframe>
 
     </main>
     <!-- START_FOOTER --><footer>
@@ -126,10 +119,6 @@
     </div>
     <div class="footer-block">
         Address<br>
-        <a href="https://www.google.com/maps/search/?api=1&query=Level+1,+5+Sargood+Street,+O'Connor,+ACT+2602,+Australia">Capital Clinical Psychology<br>
-            Level 1, 5 Sargood Street<br>
-        O'Connor, ACT, 2602</a>
-        <br><br>
         <a href="https://www.google.com/maps/search/?api=1&query=Lantern+Psychology+Centre">Lantern Psychology Centre<br>
         Unit 5, 10 Thesiger Court<br>
         Deakin, ACT, 2600</a>
@@ -145,7 +134,7 @@
     </div>
 </footer><!-- END_FOOTER -->
     <script src="script.js"></script>
-    <script>
+    <!-- <script>
   const locationButtons = document.querySelectorAll('.location-button');
   const contentElements = document.querySelectorAll('.location-content');
   const locationSelectElements = document.querySelectorAll('.location-select');
@@ -159,7 +148,7 @@
     const contentElement = document.querySelector(`.location-content[data-location-id="${locationId}"]`);
     contentElement.style.display = 'block';
   });
-});
+}); -->
 
     </script>
 </body>
