@@ -103,10 +103,9 @@ default_html_content = f"""
         <br>
         <img src="TODO" style="max-width:700px"/>
         <p>
-          <br><br>
           TODO: CONTENT
           <img src="TODO" style="float: left; max-width: 200px; margin-right: 10px;">
-            </p>
+        </p>
         </section>
         </main>
         <!-- START_FOOTER -->

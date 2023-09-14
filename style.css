@@ -179,6 +179,7 @@
     color: var(--yangwhite);
     padding: 2.5vh 2.5vw;
     box-sizing: border-box;
+    margin-top: 50px;
 }
   
   .footer-block {
