@@ -104,7 +104,7 @@ default_html_content = f"""
         <img src="TODO" style="max-width:min(700px, 90vw);"/>
         <p>
           TODO: CONTENT
-          <img src="TODO" style="float: left; max-width: 200px; margin-right: 10px;">
+          <img src="TODO" style="float: left; max-width: 200px; margin: 10px;">
         </p>
         </section>
         </main>
