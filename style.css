@@ -97,10 +97,10 @@
   }
 
   .summary-info {
-    background-color: #f8f8f8;
+    background-color: #f0f8ff;
     padding: 20px;
+    border: 2px solid #6495ed;
     border-radius: 5px;
-    margin-bottom: 20px;
   }
 
   .summary-section {
