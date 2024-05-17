@@ -95,6 +95,18 @@
     flex: 1;
     /* Add more padding if needed depending on the navbar height */
   }
+
+  .summary-info {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .summary-section {
+    padding-top: 70px;
+    margin-top: -70px;
+  }
   
 
   #hero {
