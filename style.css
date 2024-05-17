@@ -101,6 +101,7 @@
     padding: 20px;
     border: 2px solid #6495ed;
     border-radius: 5px;
+    margin: 10px auto;
   }
 
   .summary-section {
@@ -234,7 +235,6 @@ footer a:hover {
 p {
     font-size: 16px;
     line-height: 1.5;
-    max-width: 700px;
     margin: 0 auto; /* Centers the paragraph if it's inside a wider container */
   }
 h1, h2{
