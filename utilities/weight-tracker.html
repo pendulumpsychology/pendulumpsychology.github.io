@@ -141,23 +141,26 @@
 
         function updateChart() {
             const smoothedData = calculateExponentialSmoothing(weightData);
+            const projectedData = calculateProjectedWeight();
+
             chart.updateSeries([
                 { name: 'Weight', data: weightData },
                 { name: 'Exponential Smoothing', data: smoothedData },
+                { name: '-1% Projected Weight', data: projectedData[0] },
+                { name: '-0.5% Projected Weight', data: projectedData[1] },
+                { name: '+0.5% Projected Weight', data: projectedData[2] },
+                { name: '+1% Projected Weight', data: projectedData[3] },
             ]);
-            calculateProjectedWeight();
+
             updateYAxisMinMax();
         }
 
         function updateYAxisMinMax() {
-            const allDataPoints = weightData.map(point => point.y).concat(
-                chart.w.globals.series.slice(1).flatMap(series => series.map(point => point.y))
-            );
+            if (weightData.length === 0) return;
 
-            if (allDataPoints.length === 0) return;
-
-            const minY = Math.floor(Math.min(...allDataPoints) * 0.95);
-            const maxY = Math.ceil(Math.max(...allDataPoints) * 1.05);
+            const allYValues = weightData.map(point => point.y);
+            const minY = Math.floor(Math.min(...allYValues) * 0.95);
+            const maxY = Math.ceil(Math.max(...allYValues) * 1.05);
 
             chart.updateOptions({
                 yaxis: {
@@ -193,7 +196,7 @@
             const anchorDate = new Date(anchorDateInput.value);
             const projectionLength = parseInt(projectionLengthSelect.value);
 
-            if (isNaN(anchorDate.getTime()) || weightData.length === 0) return;
+            if (isNaN(anchorDate.getTime()) || weightData.length === 0) return [[], [], [], []];
 
             const percentages = [-0.01, -0.005, 0.005, 0.01];
             const projectedData = percentages.map(() => []);
@@ -202,11 +205,11 @@
             const pastData = weightData.filter((dataPoint) => dataPoint.x <= anchorTimestamp);
             const lastSevenDaysData = pastData.slice(-7);
 
-            if (lastSevenDaysData.length === 0) return;
+            if (lastSevenDaysData.length === 0) return [[], [], [], []];
 
             const avgWeight = lastSevenDaysData.reduce((sum, dataPoint) => sum + dataPoint.y, 0) / lastSevenDaysData.length;
 
-            for (let i = 1; i <= projectionLength; i++) {
+            for (let i = 0; i <= projectionLength; i++) {
                 const projectedDate = new Date(anchorDate);
                 projectedDate.setDate(projectedDate.getDate() + i);
 
@@ -216,16 +219,7 @@
                 });
             }
 
-            chart.updateSeries([
-                { name: 'Weight', data: weightData },
-                { name: 'Exponential Smoothing', data: calculateExponentialSmoothing(weightData) },
-                { name: '-1% Projected Weight', data: projectedData[0] },
-                { name: '-0.5% Projected Weight', data: projectedData[1] },
-                { name: '+0.5% Projected Weight', data: projectedData[2] },
-                { name: '+1% Projected Weight', data: projectedData[3] },
-            ]);
-
-            updateYAxisMinMax();
+            return projectedData;
         }
 
         addDataButton.addEventListener('click', () => {
@@ -295,8 +289,8 @@
             document.getElementById('editModal').style.display = 'none';
         });
 
-        projectionLengthSelect.addEventListener('change', calculateProjectedWeight);
-        anchorDateInput.addEventListener('change', calculateProjectedWeight);
+        projectionLengthSelect.addEventListener('change', updateChart);
+        anchorDateInput.addEventListener('change', updateChart);
 
         updateChart();
     });
