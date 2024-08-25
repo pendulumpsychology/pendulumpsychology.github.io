@@ -133,7 +133,7 @@
                 enabled: false,
             },
             stroke: {
-                curve: 'smooth',
+                curve: 'straight',
             },
         });
 
@@ -156,8 +156,8 @@
 
             if (allDataPoints.length === 0) return;
 
-            const minY = Math.floor(Math.min(...allDataPoints)) - 5;
-            const maxY = Math.ceil(Math.max(...allDataPoints)) + 5;
+            const minY = Math.floor(Math.min(...allDataPoints) * 0.95);
+            const maxY = Math.ceil(Math.max(...allDataPoints) * 1.05);
 
             chart.updateOptions({
                 yaxis: {
