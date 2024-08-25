@@ -1,36 +1,61 @@
 <!DOCTYPE html>
 <html lang="en-AU">
-    <head>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0'>
-        <link rel="apple-touch-icon" sizes="180x180" href="https://pendulumpsychology.com.au/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="https://pendulumpsychology.com.au/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="https://pendulumpsychology.com.au/favicon-16x16.png">
-        <!-- <link rel="manifest" href="https://pendulumpsychology.com.au/site.webmanifest"> -->
-        <link rel="mask-icon" href="https://pendulumpsychology.com.au/safari-pinned-tab.svg" color="#5bbad5">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Maven+Pro">
-        <link rel="stylesheet" href="https://pendulumpsychology.com.au/style.css">
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="theme-color" content="#ffffff">
-        <title>Weight Tracker</title>
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-        <meta name="description" content="Track weight with guidelines for healthy weight loss or gain."/>
-        <meta name="robots" content="index, follow">
-        <link rel="canonical" href="https://pendulumpsychology.com.au/utilities/weight-tracker.html">
-        <link rel="alternate" href="https://pendulumpsychology.com.au/utilities/weight-tracker.html" hreflang="en-AU">
-        <meta charset="utf-8"/>
-        <meta property="og:locale" content="en_AU">
-        <meta property="og:title" content="Weight Tracker" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://pendulumpsychology.com.au/utilities/weight-tracker.html" />
-        <meta property="og:image" content="https://pendulumpsychology.com.au/android-chrome-512x512.png" />
-        <meta property="og:description" content="Track weight with guidelines for healthy weight loss or gain.">
-        <meta property="og:site_name" content="Weight Tracker">
+<head>
+    <meta charset="utf-8"/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0'>
+    <title>Weight Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .input-container,
+        .projection-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input,
+        select,
+        button {
+            padding: 5px;
+        }
+        .chart-container {
+            width: 100%;
+            height: 400px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        button {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Weight Tracker</h1>
     <div class="input-container">
-        <input type="number" id="weight" placeholder="Weight (kg)">
-        <input type="date" id="date" value="">
+        <input type="number" id="weight" step="0.1" placeholder="Weight (kg)">
+        <input type="date" id="date">
         <button id="addData">Add Data</button>
         <button id="clearData">Clear Data</button>
     </div>
@@ -42,390 +67,239 @@
           <button id="deleteDataPoint">Delete</button>
           <button id="closeModal">Close</button>
         </div>
-      </div>      
+    </div>      
     <div class="chart-container">
         <div id="weightChart"></div>
     </div>
     <div class="projection-container">
         <label for="anchorDate">Anchor Date:</label>
-        <input type="date" id="anchorDate" value="">
-        <label for="graphLength">Graph Length:</label>
+        <input type="date" id="anchorDate">
+        <label for="projectionLength">Graph Length:</label>
         <select id="projectionLength">
             <option value="14">14 Days</option>
             <option value="60" selected>60 Days</option>
             <option value="180">6 Months</option>
         </select>
     </div>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.33.0"></script> -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const weightInput = document.getElementById('weight');
+        const dateInput = document.getElementById('date');
+        const addDataButton = document.getElementById('addData');
+        const clearDataButton = document.getElementById('clearData');
+        const anchorDateInput = document.getElementById('anchorDate');
+        const projectionLengthSelect = document.getElementById('projectionLength');
+
+        // Set the current date as the default value for date inputs
+        dateInput.valueAsDate = new Date();
+        anchorDateInput.valueAsDate = new Date();
+
+        let weightData = JSON.parse(localStorage.getItem('weightData')) || [];
+
+        const chart = new ApexCharts(document.querySelector('#weightChart'), {
+            chart: {
+                type: 'line',
+                height: 350,
+                zoom: {
+                    enabled: true,
+                },
+                events: {
+                    dataPointSelection: handleDataPointClick,
+                },
+            },
+            series: [
+                { name: 'Weight', data: [] },
+                { name: 'Exponential Smoothing', data: [] },
+                { name: '-1% Projected Weight', data: [] },
+                { name: '-0.5% Projected Weight', data: [] },
+                { name: '+0.5% Projected Weight', data: [] },
+                { name: '+1% Projected Weight', data: [] },
+            ],
+            xaxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function (val) {
+                        return new Date(val).toLocaleDateString();
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    formatter: (val) => parseFloat(val).toFixed(1)
+                },
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: 'smooth',
+            },
+        });
+
+        chart.render();
+
+        function updateChart() {
+            const smoothedData = calculateExponentialSmoothing(weightData);
+            chart.updateSeries([
+                { name: 'Weight', data: weightData },
+                { name: 'Exponential Smoothing', data: smoothedData },
+            ]);
+            calculateProjectedWeight();
+            updateYAxisMinMax();
+        }
+
+        function updateYAxisMinMax() {
+            const allDataPoints = weightData.map(point => point.y).concat(
+                chart.w.globals.series.slice(1).flatMap(series => series.map(point => point.y))
+            );
+
+            if (allDataPoints.length === 0) return;
+
+            const minY = Math.floor(Math.min(...allDataPoints)) - 5;
+            const maxY = Math.ceil(Math.max(...allDataPoints)) + 5;
+
+            chart.updateOptions({
+                yaxis: {
+                    min: minY,
+                    max: maxY,
+                    labels: {
+                        formatter: (val) => parseFloat(val).toFixed(1)
+                    },
+                },
+            });
+        }
+
+        function calculateExponentialSmoothing(data) {
+            if (data.length === 0) return [];
+
+            const baseSmoothingFactor = 0.3;
+            let smoothedData = [{ x: data[0].x, y: data[0].y }];
+
+            for (let i = 1; i < data.length; i++) {
+                const timeDifference = (data[i].x - data[i - 1].x) / (1000 * 60 * 60 * 24);
+                const dynamicSmoothingFactor = Math.min(baseSmoothingFactor * Math.sqrt(timeDifference), 1);
+
+                const prevSmoothedData = smoothedData[i - 1].y;
+                const currentData = data[i].y;
+                const smoothedValue = dynamicSmoothingFactor * currentData + (1 - dynamicSmoothingFactor) * prevSmoothedData;
+                smoothedData.push({ x: data[i].x, y: smoothedValue });
+            }
+
+            return smoothedData;
+        }
+
+        function calculateProjectedWeight() {
+            const anchorDate = new Date(anchorDateInput.value);
+            const projectionLength = parseInt(projectionLengthSelect.value);
+
+            if (isNaN(anchorDate.getTime()) || weightData.length === 0) return;
+
+            const percentages = [-0.01, -0.005, 0.005, 0.01];
+            const projectedData = percentages.map(() => []);
+
+            const anchorTimestamp = anchorDate.getTime();
+            const pastData = weightData.filter((dataPoint) => dataPoint.x <= anchorTimestamp);
+            const lastSevenDaysData = pastData.slice(-7);
+
+            if (lastSevenDaysData.length === 0) return;
+
+            const avgWeight = lastSevenDaysData.reduce((sum, dataPoint) => sum + dataPoint.y, 0) / lastSevenDaysData.length;
+
+            for (let i = 1; i <= projectionLength; i++) {
+                const projectedDate = new Date(anchorDate);
+                projectedDate.setDate(projectedDate.getDate() + i);
+
+                percentages.forEach((percentage, index) => {
+                    const projectedWeight = avgWeight * Math.pow(1 + percentage / 7, i);
+                    projectedData[index].push({ x: projectedDate.getTime(), y: projectedWeight });
+                });
+            }
+
+            chart.updateSeries([
+                { name: 'Weight', data: weightData },
+                { name: 'Exponential Smoothing', data: calculateExponentialSmoothing(weightData) },
+                { name: '-1% Projected Weight', data: projectedData[0] },
+                { name: '-0.5% Projected Weight', data: projectedData[1] },
+                { name: '+0.5% Projected Weight', data: projectedData[2] },
+                { name: '+1% Projected Weight', data: projectedData[3] },
+            ]);
+
+            updateYAxisMinMax();
+        }
+
+        addDataButton.addEventListener('click', () => {
+            const weight = parseFloat(weightInput.value);
+            const date = new Date(dateInput.value);
+
+            if (!isNaN(weight) && !isNaN(date.getTime())) {
+                const timestamp = date.getTime();
+
+                if (weightData.some((dataPoint) => dataPoint.x === timestamp)) {
+                    alert('A data point with the same date already exists.');
+                    return;
+                }
+
+                weightData.push({ x: timestamp, y: weight });
+                weightData.sort((a, b) => a.x - b.x);
+
+                localStorage.setItem('weightData', JSON.stringify(weightData));
+                updateChart();
+
+                weightInput.value = '';
+                dateInput.valueAsDate = new Date();
+            }
+        });
+
+        clearDataButton.addEventListener('click', () => {
+            weightData = [];
+            localStorage.removeItem('weightData');
+            updateChart();
+        });
+
+        let currentDataPointIndex;
+
+        function handleDataPointClick(event, chartContext, config) {
+            const dataPointIndex = config.dataPointIndex;
+            const seriesIndex = config.seriesIndex;
+
+            if (seriesIndex !== 0) return;
+
+            currentDataPointIndex = dataPointIndex;
+            const selectedDataPoint = weightData[dataPointIndex];
+
+            document.getElementById('editWeight').value = selectedDataPoint.y;
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        document.getElementById('saveEdit').addEventListener('click', () => {
+            const newWeight = parseFloat(document.getElementById('editWeight').value);
+            weightData[currentDataPointIndex].y = newWeight;
+
+            localStorage.setItem('weightData', JSON.stringify(weightData));
+            updateChart();
+
+            document.getElementById('editModal').style.display = 'none';
+        });
+
+        document.getElementById('deleteDataPoint').addEventListener('click', () => {
+            weightData.splice(currentDataPointIndex, 1);
+
+            localStorage.setItem('weightData', JSON.stringify(weightData));
+            updateChart();
+
+            document.getElementById('editModal').style.display = 'none';
+        });
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('editModal').style.display = 'none';
+        });
+
+        projectionLengthSelect.addEventListener('change', calculateProjectedWeight);
+        anchorDateInput.addEventListener('change', calculateProjectedWeight);
+
+        updateChart();
+    });
+    </script>
 </body>
 </html>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-  const weightInput = document.getElementById('weight');
-  const dateInput = document.getElementById('date');
-  const addDataButton = document.getElementById('addData');
-  document.getElementById("clearData").addEventListener("click", clearChartData);
-  const anchorDateInput = document.getElementById('anchorDate');
-  const projectionLengthSelect = document.getElementById('projectionLength');
-
-  // Set the current date as the default value for date input
-  const currentDate = new Date();
-  const timezoneOffset = currentDate.getTimezoneOffset() * 60000;
-  const localDate = new Date(currentDate - timezoneOffset);
-  dateInput.valueAsDate = localDate;
-  
-
-  let weightData = (JSON.parse(localStorage.getItem('weightData')) || []).map((dataPoint) => ({
-    x: new Date(dataPoint.x).getTime(),
-    y: dataPoint.y,
-  }));
-  
-
-// Initialize the chart
-const chart = new ApexCharts(document.querySelector('#weightChart'), {
-    chart: {
-      type: 'line',
-      height: 350,
-      zoom: {
-        enabled: true,
-      },
-      events: {
-        dataPointSelection: handleDataPointClick,
-      },
-    },
-    series: [
-      { name: 'Weight', data: weightData.map((point) => ({ x: point.x, y: point.y })) },
-      { name: 'Exponential Smoothing', data: calculateExponentialSmoothing(weightData) },
-      { name: '-1% Projected Weight', data: [] },
-      { name: '-0.5% Projected Weight', data: [] },
-      { name: '+0.5% Projected Weight', data: [] },
-      { name: '+1% Projected Weight', data: [] },
-    ],
-    xaxis: {
-      type: 'datetime',
-      labels: {
-        formatter: function (val) {
-          const date = new Date(val);
-          const month = date.toLocaleString('default', { month: 'short' });
-          return `${month} ${date.getDate()}, ${date.getFullYear()}`;
-        },
-      },
-    },
-    yaxis: {
-      min: 0,
-      labels: {
-        formatter: yAxisFormatter
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: 'smooth',
-    },
-  });
-
-    // Set the anchor date from local storage or use the current date
-    const storedAnchorDate = localStorage.getItem('anchorDate');
-    anchorDateInput.value = storedAnchorDate ? storedAnchorDate : new Date().toISOString().slice(0, 10);  
-
-    // Set the graph length from local storage or use the default value (60 days)
-const storedGraphLength = localStorage.getItem('graphLength');
-projectionLengthSelect.value = storedGraphLength ? storedGraphLength : "60";
-
-function yAxisFormatter(val) {
-  const roundedVal = Math.round(val * 10) / 10;
-  return parseFloat(roundedVal).toFixed(1);
-}
-
-let currentDataPointIndex;
-
-function handleDataPointClick(event, chartContext, config) {
-  const dataPointIndex = config.dataPointIndex;
-  const seriesIndex = config.seriesIndex;
-
-  if (seriesIndex !== 0) {
-    return;
-  }
-
-  currentDataPointIndex = dataPointIndex;
-  const selectedDataPoint = weightData[dataPointIndex];
-
-  document.getElementById('editWeight').value = selectedDataPoint.y;
-  document.getElementById('editModal').style.display = 'block';
-}
-
-document.getElementById('saveEdit').addEventListener('click', () => {
-  const newWeight = parseFloat(document.getElementById('editWeight').value);
-  weightData[currentDataPointIndex].y = newWeight;
-
-  chart.updateSeries([{ name: 'Weight', data: weightData.map((point) => ({ x: point.x, y: point.y })) }]);
-  localStorage.setItem('weightData', JSON.stringify(weightData));
-
-  document.getElementById('editModal').style.display = 'none';
-});
-
-document.getElementById('deleteDataPoint').addEventListener('click', () => {
-  weightData.splice(currentDataPointIndex, 1);
-
-  chart.updateSeries([{ name: 'Weight', data: weightData.map((point) => ({ x: point.x, y: point.y })) }]);
-  localStorage.setItem('weightData', JSON.stringify(weightData));
-
-  document.getElementById('editModal').style.display = 'none';
-});
-
-document.getElementById('closeModal').addEventListener('click', () => {
-  document.getElementById('editModal').style.display = 'none';
-});
-
-function calculateExponentialSmoothing(data) {
-  if (data.length === 0) {
-    return [];
-  }
-
-  const baseSmoothingFactor = 0.3;
-  let smoothedData = [{ x: data[0].x, y: data[0].y }];
-
-  for (let i = 1; i < data.length; i++) {
-    const timeDifference = (data[i].x - data[i - 1].x) / (1000 * 60 * 60 * 24); // Days
-    const dynamicSmoothingFactor = Math.min(baseSmoothingFactor * Math.sqrt(timeDifference), 1);
-
-    const prevSmoothedData = smoothedData[i - 1].y;
-    const currentData = data[i].y;
-    const smoothedValue = dynamicSmoothingFactor * currentData + (1 - dynamicSmoothingFactor) * prevSmoothedData;
-    smoothedData.push({ x: data[i].x, y: smoothedValue });
-  }
-
-  return smoothedData;
-}
-
-
-function updateChartData() {
-  chart.updateSeries([
-    { name: 'Weight', data: weightData.map((point) => ({ x: point.x, y: point.y })) },
-    { name: 'Exponential Smoothing', data: calculateExponentialSmoothing(weightData) },
-    { name: '-1% Projected Weight', data: chart.w.globals.series[1].data },
-    { name: '-0.5% Projected Weight', data: chart.w.globals.series[2].data },
-    { name: '+0.5% Projected Weight', data: chart.w.globals.series[3].data },
-    { name: '+1% Projected Weight', data: chart.w.globals.series[4].data },
-  ]);
-
-  updateYAxisMinMax();
-}
-  
-  chart.render();
-    // Update the Y-axis min and max values and show the projected data after rendering the chart
-    updateYAxisMinMax();
-    calculateProjectedWeight();
-
-    addDataButton.addEventListener('click', () => {
-      const weight = parseFloat(weightInput.value);
-      const date = dateInput.value;
-    
-      if (!isNaN(weight) && date) {
-        const timestamp = new Date(date).getTime();
-    
-        // Check if the date is already in the dataset
-        if (weightData.some((dataPoint) => dataPoint.x === timestamp)) {
-          alert('A data point with the same date already exists.');
-          return;
-        }
-    
-        const newDataPoint = { x: timestamp, y: weight };
-        weightData.push(newDataPoint);
-    
-        // Update the chart options with new series data
-        chart.updateOptions({
-          series: [
-            { name: 'Weight', data: weightData.map((point) => ({ x: point.x, y: point.y })) },
-            { name: 'Exponential Smoothing', data: calculateExponentialSmoothing(weightData) },
-            { name: '-1% Projected Weight', data: chart.w.globals.series[1].data },
-            { name: '-0.5% Projected Weight', data: chart.w.globals.series[2].data },
-            { name: '+0.5% Projected Weight', data: chart.w.globals.series[3].data },
-            { name: '+1% Projected Weight', data: chart.w.globals.series[4].data },
-          ],
-        });
-        updateYAxisMinMax();
-    
-        localStorage.setItem('weightData', JSON.stringify(weightData));
-    
-        // Clear the input fields after adding data
-        weightInput.value = '';
-        dateInput.valueAsDate = new Date();
-      }
-    });
-    
-
-
-  function updateYAxisMinMax() {
-    const allDataPoints = [
-      ...weightData.map((point) => point.y),
-      ...(chart.w.globals.series[1]?.data || []).map((point) => point.y),
-    ];
-  
-    if (allDataPoints.length === 0) {
-      return;
-    }
-  
-    const minY = Math.min(...allDataPoints) - 10;
-    const maxY = Math.max(...allDataPoints) + 10;
-  
-    chart.updateOptions({
-      yaxis: {
-        min: minY,
-        max: maxY,
-        labels: {
-          formatter: yAxisFormatter,
-        },
-      },
-    });
-  }
-
-  function clearChartData() {
-  chart.updateSeries([
-    { name: 'Weight', data: [] },
-    { name: 'Exponential Smoothing', data: [] },
-    { name: '-1% Projected Weight', data: [] },
-    { name: '-0.5% Projected Weight', data: [] },
-    { name: '+0.5% Projected Weight', data: [] },
-    { name: '+1% Projected Weight', data: [] },
-  ]);
-
-  updateYAxisMinMax();
-  localStorage.removeItem('weightData');
-}
-  
-  
-  
-  // Calculate the projected weight based on the anchor date and percentage change
-  function calculateProjectedWeight() {
-    const anchorDate = anchorDateInput.value;
-    const projectionLength = parseInt(projectionLengthSelect.value);
-  
-    if (!anchorDate) {
-      return;
-    }
-
-    const percentages = [-0.01, -0.005, 0.005, 0.01];
-    const projectedData = percentages.map(() => []);
-  
-    const anchorDateObj = new Date(anchorDate);
-    const anchorTimestamp = anchorDateObj.getTime();
-    const pastData = weightData.filter((dataPoint) => new Date(dataPoint.x).getTime() <= anchorTimestamp);
-    const lastSevenDaysData = pastData.slice(Math.max(pastData.length - 7, 0));
-
-  if (lastSevenDaysData.length === 0) {
-    return;
-  }
-
-  const avgWeight = lastSevenDaysData.reduce((sum, dataPoint) => sum + dataPoint.y, 0) / lastSevenDaysData.length;
-
-  for (let i = 1; i <= projectionLength; i++) {
-    const projectedDate = new Date(anchorDateObj);
-    projectedDate.setDate(projectedDate.getDate() + i);
-
-    percentages.forEach((percentage, index) => {
-      const projectedWeight = avgWeight * Math.pow(1 + percentage / 7, i);
-      projectedData[index].push({ x: projectedDate.getTime(), y: projectedWeight });
-    });
-  }
-
-  chart.updateSeries([
-    { name: 'Weight', data: weightData.map((point) => ({ x: point.x, y: point.y })) },
-    { name: 'Exponential Smoothing', data: calculateExponentialSmoothing(weightData) },
-    { name: '-1% Projected Weight', data: projectedData[0] },
-    { name: '-0.5% Projected Weight', data: projectedData[1] },
-    { name: '+0.5% Projected Weight', data: projectedData[2] },
-    { name: '+1% Projected Weight', data: projectedData[3] },
-  ]);
-
-  updateYAxisMinMax();
-}
-
-  // Update the graph length when the user changes the "Graph Length" selection
-  projectionLengthSelect.addEventListener('change', () => {
-    const graphLength = parseInt(projectionLengthSelect.value);
-    const now = new Date();
-    const startTime = now.getTime() - graphLength * 86400000 / 2;
-
-    chart.updateOptions({
-      xaxis: {
-        min: startTime,
-        max: startTime + graphLength * 86400000,
-      },
-    });
-
-    // Update the projection when the graph length changes
-    calculateProjectedWeight();
-
-        // Store the selected graph length in local storage
-        localStorage.setItem('graphLength', projectionLengthSelect.value);
-  });
-
-  // Update the projection when the anchor date changes
-  anchorDateInput.addEventListener('change', calculateProjectedWeight);
-
-  // Initial update of the projected weight and graph length
-  calculateProjectedWeight();
-  projectionLengthSelect.dispatchEvent(new Event('change'));
-
-  // Update the anchor date in local storage when it changes
-  anchorDateInput.addEventListener('change', () => {
-    localStorage.setItem('anchorDate', anchorDateInput.value);
-    calculateProjectedWeight();
-  });
-});
-</script>
-
-<style>
-    body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.input-container,
-.projection-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-input,
-select,
-button {
-    padding: 5px;
-}
-
-.chart-container {
-    width: 100%;
-    height: 400px;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-  }
-  
-  button {
-    margin-right: 10px;
-  }
-</style>
