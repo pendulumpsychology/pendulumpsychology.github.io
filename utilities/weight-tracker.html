@@ -95,309 +95,320 @@
         </select>
     </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const weightInput = document.getElementById('weight');
-        const dateInput = document.getElementById('date');
-        const addDataButton = document.getElementById('addData');
-        const clearDataButton = document.getElementById('clearData');
-        const anchorDateInput = document.getElementById('anchorDate');
-        const projectionLengthSelect = document.getElementById('projectionLength');
-        const exportDataButton = document.getElementById('exportData');
-        const importDataInput = document.getElementById('importData');
+    <script> document.addEventListener('DOMContentLoaded', () => {
+    const weightInput = document.getElementById('weight');
+    const dateInput = document.getElementById('date');
+    const addDataButton = document.getElementById('addData');
+    const clearDataButton = document.getElementById('clearData');
+    const anchorDateInput = document.getElementById('anchorDate');
+    const projectionLengthSelect = document.getElementById('projectionLength');
+    const exportDataButton = document.getElementById('exportData');
+    const importDataInput = document.getElementById('importData');
 
-        // Set the current date as the default value for date input
-        dateInput.valueAsDate = new Date();
+    // Set the current date as the default value for date input
+    dateInput.valueAsDate = new Date();
 
-        // Load anchor date from local storage or leave it empty
-        const savedAnchorDate = loadFromLocalStorage('anchorDate');
-        if (savedAnchorDate) {
-            anchorDateInput.value = savedAnchorDate;
-        }
+    let weightData = loadFromLocalStorage('weightData') || [];
+    let predictedData = loadFromLocalStorage('predictedData') || [];
+    
+    // Load anchor date from local storage or set to today's date if not available
+    const savedAnchorDate = loadFromLocalStorage('anchorDate');
+    if (savedAnchorDate) {
+        anchorDateInput.value = savedAnchorDate;
+    } else {
+        anchorDateInput.valueAsDate = new Date();
+        saveToLocalStorage('anchorDate', anchorDateInput.value);
+    }
 
-        let weightData = loadFromLocalStorage('weightData') || [];
-
-        const chart = new ApexCharts(document.querySelector('#weightChart'), {
-            chart: {
-                type: 'line',
-                height: 350,
-                zoom: {
-                    enabled: true,
-                    type: 'x',
-                    autoScaleYaxis: true
-                },
-                events: {
-                    dataPointSelection: handleDataPointClick,
+    const chart = new ApexCharts(document.querySelector('#weightChart'), {
+        chart: {
+            type: 'line',
+            height: 350,
+            zoom: {
+                enabled: true,
+                type: 'x',
+                autoScaleYaxis: true
+            },
+            events: {
+                dataPointSelection: handleDataPointClick,
+            },
+        },
+        series: [
+            { name: 'Weight', data: [] },
+            { name: 'Exponential Smoothing', data: [] },
+            { name: '-1% Projected Weight', data: [] },
+            { name: '-0.5% Projected Weight', data: [] },
+            { name: '+0.5% Projected Weight', data: [] },
+            { name: '+1% Projected Weight', data: [] },
+        ],
+        xaxis: {
+            type: 'datetime',
+            labels: {
+                formatter: function (val) {
+                    return new Date(val).toLocaleDateString();
                 },
             },
-            series: [
-                { name: 'Weight', data: [] },
-                { name: 'Exponential Smoothing', data: [] },
-                { name: '-1% Projected Weight', data: [] },
-                { name: '-0.5% Projected Weight', data: [] },
-                { name: '+0.5% Projected Weight', data: [] },
-                { name: '+1% Projected Weight', data: [] },
-            ],
-            xaxis: {
-                type: 'datetime',
-                labels: {
-                    formatter: function (val) {
-                        return new Date(val).toLocaleDateString();
-                    },
-                },
+        },
+        yaxis: {
+            labels: {
+                formatter: (val) => parseFloat(val).toFixed(1)
             },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        stroke: {
+            curve: 'straight',
+        },
+    });
+
+    chart.render();
+
+    function updateChart() {
+        const smoothedData = calculateExponentialSmoothing(weightData);
+        
+        chart.updateSeries([
+            { name: 'Weight', data: weightData },
+            { name: 'Exponential Smoothing', data: smoothedData },
+            { name: '-1% Projected Weight', data: predictedData[0] },
+            { name: '-0.5% Projected Weight', data: predictedData[1] },
+            { name: '+0.5% Projected Weight', data: predictedData[2] },
+            { name: '+1% Projected Weight', data: predictedData[3] },
+        ]);
+
+        updateYAxisMinMax();
+    }
+
+    function updateYAxisMinMax() {
+        if (weightData.length === 0) return;
+
+        const allYValues = weightData.map(point => point.y);
+        const minY = Math.floor(Math.min(...allYValues) * 0.95);
+        const maxY = Math.ceil(Math.max(...allYValues) * 1.05);
+
+        chart.updateOptions({
             yaxis: {
+                min: minY,
+                max: maxY,
                 labels: {
                     formatter: (val) => parseFloat(val).toFixed(1)
                 },
             },
-            dataLabels: {
-                enabled: false,
-            },
-            stroke: {
-                curve: 'straight',
-            },
         });
+    }
 
-        chart.render();
+    function calculateExponentialSmoothing(data) {
+        if (data.length === 0) return [];
 
-        function updateChart() {
-            if (chart.w.globals.series[0].length !== weightData.length) {
-                const smoothedData = calculateExponentialSmoothing(weightData);
-                const projectedData = calculateProjectedWeight();
-                chart.updateSeries([
-                    { name: 'Weight', data: weightData },
-                    { name: 'Exponential Smoothing', data: smoothedData },
-                    { name: '-1% Projected Weight', data: projectedData[0] },
-                    { name: '-0.5% Projected Weight', data: projectedData[1] },
-                    { name: '+0.5% Projected Weight', data: projectedData[2] },
-                    { name: '+1% Projected Weight', data: projectedData[3] },
-                ]);
-            } else {
-                chart.updateSeries([{ name: 'Weight', data: weightData }], true);
-            }
-            updateYAxisMinMax();
+        const baseSmoothingFactor = 0.3;
+        let smoothedData = [{ x: data[0].x, y: data[0].y }];
+
+        for (let i = 1; i < data.length; i++) {
+            const timeDifference = (data[i].x - data[i - 1].x) / (1000 * 60 * 60 * 24);
+            const dynamicSmoothingFactor = Math.min(baseSmoothingFactor * Math.sqrt(timeDifference), 1);
+
+            const prevSmoothedData = smoothedData[i - 1].y;
+            const currentData = data[i].y;
+            const smoothedValue = dynamicSmoothingFactor * currentData + (1 - dynamicSmoothingFactor) * prevSmoothedData;
+            smoothedData.push({ x: data[i].x, y: smoothedValue });
         }
 
-        function updateYAxisMinMax() {
-            if (weightData.length === 0) return;
+        return smoothedData;
+    }
 
-            const allYValues = weightData.map(point => point.y);
-            const minY = Math.floor(Math.min(...allYValues) * 0.95);
-            const maxY = Math.ceil(Math.max(...allYValues) * 1.05);
+    function calculateProjectedWeight() {
+        const anchorDate = new Date(anchorDateInput.value);
+        const projectionLength = parseInt(projectionLengthSelect.value);
 
-            chart.updateOptions({
-                yaxis: {
-                    min: minY,
-                    max: maxY,
-                    labels: {
-                        formatter: (val) => parseFloat(val).toFixed(1)
-                    },
-                },
+        if (isNaN(anchorDate.getTime()) || weightData.length === 0) return [[], [], [], []];
+
+        const percentages = [-0.01, -0.005, 0.005, 0.01];
+        const projectedData = percentages.map(() => []);
+
+        const anchorTimestamp = anchorDate.getTime();
+        const pastData = weightData.filter((dataPoint) => dataPoint.x <= anchorTimestamp);
+        const lastSevenDaysData = pastData.slice(-7);
+
+        if (lastSevenDaysData.length === 0) return [[], [], [], []];
+
+        const avgWeight = lastSevenDaysData.reduce((sum, dataPoint) => sum + dataPoint.y, 0) / lastSevenDaysData.length;
+
+        for (let i = 0; i <= projectionLength; i++) {
+            const projectedDate = new Date(anchorDate);
+            projectedDate.setDate(projectedDate.getDate() + i);
+
+            percentages.forEach((percentage, index) => {
+                const projectedWeight = avgWeight * Math.pow(1 + percentage / 7, i);
+                projectedData[index].push({ x: projectedDate.getTime(), y: projectedWeight });
             });
         }
 
-        function calculateExponentialSmoothing(data) {
-            if (data.length === 0) return [];
+        return projectedData;
+    }
 
-            const baseSmoothingFactor = 0.3;
-            let smoothedData = [{ x: data[0].x, y: data[0].y }];
+    function updatePredictedData() {
+        predictedData = calculateProjectedWeight();
+        saveToLocalStorage('predictedData', predictedData);
+        updateChart();
+    }
 
-            for (let i = 1; i < data.length; i++) {
-                const timeDifference = (data[i].x - data[i - 1].x) / (1000 * 60 * 60 * 24);
-                const dynamicSmoothingFactor = Math.min(baseSmoothingFactor * Math.sqrt(timeDifference), 1);
+    function validateWeight(weight) {
+        return !isNaN(weight) && weight > 0 && weight < 1000;
+    }
 
-                const prevSmoothedData = smoothedData[i - 1].y;
-                const currentData = data[i].y;
-                const smoothedValue = dynamicSmoothingFactor * currentData + (1 - dynamicSmoothingFactor) * prevSmoothedData;
-                smoothedData.push({ x: data[i].x, y: smoothedValue });
-            }
+    function saveToLocalStorage(key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) {
+            console.error('Failed to save to localStorage:', e);
+            alert('Failed to save data. Please ensure your browser supports local storage.');
+        }
+    }
 
-            return smoothedData;
+    function loadFromLocalStorage(key) {
+        try {
+            const value = localStorage.getItem(key);
+            return value ? JSON.parse(value) : null;
+        } catch (e) {
+            console.error('Failed to load from localStorage:', e);
+            alert('Failed to load data. Please ensure your browser supports local storage.');
+            return null;
+        }
+    }
+
+    addDataButton.addEventListener('click', () => {
+        const weight = parseFloat(weightInput.value);
+        const date = new Date(dateInput.value);
+
+        if (!validateWeight(weight)) {
+            alert('Please enter a valid weight (between 0 and 1000 kg).');
+            return;
         }
 
-        function calculateProjectedWeight() {
-            const anchorDate = new Date(anchorDateInput.value);
-            const projectionLength = parseInt(projectionLengthSelect.value);
+        if (!isNaN(weight) && !isNaN(date.getTime())) {
+            const timestamp = date.getTime();
 
-            if (isNaN(anchorDate.getTime()) || weightData.length === 0) return [[], [], [], []];
-
-            const percentages = [-0.01, -0.005, 0.005, 0.01];
-            const projectedData = percentages.map(() => []);
-
-            const anchorTimestamp = anchorDate.getTime();
-            const pastData = weightData.filter((dataPoint) => dataPoint.x <= anchorTimestamp);
-            const lastSevenDaysData = pastData.slice(-7);
-
-            if (lastSevenDaysData.length === 0) return [[], [], [], []];
-
-            const avgWeight = lastSevenDaysData.reduce((sum, dataPoint) => sum + dataPoint.y, 0) / lastSevenDaysData.length;
-
-            for (let i = 0; i <= projectionLength; i++) {
-                const projectedDate = new Date(anchorDate);
-                projectedDate.setDate(projectedDate.getDate() + i);
-
-                percentages.forEach((percentage, index) => {
-                    const projectedWeight = avgWeight * Math.pow(1 + percentage / 7, i);
-                    projectedData[index].push({ x: projectedDate.getTime(), y: projectedWeight });
-                });
-            }
-
-            return projectedData;
-        }
-
-        function validateWeight(weight) {
-            return !isNaN(weight) && weight > 0 && weight < 1000;
-        }
-
-        function saveToLocalStorage(key, value) {
-            try {
-                localStorage.setItem(key, JSON.stringify(value));
-            } catch (e) {
-                console.error('Failed to save to localStorage:', e);
-                alert('Failed to save data. Please ensure your browser supports local storage.');
-            }
-        }
-
-        function loadFromLocalStorage(key) {
-            try {
-                const value = localStorage.getItem(key);
-                return value ? JSON.parse(value) : null;
-            } catch (e) {
-                console.error('Failed to load from localStorage:', e);
-                alert('Failed to load data. Please ensure your browser supports local storage.');
-                return null;
-            }
-        }
-
-        addDataButton.addEventListener('click', () => {
-            const weight = parseFloat(weightInput.value);
-            const date = new Date(dateInput.value);
-
-            if (!validateWeight(weight)) {
-                alert('Please enter a valid weight (between 0 and 1000 kg).');
+            if (weightData.some((dataPoint) => dataPoint.x === timestamp)) {
+                alert('A data point with the same date already exists.');
                 return;
             }
 
-            if (!isNaN(weight) && !isNaN(date.getTime())) {
-                const timestamp = date.getTime();
-
-                if (weightData.some((dataPoint) => dataPoint.x === timestamp)) {
-                    alert('A data point with the same date already exists.');
-                    return;
-                }
-
-                weightData.push({ x: timestamp, y: weight });
-                weightData.sort((a, b) => a.x - b.x);
-
-                saveToLocalStorage('weightData', weightData);
-                updateChart();
-
-                weightInput.value = '';
-                dateInput.valueAsDate = new Date();
-                alert('Data point added successfully!');
-            }
-        });
-
-        clearDataButton.addEventListener('click', () => {
-            if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
-                weightData = [];
-                localStorage.removeItem('weightData');
-                updateChart();
-                alert('All data has been cleared.');
-            }
-        });
-
-        let currentDataPointIndex;
-
-        function handleDataPointClick(event, chartContext, config) {
-            const dataPointIndex = config.dataPointIndex;
-            const seriesIndex = config.seriesIndex;
-
-            if (seriesIndex !== 0) return;
-
-            currentDataPointIndex = dataPointIndex;
-            const selectedDataPoint = weightData[dataPointIndex];
-
-            document.getElementById('editWeight').value = selectedDataPoint.y;
-            document.getElementById('editModal').style.display = 'block';
-        }
-
-        document.getElementById('saveEdit').addEventListener('click', () => {
-            const newWeight = parseFloat(document.getElementById('editWeight').value);
-            if (!validateWeight(newWeight)) {
-                alert('Please enter a valid weight (between 0 and 1000 kg).');
-                return;
-            }
-            weightData[currentDataPointIndex].y = newWeight;
+            weightData.push({ x: timestamp, y: weight });
+            weightData.sort((a, b) => a.x - b.x);
 
             saveToLocalStorage('weightData', weightData);
-            updateChart();
+            updatePredictedData();
 
-            document.getElementById('editModal').style.display = 'none';
-            alert('Data point updated successfully!');
-        });
-
-        document.getElementById('deleteDataPoint').addEventListener('click', () => {
-            if (confirm('Are you sure you want to delete this data point?')) {
-                weightData.splice(currentDataPointIndex, 1);
-
-                saveToLocalStorage('weightData', weightData);
-                updateChart();
-
-                document.getElementById('editModal').style.display = 'none';
-                alert('Data point deleted successfully!');
-            }
-        });
-
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('editModal').style.display = 'none';
-        });
-
-        anchorDateInput.addEventListener('change', () => {
-            saveToLocalStorage('anchorDate', anchorDateInput.value);
-            updateChart();
-        });
-
-        projectionLengthSelect.addEventListener('change', updateChart);
-
-        exportDataButton.addEventListener('click', () => {
-            const dataStr = JSON.stringify(weightData);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            const exportFileDefaultName = 'weight_data.json';
-
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-        });
-
-        importDataInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const importedData = JSON.parse(e.target.result);
-                        if (Array.isArray(importedData) && importedData.every(item => item.x && item.y)) {
-                            weightData = importedData;
-                            saveToLocalStorage('weightData', weightData);
-                            updateChart();
-                            alert('Data imported successfully!');
-                        } else {
-                            throw new Error('Invalid data format');
-                        }
-                    } catch (error) {
-                        console.error('Failed to import data:', error);
-                        alert('Failed to import data. Please ensure the file contains valid weight data.');
-                    }
-                };
-                reader.readAsText(file);
-            }
-        });
-
-        updateChart();
+            weightInput.value = '';
+            dateInput.valueAsDate = new Date();
+            alert('Data point added successfully!');
+        }
     });
+
+    clearDataButton.addEventListener('click', () => {
+        if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+            weightData = [];
+            predictedData = [[], [], [], []];
+            localStorage.removeItem('weightData');
+            localStorage.removeItem('predictedData');
+            updateChart();
+            alert('All data has been cleared.');
+        }
+    });
+
+    let currentDataPointIndex;
+
+    function handleDataPointClick(event, chartContext, config) {
+        const dataPointIndex = config.dataPointIndex;
+        const seriesIndex = config.seriesIndex;
+
+        if (seriesIndex !== 0) return;
+
+        currentDataPointIndex = dataPointIndex;
+        const selectedDataPoint = weightData[dataPointIndex];
+
+        document.getElementById('editWeight').value = selectedDataPoint.y;
+        document.getElementById('editModal').style.display = 'block';
+    }
+
+    document.getElementById('saveEdit').addEventListener('click', () => {
+        const newWeight = parseFloat(document.getElementById('editWeight').value);
+        if (!validateWeight(newWeight)) {
+            alert('Please enter a valid weight (between 0 and 1000 kg).');
+            return;
+        }
+        weightData[currentDataPointIndex].y = newWeight;
+
+        saveToLocalStorage('weightData', weightData);
+        updatePredictedData();
+
+        document.getElementById('editModal').style.display = 'none';
+        alert('Data point updated successfully!');
+    });
+
+    document.getElementById('deleteDataPoint').addEventListener('click', () => {
+        if (confirm('Are you sure you want to delete this data point?')) {
+            weightData.splice(currentDataPointIndex, 1);
+
+            saveToLocalStorage('weightData', weightData);
+            updatePredictedData();
+
+            document.getElementById('editModal').style.display = 'none';
+            alert('Data point deleted successfully!');
+        }
+    });
+
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('editModal').style.display = 'none';
+    });
+
+    anchorDateInput.addEventListener('change', () => {
+        saveToLocalStorage('anchorDate', anchorDateInput.value);
+        updatePredictedData();
+    });
+
+    projectionLengthSelect.addEventListener('change', () => {
+        updatePredictedData();
+    });
+
+    exportDataButton.addEventListener('click', () => {
+        const dataStr = JSON.stringify(weightData);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        const exportFileDefaultName = 'weight_data.json';
+
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+    });
+
+    importDataInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (Array.isArray(importedData) && importedData.every(item => item.x && item.y)) {
+                        weightData = importedData;
+                        saveToLocalStorage('weightData', weightData);
+                        updatePredictedData();
+                        alert('Data imported successfully!');
+                    } else {
+                        throw new Error('Invalid data format');
+                    }
+                } catch (error) {
+                    console.error('Failed to import data:', error);
+                    alert('Failed to import data. Please ensure the file contains valid weight data.');
+                }
+            };
+            reader.readAsText(file);
+        }
+    });
+
+    // Initial chart update
+    updatePredictedData();
+});
     </script>
 </body>
 </html>
