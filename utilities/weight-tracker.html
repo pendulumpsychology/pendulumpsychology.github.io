@@ -91,9 +91,14 @@
         const anchorDateInput = document.getElementById('anchorDate');
         const projectionLengthSelect = document.getElementById('projectionLength');
 
-        // Set the current date as the default value for date inputs
+        // Set the current date as the default value for date input
         dateInput.valueAsDate = new Date();
-        anchorDateInput.valueAsDate = new Date();
+
+        // Load anchor date from local storage or leave it empty
+        const savedAnchorDate = localStorage.getItem('anchorDate');
+        if (savedAnchorDate) {
+            anchorDateInput.value = savedAnchorDate;
+        }
 
         let weightData = JSON.parse(localStorage.getItem('weightData')) || [];
 
@@ -289,8 +294,12 @@
             document.getElementById('editModal').style.display = 'none';
         });
 
+        anchorDateInput.addEventListener('change', () => {
+            localStorage.setItem('anchorDate', anchorDateInput.value);
+            updateChart();
+        });
+
         projectionLengthSelect.addEventListener('change', updateChart);
-        anchorDateInput.addEventListener('change', updateChart);
 
         updateChart();
     });
