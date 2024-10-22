@@ -217,34 +217,55 @@
     }
 
     function calculateProjectedWeight() {
-        const anchorDate = new Date(anchorDateInput.value);
-        const projectionLength = parseInt(projectionLengthSelect.value);
+    const anchorDate = new Date(anchorDateInput.value);
+    const projectionLength = parseInt(projectionLengthSelect.value);
 
-        if (isNaN(anchorDate.getTime()) || weightData.length === 0) return [[], [], [], []];
+    if (isNaN(anchorDate.getTime()) || weightData.length === 0) return [[], [], [], []];
 
-        const percentages = [-0.01, -0.005, 0.005, 0.01];
-        const projectedData = percentages.map(() => []);
+    // Calculate exponential smoothing up to the anchor date
+    const smoothedData = calculateExponentialSmoothing(
+        weightData.filter(point => point.x <= anchorDate.getTime())
+    );
 
-        const anchorTimestamp = anchorDate.getTime();
-        const pastData = weightData.filter((dataPoint) => dataPoint.x <= anchorTimestamp);
-        const lastSevenDaysData = pastData.slice(-7);
+    if (smoothedData.length === 0) return [[], [], [], []];
 
-        if (lastSevenDaysData.length === 0) return [[], [], [], []];
+    // Find the closest smoothed data point to the anchor date
+    const anchorTimestamp = anchorDate.getTime();
+    let closestPoint = smoothedData[0];
+    let minTimeDiff = Math.abs(smoothedData[0].x - anchorTimestamp);
 
-        const avgWeight = lastSevenDaysData.reduce((sum, dataPoint) => sum + dataPoint.y, 0) / lastSevenDaysData.length;
-
-        for (let i = 0; i <= projectionLength; i++) {
-            const projectedDate = new Date(anchorDate);
-            projectedDate.setDate(projectedDate.getDate() + i);
-
-            percentages.forEach((percentage, index) => {
-                const projectedWeight = avgWeight * Math.pow(1 + percentage / 7, i);
-                projectedData[index].push({ x: projectedDate.getTime(), y: projectedWeight });
-            });
+    for (let i = 1; i < smoothedData.length; i++) {
+        const timeDiff = Math.abs(smoothedData[i].x - anchorTimestamp);
+        if (timeDiff < minTimeDiff) {
+            minTimeDiff = timeDiff;
+            closestPoint = smoothedData[i];
         }
-
-        return projectedData;
     }
+
+    // Calculate projections using weekly percentage changes
+    const weeklyPercentages = [-0.01, -0.005, 0.005, 0.01];
+    const dailyPercentages = weeklyPercentages.map(p => p / 7);
+    const projectedData = dailyPercentages.map(() => []);
+
+    // Start all projections from the closest smoothed point
+    const startWeight = closestPoint.y;
+
+    for (let i = 0; i <= projectionLength; i++) {
+        const projectedDate = new Date(anchorDate);
+        projectedDate.setDate(projectedDate.getDate() + i);
+
+        dailyPercentages.forEach((dailyPercentage, index) => {
+            // Calculate compound effect of daily percentage change
+            const projectedWeight = startWeight * Math.pow(1 + dailyPercentage, i);
+            projectedData[index].push({
+                x: projectedDate.getTime(),
+                y: projectedWeight
+            });
+        });
+    }
+
+    return projectedData;
+}
 
     function updatePredictedData() {
         predictedData = calculateProjectedWeight();
