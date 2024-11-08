@@ -1,17 +1,23 @@
 :root {
-    --yinblack: #272727;
-    --yangwhite: #F6F6F6;
-    --balancepurple: #8D6AA8;
-    --harmonygreen: #7EB984;
-    --serenitylavender: #C0B1D9;
-    --growthlime: #C8D95B;
+  /* Core colors */
+  --color-background: #F6F6F6;
+  --color-text: #272727;
+  --color-text-light: #F6F6F6;
 
-    --persianindigo: #541675;
-    --purpleheart: #7E38B7;
-    --lightslateblue: #9C89FF;
-    --cornflour: #99CCED;
-    --lightcyan: #C4FEFF;
-  }
+  /* Primary theme */
+  --color-primary: #541675;
+  --color-primary-light: #8D6AA8;
+  --color-primary-dark: #3A1052;
+
+  /* Accent colors */
+  --color-accent: #7EB984;
+  --color-accent-soft: #C0B1D9;
+
+  /* Interactive states */
+  --color-link: #7E38B7;
+  --color-link-hover: #9C89FF;
+  --color-footer-link: #99CCED;
+}
 
 * {
     margin: 0;
@@ -39,8 +45,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    background-color: var(--yangwhite);
-    color: var(--yinblack);
+    background-color: var(--color-background);
+    color: var(--color-text);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -52,8 +58,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--yinblack);
-    background-color: var(--yangwhite);
+    color: var(--color-text);
+    background-color: var(--color-background);
     cursor: pointer;
     border: none;
     font-size: 1rem;
@@ -76,8 +82,8 @@
   }
   
   .navbar-element:hover {
-    background-color: var(--persianindigo);
-    color: var(--yangwhite);
+    background-color: var(--color-primary);
+    color: var(--color-background);
   }
 
   .random-quote {
@@ -124,7 +130,7 @@
   
   .hero-content {
     text-align: center;
-    color: var(--yangwhite);
+    color: var(--color-background);
     max-width: 80%;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.4);
@@ -170,16 +176,16 @@
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: var(--yangwhite);
-    color: var(--yinblack);
+    background-color: var(--color-background);
+    color: var(--color-text);
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
   }
   
   .cta-button:hover {
-    background-color: var(--persianindigo);
-    color: var(--yangwhite);
+    background-color: var(--color-primary);
+    color: var(--color-background);
   }
 
   footer {
@@ -189,8 +195,8 @@
     align-content: center;
     align-items: stretch;
     flex-wrap: wrap;
-    background-color: var(--persianindigo);
-    color: var(--yangwhite);
+    background-color: var(--color-primary);
+    color: var(--color-background);
     padding: 2.5vh 2.5vw;
     box-sizing: border-box;
     margin-top: 50px;
@@ -206,40 +212,31 @@
 }
 
   main a{
-    color: var(--purpleheart);
+    color: var(--color-link);
     text-decoration: none;
   }
 
     
   main a:hover {
-    color: var(--lightslateblue);
+    color: var(--color-link-hover);
   }
 
   footer a {
     display: flex;
     align-items: center;
 
-    color: var(--cornflour);
+    color: var(--color-footer-link);
     text-decoration: none;
     overflow-wrap: break-word;
   }
 
 footer a:hover {
-    color: var(--lightslateblue); /* Apply the same hover color as other links */
+    color: var(--color-link-hover); /* Apply the same hover color as other links */
   }
 
   footer svg {
     margin-right: 5px;
   }
-
-
-.avatar {
-    margin: 0 30px 0 0;
-    border-radius: 50%;
-    max-width: 250px;
-    max-height: 250px;
-    float: left;
-}
 
 p {
     font-size: 16px;
@@ -265,8 +262,8 @@ section {
 
 .location-button {
     background-color: transparent;
-    border: 1px solid var(--persianindigo);
-    color: var(--yinblack);
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
@@ -277,8 +274,8 @@ section {
   }
   
   .location-button:hover {
-    background-color: var(--persianindigo);
-    color: var(--yangwhite);
+    background-color: var(--color-primary);
+    color: var(--color-background);
   }
 
 ul {
@@ -327,8 +324,8 @@ ul {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: var(--persianindigo);
-  color: var(--yangwhite);
+  background-color: var(--color-primary);
+  color: var(--color-background);
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -336,8 +333,8 @@ ul {
 }
 
 .card-btn:hover {
-  background-color: var(--yangwhite);
-  color: var(--yinblack);
+  background-color: var(--color-background);
+  color: var(--color-text);
   border: 1px solid black;
 }
 

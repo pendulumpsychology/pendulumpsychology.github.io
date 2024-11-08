@@ -9,6 +9,514 @@
         <link rel="mask-icon" href="https://pendulumpsychology.com.au/safari-pinned-tab.svg" color="#5bbad5">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
         <link rel="stylesheet" href="https://pendulumpsychology.com.au/style.css">
+        <style>
+/* Theme Variables */
+:root {
+    /* Core colors */
+    --color-background: #F6F6F6;    /* Light base */
+    --color-text: #272727;          /* Dark text */
+    --color-text-light: #F6F6F6;    /* Light text */
+
+    /* Primary theme */
+    --color-primary: #541675;       /* Main purple */
+    --color-primary-light: #8D6AA8; /* Lighter purple */
+    --color-primary-dark: #3A1052;  /* Darker purple */
+
+    /* Accent colors */
+    --color-accent: #7EB984;        /* Green for positive/success */
+    --color-accent-soft: #C0B1D9;   /* Soft purple for subtle emphasis */
+
+    /* Interactive states */
+    --color-link: #7E38B7;          /* Link color */
+    --color-link-hover: #9C89FF;    /* Hover state */
+    --color-footer-link: #99CCED;   /* Footer specific */
+
+    /* Animation speeds */
+    --transition-fast: 0.2s;
+    --transition-medium: 0.3s;
+    --transition-slow: 0.5s;
+
+    /* Common values */
+    --border-radius: 12px;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Typography utilities */
+.bold { font-weight: bold; }
+.italics { font-style: italic; }
+
+/* Navigation */
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    z-index: 100;
+}
+
+.navbar-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    flex: 1;
+    min-height: 50px;
+}
+
+.navbar-element:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+.navbar-element:hover .logo {
+    filter: invert(1);
+}
+
+.logo {
+    padding: 0 17.5px;
+    transition: filter var(--transition-fast);
+}
+
+#toggle {
+    display: none;
+}
+
+/* Hero Section */
+#hero {
+    height: calc(100vh - 50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.hero-content {
+    text-align: center;
+    color: var(--color-text-light);
+    max-width: 80%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: var(--border-radius);
+    position: relative;
+    z-index: 1;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    transition: opacity var(--transition-slow);
+}
+
+#hero-bg1 { z-index: 1; opacity: 1; }
+#hero-bg2 { z-index: 0; opacity: 0; }
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.tagline {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.random-quote {
+    font-style: italic;
+    text-align: center;
+    margin: 15px 0;
+    display: block;
+    font-size: 1.2em;
+    transition: opacity var(--transition-slow);
+}
+
+/* Main Content Sections */
+main {
+    margin-top: 38px;
+    flex: 1;
+}
+
+.content-section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Essential Info Section */
+.essential-info {
+    background: linear-gradient(
+        to bottom right,
+        var(--color-background),
+        rgba(246, 246, 246, 0.9)
+    );
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--box-shadow);
+}
+
+.essential-info h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.info-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.info-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-column .cta-button {
+    margin-top: 1.5rem;
+    align-self: flex-start;  /* Aligns with the list */
+    border: 1px solid black;
+}
+
+.expandable-content .cta-button {
+  margin-top: 1.5rem;
+    display: block;  /* Changed from inline-block */
+    width: fit-content;  /* Prevent full-width while allowing block display */
+    margin-left: auto;  /* Center the button */
+    margin-right: auto;
+    border: 1px solid black;
+}
+
+.accepting-clients {
+    color: var(--color-accent);
+}
+
+.no-prefix {
+    color: var(--color-primary-light);
+}
+
+.introduction {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Avatar/Image Styles */
+.avatar {
+    margin: 0 auto;
+    border-radius: 50%;
+    max-width: 250px;
+    max-height: 250px;
+    display: block;
+}
+
+/* List Styles */
+.clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.clean-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.clean-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary-light);
+}
+
+/* Expandable Sections */
+.expandable-section {
+    background: var(--color-background);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.expandable-header {
+    width: 100%;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-background);
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text);
+    transition: background-color var(--transition-fast);
+}
+
+.expandable-header:hover {
+    background-color: var(--color-accent-soft);
+}
+
+.expandable-header .chevron {
+    transition: transform var(--transition-medium) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.expandable-header.expanded .chevron {
+    transform: rotate(90deg);
+}
+
+.expandable-content {
+    opacity: 0;
+    transform: translateY(-10px);
+    height: 0;
+    overflow: hidden;
+    padding: 0 1.5rem;
+    transition: opacity var(--transition-medium),
+                transform var(--transition-medium),
+                height var(--transition-medium) cubic-bezier(0.4, 0, 0.2, 1),
+                padding var(--transition-fast);
+    will-change: opacity, transform, height, padding;
+}
+
+.expandable-content.expanded {
+    opacity: 1;
+    transform: translateY(0);
+    height: auto;
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-accent-soft);
+}
+
+/* Content Elements within Expandable Sections */
+.read-more {
+    display: inline-block;
+    color: var(--color-link);
+    text-decoration: none;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.read-more:hover {
+    color: var(--color-link-hover);
+}
+
+.booking-info {
+    background: var(--color-background);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-top: 1.5rem;
+    border: 1px solid var(--color-accent);
+}
+
+/* Call to Action Button */
+.cta-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-fast);
+}
+
+.cta-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    transform: translateY(-1px);
+    box-shadow: var(--box-shadow);
+}
+
+/* Link Styles */
+main a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+main a:hover {
+    color: var(--color-link-hover);
+}
+
+/* Footer Styles */
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 2.5vh 2.5vw;
+    box-sizing: border-box;
+    margin-top: 50px;
+}
+
+.footer-block {
+    width: 20vw;
+    box-sizing: border-box;
+    padding: 2.5vh 2.5vw;
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+footer a {
+    display: flex;
+    align-items: center;
+    color: var(--color-footer-link);
+    text-decoration: none;
+    overflow-wrap: break-word;
+    transition: color var(--transition-fast);
+}
+
+footer a:hover {
+    color: var(--color-link-hover);
+}
+
+footer svg {
+    margin-right: 5px;
+}
+
+/* Typography and Spacing */
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    max-width: 700px;
+    margin: 0 auto 15px auto;
+}
+
+section {
+    padding: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Media Queries */
+@media (max-width: 790px) {
+    /* Navigation */
+    #navbar {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    #toggle {
+        display: flex;
+    }
+    
+    .nav-button {
+        display: none;
+    }
+    
+    .logo {
+        display: none;
+    }
+
+    /* Quote */
+    .random-quote {
+        display: none;
+    }
+    
+    /* Footer */
+    .footer-block {
+        width: 80vw;
+        text-align: center;
+    }
+
+    .footer-block a {
+        justify-content: center;
+    }
+    
+    /* Content Layout */
+    .info-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .info-column .cta-button {
+        align-self: center;  /* Centers button on mobile */
+        margin: 1.5rem auto 0;
+    }
+
+    .clean-list {
+        display: inline-block;
+        text-align: left;
+    }
+    
+    /* Expandable Sections */
+    .expandable-header {
+        padding: 1rem;
+    }
+    
+    .expandable-content.expanded {
+        padding: 1rem;
+    }
+}
+
+@media (min-width: 790px) {
+    .nav-button {
+        display: flex !important;
+    }
+}
+
+/* Print Styles - Optional but recommended */
+@media print {
+    .expandable-content {
+        height: auto !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .hero-section,
+    .cta-button,
+    #navbar {
+        display: none;
+    }
+}
+
+
+
+      </style>
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
         <title>Pendulum Psychology</title>
@@ -93,223 +601,137 @@
                   <a href="https://pendulumpsychology.com.au/booking.html" class="cta-button">Book an Appointment</a>
               </div>
             </div>
-          
 
-            <!-- About Section -->
-<section id="about">
-  <h2>Current Availability</h2>
-  <p>
-    <!-- I'm currently at full capacity in my private practice. However, I'm available through "here", a separate company where I work as a contractor. To see me
-    through "here", please <a href="https://fine-works.pro.typeform.com/psych-appt?typeform-source=pendulumpsychology.com.au" target="_blank">complete this intake form</a>
-    and request me specifically. If you prefer my private practice, check back periodically for openings. For immediate support, please see my
-    <a href="https://pendulumpsychology.com.au/alternatives.html">alternatives page</a> for other services.
-    <br><br> -->
-    I currently have availability to take on new adult (18+) clients. Please note:<br><br>
-    - I am not taking on child clients at this time<br>
-    - I do not provide medicolegal reports or assessments<br>
-    - I do not accept clients funded by NDIS, worker's compensation, or other insurance agencies<br><br>
-    New and existing clients can make a booking through the <a href="https://pendulumpsychology.com.au/booking.html">booking page</a>.
-    <br><br>
-  </p>
-    <h2>Welcome!</h2>
-    <p>
-    Now, if you are still reading, I invite you to take a deep breath. As you do, you might notice the gentle rise and fall of your chest. Perhaps you'd like to settle into your surroundings,
-    feeling the weight of your body grounding you to this present moment. As you continue to breathe, you may become aware of its rhythm, a constant companion on your
-    life's journey. As you read these words, allow yourself, if you wish, to sink into a space of curiosity and potential. 
-    <br><br>
-    <img src="profile.webp" alt="photo of David" class="avatar" title="Here is a photo of me, in case you were wondering"> Hello there. I'm David O'Donohue,
-    a clinical psychologist offering guidance for those ready to explore the intricate landscapes of their inner world. 
-    <br><br></p>
-    <h2>A Space for Authentic Expression</h2>
-    <p>As you step into the therapy space, you might notice a sense of calm settling over you. Picture yourself sinking into a comfortable chair, feeling its support beneath
-      you. The room around you is designed to be a container for whatever you might bring to our session.
-      <br><br>
-    As time unfolds, you may become aware of a gentle rhythm emerging in the space. Your words might flow more freely than you expected, finding their way into the
-    open air. You might feel a subtle shift as you realise your experiences are being received and held with care - perhaps in a way you've rarely encountered before.
-    <br><br>
-    In this environment, you may find yourself noticing the ebb and flow of your emotions more clearly. A slight change in your tone, a subtle shift in your posture - these
-    unspoken expressions are part of your story, too. You may be surprised at the depth of understanding that can arise from paying attention to these moments.
-    <br><br>
-    This is a place where your experiences, in all their complexity, are welcomed. Here, you're invited to explore, to question, to simply be. It's a space where your
-    unique journey is the focus, where curiosity about your experiences is the guiding principle. In this protected environment, we may embark on a journey of self-discovery,
-    moving at a pace that feels right for you. There's no rush, no pressure, no judgment. Only a gentle invitation to explore, understand, and heal.
-    <br><br></p>
-    <h2>Navigating the Labyrinth: Our Inner World and Its Hidden Passages</h2>
-<p>
-Imagine your inner world as a vast, intricate labyrinth. Some pathways are well-lit and frequently traveled, representing the parts of ourselves we readily accept.
-<br><br>
-But there are other passages - shadowy and unexplored - that often contain the experiences and emotions we've tried to avoid or protect ourselves from, usually
-because they felt too overwhelming or shameful to face.
-<br><br>
-These hidden passages often house our deepest vulnerabilities, stemming from attachment wounds and past traumas. In our attempts to avoid these areas, we build internal
-barriers and station guardians at certain junctions, requiring constant energy to maintain. These guardians, born from our deep-seated fears, work tirelessly to
-divert us from these vulnerable parts of our psyche.
-<br><br>
-Paradoxically, it's often these barriers, guardians, and the effort of maintaining them that create or intensify the very concerns bringing you to therapy. While
-their intention is to protect, they can hold us back from the connection and authenticity we crave. We may consciously desire genuine relationships and self-acceptance,
-yet these protective mechanisms can lead us to unknowingly avoid the very intimacy we seek, often resulting in patterns of self-sabotage. Moreover, the avoided content within
-these hidden passages doesn't simply disappear; it can emerge in unconscious ways, influencing our behaviors, relationships, and well-being in ways we may not readily understand.
-<br><br>
-Our work together is like a gentle exploration of this labyrinth of your psyche. With compassion as our lantern, we'll slowly approach those unexplored passages. As we
-carefully navigate them, we begin a process of reclaiming and integrating the lost parts of yourself, moving towards a more authentic and whole sense of self.
-<br><br>
-In our exploration, we'll draw upon an integrated psychodynamic and somatic approach. This perspective recognises that the body and the unconscious are intrinsically
-linked - the body provides access to the unconscious, while unconscious material resides within the body. Our work together emphasises bringing avoided, painful, but
-authentic and important content to the conscious mind through curious and compassionate exploration. 
-<br><br>
-In our therapeutic journey, we approach these hidden passages and their guardians with gentleness and understanding. We acknowledge their important protective role while
-exploring how we might redirect their energy. As you allow yourself to be more authentic, less energy may be needed for avoidance and control, freeing up resources for
-growth and self-discovery.
-<br><br>
-As we carefully navigate these unexplored areas of your inner labyrinth, we create space for a more authentic and whole sense of self to emerge. This journey towards
-vulnerability and genuine intimacy is taken step by step. Through this exploration, many find they're better equipped to navigate uncertainty, improve relationships,
-and gain a richer understanding of themselves.
-<br><br></p>
-<h2>Listening to the Whispers in the Labyrinth</h2>
-<p>
-As we navigate the labyrinth of your inner world, we pay attention to the myriad ways your experiences manifest. This isn't just about conscious thoughts or physical
-sensations, but about noticing the subtle currents that flow through the passages of your being.
-<br><br>
-You might become aware of:<br>
-    1. The wisdom your body holds: A tightness in your chest, a flutter in your stomach - these physical sensations are messengers, perhaps pointing to unexplored
-    passages we've yet to discover.<br> 
-    2. The wanderings of your mind: Where your thoughts drift when given space can reveal hidden pathways to unexplored areas of your psyche.<br> 
-    3. The dynamics of our therapeutic relationship: How you feel in our interactions can mirror patterns from your life, offering valuable insights into your
-    ways of relating to others and yourself.<br> 
-    4. Spontaneous ideas and images: Thoughts or visualisations that seem to arise from nowhere often carry profound meaning, like clues to navigating sections
-    of the labyrinth you didn't know existed.<br> 
-    5. Emotional echoes: How past experiences resonate with present moments, coloring your perceptions and reactions in ways you might not have noticed before.
-    <br><br> 
-By learning to listen to these various aspects of your experience, you can develop a more complete understanding of yourself. This holistic approach can lead to profound
-insights and lasting change. As we progress, you might find:<br>
-- Previously blocked passages opening up, allowing for a more integrated and authentic sense of self<br>
-- The quiet whispers of your body growing clearer, offering valuable guidance through the labyrinth<br>
-- Previously overwhelming emotions becoming more manageable and even friendly, as they finally feel acknowledged and understood<br>
-- The protective barriers you've built within the labyrinth gradually softening, allowing for more authentic and vulnerable connections with others and yourself<br> 
-- A newfound capacity to sit with uncertainty and intense emotions, finding peace in the twists and turns of your inner journey<br>
-This process of noticing and exploring is gentle yet powerful. It's about creating a space where all parts of you - known and unknown, comfortable and
-challenging - can be acknowledged and integrated. As we journey together, you may discover new depths to your experiences, uncovering strengths and resources
-you didn't know you had.
-<br><br>
-As you become more attuned to these subtle signals, you may develop a richer, more nuanced relationship with your inner labyrinth. This growing self-awareness can lead
-to a sense of empowerment, as you learn to navigate your internal landscape with greater ease and understanding.
-<br><br></p>
-<h2>A Personal Journey</h2>
-<p>
-I, too, have walked through the winding paths of my own inner labyrinth, encountering unexpected turns and protective guardians along the way. It's been a long journey,
-and one that I'm still navigating. Through reflection, mindfulness, self-compassion, and my own therapy, I continue to explore and understand the intricate passages of my psyche.
-<br><br>
-This ongoing personal journey informs my work as a therapist. It deepens my empathy, fuels my commitment to growth, and reminds me of the courage it takes to venture into
-the unexplored areas of our inner world. I bring this lived experience to our sessions, not as someone who has mapped out the entire labyrinth, but as a fellow traveller
-who understands the challenges and rewards of the terrain.
-<br><br></p>
-<h2>Our Therapeutic Partnership</h2>
-<p>
-In our work together, my role is not to provide a map with predefined routes, but to walk beside you with open-minded curiosity as we explore the labyrinth of your inner
-world. We'll examine the unique twists and turns of your experiences and perspectives, never judging, always seeking to understand and connect more deeply.
-<br><br>
-This journey is about rediscovering your authentic self, welcoming all aspects of your experience, and responding with self-compassion. It's an invitation to
-wholeness - a chance to reclaim the parts of yourself you've hidden in distant corners of the labyrinth and to cultivate a deep, abiding connection with your true nature.
-Through this process, many find they're better equipped to navigate the uncertainty of life's maze, improve relationships, and gain a richer understanding of themselves.
-<br><br></p>
-<h2>Taking the First Step</h2>
-<p>
-Take another deep breath. Feel the quiet stirring of possibility within you, like a gentle breeze at the entrance of your inner labyrinth.
-<br><br>
-The journey of self-discovery and healing is a profound one, and deciding to embark on it is a courageous act. Seeking a guide for this exploration is a testament
-to your strength and desire for a more fulfilling life.
-<br><br>
-Welcome to the possibility of coming home to yourself, of reclaiming all parts of your experience with compassion and understanding, and of living with greater authenticity
-and integration. As we step into the labyrinth together, know that each turn, each discovery, brings you closer to a more whole and authentic version of yourself.
-<br><br></p>
-      <!-- I'm David O'Donohue, a clinical psychologist. I am currently accepting new
-      adult clients (aged 18+) for psychological therapy. -->
-      <!-- I'm David O'Donohue, a clinical psychologist. I am not accepting new clients at this stage. -->
-      <br><br>
-      <!-- Please note that I am not accepting worker's compensation, DVA, Open Arms, or agency-managed or fund-managed NDIS participants.
-      I also do not provide assessments or medico-legal reports. -->
-      <!-- <br><br> -->
-      <!-- New and existing clients  -->
-      <!-- Existing clients
-      can make appointments
-      through <a href="https://pendulumpsychology.com.au/booking.html">the booking page</a>.
-      If you have any questions or need assistance booking an appointment, please feel free to reach out to me directly at
-      <a href="mailto:pendulumpsychology@gmail.com">pendulumpsychology@gmail.com</a>.
-      <br><br></p>
-      <h2>About me</h2>
-      <p>I have always been interested in how our minds work. They are a complex system of thoughts, feelings, and impulses,
-        from which such a diverse range of patterns of perception and behaviour emerge.
-        I also find interpersonal connection, emotional attunement, and equanimity to emotions to be highly rewarding.
-        <br><br>
-        I am very interested in some of the paradoxes of mental health: the more we try to eliminate uncertainty, the more uncertain
-        we feel; the more we crave authentic connections, the less authentic our connections seem; the more we strive for
-        perfection, the more flawed we feel; the more we try to control our cravings, the more overpowering they become;
-        the more we try to suppress our distress, the more intense and pervasive it becomes; the more we seek happiness in
-        external achievements, the less fulfilled we feel; the harder we fight our emotions, the stronger they seem to grip
-        us; and the more we try to protect ourselves from or avoid a particular situation, the more often we find ourselves
-        facing that very situation.
-        <br><br>
-        This psychological interest is complemented by an interest in taoism, particularly the ancient observation that
-        many things which appear to be opposites are actually interdependent, and exist in a dynamic equilibrium. Pushing
-        something in a particular direction can sometimes result in the opposite occurring. This observation is, in fact,
-        part of the basis of my practice name.
-        <br><br></p>
-        <h2>About My Approach</h2>
-        <p>
-        I take a client-centered, non-directive approach to therapy. This means that I don't bring an agenda to sessions,
-        and am instead guided by what each client is looking for. I aim to fully understand each client,
-        from their perspective, with all of the complex and often contradictory thoughts and feelings that come from
-        living in an uncertain world. In doing so, I hope to provide a safe space for exploration, self-insight, and internal
-        harmony.
-        <br><br>
-        Drawing from a range of emotion-focused and insight-based therapeutic approaches, I view psychological progress as
-        a journey towards feeling safe enough to think flexibly about our past, present, and future. However, I don't see it
-        as my place to "correct" anything the mind is doing, and instead try to collaboratively understand what it is doing, and why.
-        Often, when we understand the different parts of our mind, we can either more clearly see a resolution that comes from within,
-        or are more willing to accept the help our mind is trying to give us.
-        <br><br>
-        I genuinely believe that every thought, feeling, or
-        impulse a person has, even conflicting ones, makes sense in a certain context. This means that instead of judging or
-        pathologising a person's experience, I can be open to understanding it. 
-      </p> -->
-      <!-- <h2>About My Approach</h2>
-      <p>
-                Many individuals seeking psychological support often find themselves contending with unwanted thoughts, feelings, or behaviours, frequently referred to as 'symptoms'. These symptoms often surface as adaptive responses to earlier challenges, particularly when other options may have been scarce.
-                <br><br>
-                One of the remarkable faculties of our minds is the ability to encode these solutions into our implicit memory, automating them into what we might call our 'autopilot'. While this can be advantageous, facilitating numerous tasks without requiring much conscious effort, these once adaptive patterns may feel more like obstacles than solutions over time, or as our circumstances evolve.
-                <br><br>
-                Rather than categorising these patterns as 'bad' and striving to suppress them, my therapeutic approach focuses on recognising the value they either once had or may still have in your life. I allow space for understanding and curiosity to develop, so that we can explore both the origins and the profound emotional significance of these patterns in your life. Take the example of a relentless inner critic. While it may be presently overwhelming, it could have originally served as a protective mechanism to anticipate and manage others' reactions.
-                <br><br>
-                Every decision we make carries advantages and drawbacks, which may not be entirely visible when initially taken, given our varying emotional states and changing life circumstances. For example, at some point, you may have chosen to dodge discomfort, only to find that this choice eventually led to feelings of loneliness or emptiness.
-                <br><br>
-                Such choices might have been made by a part of your mind in the past, preserved in implicit memory, and subsequently forgotten, resulting in the conscious mind feeling at odds with the unconscious/implicit mind. This dynamic might resemble two teams within a company working against each other.
-                <br><br>
-                While we can attempt to understand these components of our mind intellectually, genuine resolution of internal conflict often arises when we engage with these parts on an emotional level. This involves progressing beyond a purely logical grasp of a perspective and cultivating a deep, embodied understanding. This depth of comprehension can nurture a more compassionate and nuanced relationship with these aspects of ourselves, fostering more fruitful internal collaboration. The end product of this process often entails either developing a greater tolerance for the inner mechanics of the mind, or a re-assessment and adjustment of past decisions on an emotional level.
-                <br><br>
-                Through therapy, the goal is to surface these unconscious decisions into conscious awareness, shedding light on the choices various aspects of yourself made in the past. Recognising these choices does not mean rejecting these parts, but instead acknowledging them, appreciating their significance, and reconsidering their ongoing role in your life. This fosters an environment of openness, understanding, and harmony between the conscious and unconscious mind.
-                <br><br>
-                Enhanced self-awareness opens the door for exploring alternative choices that harmonise better with your current needs and circumstances, or for fostering a deeper acceptance of a choice that continues to be beneficial. As your therapist, my role is to guide you on this journey towards acknowledging and integrating all aspects of your mind, with the ultimate aim of improving your mental health and overall well-being.
-              </p> -->
-                <!-- 
-                I think that a helpful way to think about mental health is in terms of internal conflict. People seeking psychological support are often in the position of experiencing unwanted thoughts, feelings, or compulsions/behaviors. We can refer to these as "symptoms." These symptoms typically develop as a solution to an early problem, when better alternatives are unavailable or inaccessible. Over time, these thought patterns become automatic, and when our circumstances change, we may start to view them as detrimental.
-<br><br>
-In response, we might attempt to repress these patterns and label the entire thought pattern as "bad." For example, someone with a harsh inner critic might decide that all self-criticism is harmful and try to suppress it. However, this repression has two significant consequences.
-<br><br>
-Firstly, it appears that subconscious thought patterns are challenging to change if they remain hidden. To alter them, we need to get in touch with the version of ourselves which created the solution in the first place. Secondly, (if we assume that evolution has shaped all mental activities to be useful in some context) repressing a thought pattern may deprive us of its benefits. As a result, an unmet need for this pattern may build up, leading to a swing back towards it, often manifesting in an unwanted form.
-<br><br>
-My approach to therapy revolves around understanding these symptoms, their origins, and the value of the underlying thought pattern. By exploring the functions they serve and finding ways to balance these needs with other ways of being, clients can achieve a more harmonious state, either a middle ground which incorporates two different ways of being, or an acceptance of the different ways of being.
-<br><br>
-In essence, my approach to therapy is about guiding clients towards greater self-awareness and an understanding of their symptoms, helping them appreciate the value of their thought patterns, and discovering how to find balance in their lives. By doing so, clients can learn to embrace and integrate all aspects of their minds, ultimately leading to improved mental health and well-being.</p> -->
-  </section>
-  
-  <!-- Services Section -->
-  <!-- <section id="services">
-    <h2>Psychological Services</h2>
-    <p>I offer psychological therapy to adult clients (clients aged 18 and over) for a broad range of presentations,
-      including presentations consistent with anything from complex trauma and eating disorders, to anxiety and depression.<br><br>
-    I do not offer psychological assessments or medico-legal reports. I also do not offer therapeutic services to clients under
-    the age of 18.</p>
-  </section> -->
+            <!-- Keep your existing hero section with rotating backgrounds/quotes -->
+
+<section class="content-section">
+  <!-- Essential Information (Always Visible) -->
+  <div class="essential-info">
+    <h1 class="main-title">Welcome to Pendulum Psychology</h1>
+    
+    <div class="info-content">
+        <!-- Left Column -->
+        <div class="info-column">
+            <h2>Current Availability</h2>
+            <br>
+            <p class="accepting-clients">Now accepting adult (18+) clients</p>
+            <br>
+            <ul class="clean-list">
+                <li><span class="no-prefix">Not</span> taking child clients</li>
+                <li><span class="no-prefix">No</span> medicolegal reports/assessments</li>
+                <li><span class="no-prefix">No</span> NDIS/insurance clients</li>
+            </ul>
+            <br>
+            <a href="https://pendulumpsychology.com.au/booking.html" class="cta-button">Book an appointment</a>
+        </div>
+        
+        <!-- Right Column -->
+        <div class="info-column">
+            <img src="profile.webp" alt="David O'Donohue" class="avatar">
+            <p class="introduction">Hello, I'm David O'Donohue, a clinical psychologist offering guidance for those ready to explore their inner world.</p>
+        </div>
+    </div>
+</div>
+
+  <!-- First Layer: Initial Welcome -->
+  <div class="expandable-section">
+    <button class="expandable-header">
+      Begin Your Journey
+      <span class="chevron">></span>
+    </button>
+    <div class="expandable-content">
+      <p>Take a deep breath. As you do, you might notice the gentle rise and fall of your chest. Perhaps you'd like to settle into your surroundings, feeling the weight of your body grounding you to this present moment. As you read these words, allow yourself, if you wish, to sink into a space of curiosity and potential.</p>
+      <br>
+      <p>The therapy room offers a quiet space, with a comfortable chair waiting should you choose to begin this journey. The room around you is designed to be a container for whatever you might bring to our session - your experiences, your questions, your uncertainties.</p>
+      
+      <a class="read-more" data-section="therapeutic-space">Learn more about our therapeutic space →</a>
+    </div>
+  </div>
+
+    <!-- Second Layer: The Labyrinth -->
+    <div class="expandable-section">
+      <button class="expandable-header">
+        The Labyrinth Within
+        <span class="chevron">></span>
+      </button>
+      <div class="expandable-content">
+        <p>Our inner world might be imagined as a vast, intricate labyrinth. Some pathways are well-lit and familiar, places we know well. Other passages might remain less traveled - perhaps holding experiences or emotions that felt too overwhelming to approach before.</p>
+          <br>
+        <p>Within this labyrinth, we might find guardians at certain passages - parts of ourselves that have helped us survive, protecting us when we needed protection. These guardians carry their own wisdom, their own stories, their own deep knowing of what we've needed along the way.</p>
+      </div>
+    </div>
+
+      <!-- Third Layer: Therapeutic Space -->
+  <div class="expandable-section">
+    <button class="expandable-header">
+      A Space for Your Journey
+      <span class="chevron">></span>
+    </button>
+    <div class="expandable-content">
+      <p>The therapeutic space offers a gentle holding as you explore your inner labyrinth. Here, each turn in the path is met with patience, each guardian encountered with respect. There's room for all that might arise - uncertainty, curiosity, hesitation, hope.</p>
+      <br>
+      <p>Sometimes, it's in the quiet moments between words that something meaningful emerges. A pause in the journey, a moment of noticing, a subtle shift in how something feels. Each of these moments has its place here. Here, you're invited to explore, to question, to simply be.</p>
+    </div>
+  </div>
+
+
+  <!-- Fourth Layer: Ways of Knowing -->
+  <div class="expandable-section">
+    <button class="expandable-header">
+      Listening to the Labyrinth
+      <span class="chevron">></span>
+    </button>
+    <div class="expandable-content">
+      <p>As we sit with our experience, the labyrinth speaks to us in many ways. Sometimes through the body - a tightness in the chest, a flutter in the stomach, a moment of ease. Sometimes through images or memories that arise unexpectedly, like finding an unfamiliar passage.</p>
+      <br>
+      <p>Even our therapeutic relationship itself becomes a gentle mirror, reflecting patterns from your life and offering insights into how you connect with others and yourself. Sometimes, images or thoughts will arise spontaneously, like clues appearing in the labyrinth, carrying profound meaning about parts of yourself yet to be discovered. Past experiences might echo in present moments, coloring your perceptions in ways that, once noticed, can bring new understanding.</p>
+      <br>
+      <p>Each of these expressions carries its own meaning, its own truth. In therapy, we can create space to hear these different voices, allowing them to be present in their own time, in their own way.</p>
+    </div>
+</div>
+
+  <!-- Fifth Layer: Movement -->
+  <div class="expandable-section">
+    <button class="expandable-header">
+      Walking Together
+      <span class="chevron">></span>
+    </button>
+    <div class="expandable-content">
+      <p>Each person's journey through their inner labyrinth is uniquely their own. Some might notice subtle shifts over time - perhaps a familiar passage feeling different, or a previously overwhelming path becoming possible to approach. Others might discover new questions arising, or find different meanings in long-known places.</p>
+      <br>
+      <p>Whatever emerges, therapy offers a space where each step, each pause, each return can be held with gentleness. There's no need to rush, no particular path to take. Sometimes, simply being accompanied as we stand where we are can open new possibilities.</p>
+    </div>
+  </div>
+
+  <!-- Sixth Layer: Personal Note -->
+  <div class="expandable-section">
+    <button class="expandable-header">
+      Fellow Traveler
+      <span class="chevron">></span>
+    </button>
+    <div class="expandable-content">
+      <p>I too know what it means to walk the winding paths of my own inner labyrinth, to meet its guardians, to sit with its mysteries. Through my own journey of therapy, mindfulness, and reflection, I've come to deeply appreciate the courage it takes to explore these inner landscapes.</p>
+      <br>
+      <p>This experience informs how I am present with others - with patience, with respect for each person's unique path, and with trust in the profound value of being truly heard and understood.</p>
+    </div>
+  </div>
+
+  <!-- Seventh Layer: Beginning -->
+  <div class="expandable-section">
+    <button class="expandable-header">
+      Taking a Step
+      <span class="chevron">></span>
+    </button>
+    <div class="expandable-content">
+      <p>If you're considering therapy, you might be feeling many things - perhaps hope, perhaps uncertainty, perhaps something else entirely. Whatever you're feeling is welcome here.</p>
+      <br>
+      <p>Should you choose to explore your inner labyrinth, we can move at a pace that feels right for you, holding space for whatever emerges, one step at a time.</p>
+      <br>
+      <a href="https://pendulumpsychology.com.au/booking" class="cta-button">Begin the Journey</a>
+    </div>
+  </div>
+
+</section>
         </main>
     <!-- START_FOOTER --><footer>
     <div class="footer-block">
@@ -347,6 +769,80 @@ In essence, my approach to therapy is about guiding clients towards greater self
 </footer><!-- END_FOOTER -->
         <script src="https://pendulumpsychology.com.au/script.js"></script>
         <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle expandable sections
+    const expandableSections = document.querySelectorAll('.expandable-section');
+    
+    // Function to close all sections
+    function closeAllSections() {
+        expandableSections.forEach(section => {
+            section.querySelector('.expandable-header').classList.remove('expanded');
+            const content = section.querySelector('.expandable-content');
+            content.classList.remove('expanded');
+        });
+    }
+    
+    // Initially close all sections
+    closeAllSections();
+    
+    // Add click handlers to headers
+    expandableSections.forEach((section, index) => {
+        const header = section.querySelector('.expandable-header');
+        const content = section.querySelector('.expandable-content');
+        
+        header.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // If this section is already expanded, close it
+            if (header.classList.contains('expanded')) {
+                header.classList.remove('expanded');
+                content.classList.remove('expanded');
+            } else {
+                // Close all sections first
+                closeAllSections();
+                // Then open this one
+                header.classList.add('expanded');
+                content.classList.add('expanded');
+            }
+        });
+    });
+    
+    // Handle "read more" links
+    const readMoreLinks = document.querySelectorAll('.read-more');
+    readMoreLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Find the next section
+            const currentSection = link.closest('.expandable-section');
+            const nextSection = currentSection.nextElementSibling;
+            
+            if (nextSection && nextSection.classList.contains('expandable-section')) {
+                // Close all sections
+                closeAllSections();
+                
+                // Open the next section
+                const nextHeader = nextSection.querySelector('.expandable-header');
+                const nextContent = nextSection.querySelector('.expandable-content');
+                
+                nextHeader.classList.add('expanded');
+                nextContent.classList.add('expanded');
+                
+                // Scroll to the next section
+                nextSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start',
+                    inline: 'nearest'
+                });
+
+                // Add a small offset to account for fixed header
+                window.scrollBy(0, -60); // Adjust this value based on your header height
+            }
+        });
+    });
+});
+
   // Preload images function
   function preloadImages(imagesList) {
     imagesList.forEach((imageURL) => {
