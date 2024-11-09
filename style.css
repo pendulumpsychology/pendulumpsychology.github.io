@@ -338,6 +338,32 @@ ul {
   border: 1px solid black;
 }
 
+section ul {
+  max-width: 700px;
+  margin: 20px auto;
+  padding-left: 0;
+  list-style: none;
+}
+
+section ul li {
+  position: relative;
+  padding-left: 1.5em;
+  margin-bottom: 0.8em;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+section ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+}
+
 .share-button {
   text-decoration: none;
 }
