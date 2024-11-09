@@ -338,31 +338,24 @@ ul {
   border: 1px solid black;
 }
 
-/* Style for lists within sections (psychodynamic page) */
-section ul.content-list {
-  max-width: 700px;
-  margin: 20px auto;
-  padding-left: 0;
+/* List Styles */
+.clean-list {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-section ul.content-list li {
+.clean-list li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
   position: relative;
-  padding-left: 1.5em;
-  margin-bottom: 0.8em;
-  line-height: 1.5;
-  color: var(--color-text);
 }
 
-section ul.content-list li::before {
-  content: "";
+.clean-list li:before {
+  content: "•";
   position: absolute;
   left: 0;
-  top: 0.6em;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--color-primary);
+  color: var(--color-primary-light);
 }
 
 .share-button {
