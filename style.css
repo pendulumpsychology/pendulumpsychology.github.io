@@ -15,6 +15,9 @@
   --color-link: #7E38B7;          /* Link color */
   --color-link-hover: #9C89FF;    /* Hover state */
 
+  --color-footer-link: #B794D4;      /* Light purple */
+  --color-footer-link-hover: #FFFFFF; /* White */
+
   /* Semantic colors */
   --color-yes: hsl(134 31% 61%);           /* Success green */
   --color-no: hsl(6 78% 57%);              /* Warning red */
@@ -507,17 +510,17 @@ ul {
 .footer-link {
   display: flex;
   align-items: center;
-  color: #99CCED;
   text-decoration: none;
   transition: var(--transition-colors);
   overflow-wrap: break-word;
   font-size: 1rem;
   line-height: 1.5;
   padding: 0.25rem 0;
+  color: var(--color-footer-link);
 }
 
 .footer-link:hover {
-  color: var(--color-surface);
+  color: var(--color-footer-link-hover);
 }
 
 .footer-link svg {
