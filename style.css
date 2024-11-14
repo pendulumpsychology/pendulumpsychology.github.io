@@ -10,16 +10,16 @@
   --color-primary: #541675;       /* Main purple */
   --color-primary-light: #8D6AA8; /* Lighter purple */
   --color-primary-dark: #3A1052;  /* Darker purple */
-  
+
+  /* Component variables */
+  --color-link: #7E38B7;          /* Link color */
+  --color-link-hover: #9C89FF;    /* Hover state */
+
   /* Semantic colors */
   --color-yes: hsl(134 31% 61%);           /* Success green */
   --color-no: hsl(6 78% 57%);              /* Warning red */
   --color-info: hsl(210 100% 97%);      /* Light blue for info boxes */
   --color-info-border: hsl(220 79% 66%); /* Darker blue for info borders */
-
-  /* Component variables */
-  --color-link: #7E38B7;          /* Link color */
-  --color-link-hover: #9C89FF;    /* Hover state */
   
   /* Interactive states */
   --color-hover: color-mix(in srgb, var(--color-primary) 10%, transparent);
