@@ -9,494 +9,6 @@
         <link rel="mask-icon" href="https://pendulumpsychology.com.au/safari-pinned-tab.svg" color="#5bbad5">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
         <link rel="stylesheet" href="https://pendulumpsychology.com.au/style.css">
-        <style>
-/* Theme Variables */
-:root {
-    /* Core colors */
-    --color-background: #F6F6F6;    /* Light base */
-    --color-text: #272727;          /* Dark text */
-    --color-text-light: #F6F6F6;    /* Light text */
-
-    /* Primary theme */
-    --color-primary: #541675;       /* Main purple */
-    --color-primary-light: #8D6AA8; /* Lighter purple */
-    --color-primary-dark: #3A1052;  /* Darker purple */
-
-    /* Accent colors */
-    --color-accent: #7EB984;        /* Green for positive/success */
-    --color-accent-soft: #C0B1D9;   /* Soft purple for subtle emphasis */
-
-    /* Interactive states */
-    --color-link: #7E38B7;          /* Link color */
-    --color-link-hover: #9C89FF;    /* Hover state */
-    --color-footer-link: #99CCED;   /* Footer specific */
-
-    /* Animation speeds */
-    --transition-fast: 0.2s;
-    --transition-medium: 0.3s;
-    --transition-slow: 0.5s;
-
-    /* Common values */
-    --border-radius: 12px;
-    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Base styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Montserrat';
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* Typography utilities */
-.bold { font-weight: bold; }
-.italics { font-style: italic; }
-
-/* Navigation */
-#navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--color-background);
-    color: var(--color-text);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-    z-index: 100;
-}
-
-.navbar-element {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--color-text);
-    background-color: var(--color-background);
-    cursor: pointer;
-    border: none;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: all var(--transition-fast);
-    flex: 1;
-    min-height: 50px;
-}
-
-.navbar-element:hover {
-    background-color: var(--color-primary);
-    color: var(--color-text-light);
-}
-
-.navbar-element:hover .logo {
-    filter: invert(1);
-}
-
-.logo {
-    padding: 0 17.5px;
-    transition: filter var(--transition-fast);
-}
-
-#toggle {
-    display: none;
-}
-
-/* Hero Section */
-#hero {
-    height: calc(100vh - 50px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.hero-content {
-    text-align: center;
-    color: var(--color-text-light);
-    max-width: 80%;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: var(--border-radius);
-    position: relative;
-    z-index: 1;
-}
-
-.hero-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    transition: opacity var(--transition-slow);
-}
-
-#hero-bg1 { z-index: 1; opacity: 1; }
-#hero-bg2 { z-index: 0; opacity: 0; }
-
-.hero-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.tagline {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.random-quote {
-    font-style: italic;
-    text-align: center;
-    margin: 15px 0;
-    display: block;
-    font-size: 1.2em;
-    transition: opacity var(--transition-slow);
-}
-
-/* Main Content Sections */
-main {
-    margin-top: 38px;
-    flex: 1;
-}
-
-.content-section {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 1rem;
-}
-
-/* Essential Info Section */
-.essential-info {
-    background: linear-gradient(
-        to bottom right,
-        var(--color-background),
-        rgba(246, 246, 246, 0.9)
-    );
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: var(--box-shadow);
-}
-
-.essential-info h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.info-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: center;
-}
-
-.info-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.info-column .cta-button {
-    margin-top: 1.5rem;
-    align-self: flex-start;  /* Aligns with the list */
-    border: 1px solid black;
-}
-
-.expandable-content .cta-button {
-  margin-top: 1.5rem;
-    display: block;  /* Changed from inline-block */
-    width: fit-content;  /* Prevent full-width while allowing block display */
-    margin-left: auto;  /* Center the button */
-    margin-right: auto;
-    border: 1px solid black;
-}
-
-.accepting-clients {
-    color: var(--color-accent);
-}
-
-.no-prefix {
-    color: var(--color-primary-light);
-}
-
-.introduction {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-/* Avatar/Image Styles */
-.avatar {
-    margin: 0 auto;
-    border-radius: 50%;
-    max-width: 250px;
-    max-height: 250px;
-    display: block;
-}
-
-/* Expandable Sections */
-.expandable-section {
-    background: var(--color-background);
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-}
-
-.expandable-header {
-    width: 100%;
-    padding: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--color-background);
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--color-text);
-    transition: background-color var(--transition-fast);
-}
-
-.expandable-header:hover {
-    background-color: var(--color-accent-soft);
-}
-
-.expandable-header .chevron {
-    transition: transform var(--transition-medium) cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.expandable-header.expanded .chevron {
-    transform: rotate(90deg);
-}
-
-.expandable-content {
-    opacity: 0;
-    transform: translateY(-10px);
-    height: 0;
-    overflow: hidden;
-    padding: 0 1.5rem;
-    transition: opacity var(--transition-medium),
-                transform var(--transition-medium),
-                height var(--transition-medium) cubic-bezier(0.4, 0, 0.2, 1),
-                padding var(--transition-fast);
-    will-change: opacity, transform, height, padding;
-}
-
-.expandable-content.expanded {
-    opacity: 1;
-    transform: translateY(0);
-    height: auto;
-    padding: 1.5rem;
-    border-top: 1px solid var(--color-accent-soft);
-}
-
-/* Content Elements within Expandable Sections */
-.read-more {
-    display: inline-block;
-    color: var(--color-link);
-    text-decoration: none;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: color var(--transition-fast);
-}
-
-.read-more:hover {
-    color: var(--color-link-hover);
-}
-
-.booking-info {
-    background: var(--color-background);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-    margin-top: 1.5rem;
-    border: 1px solid var(--color-accent);
-}
-
-/* Call to Action Button */
-.cta-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: var(--color-background);
-    color: var(--color-text);
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    transition: all var(--transition-fast);
-}
-
-.cta-button:hover {
-    background-color: var(--color-primary);
-    color: var(--color-text-light);
-    transform: translateY(-1px);
-    box-shadow: var(--box-shadow);
-}
-
-/* Link Styles */
-main a {
-    color: var(--color-link);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-}
-
-main a:hover {
-    color: var(--color-link-hover);
-}
-
-/* Footer Styles */
-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
-    background-color: var(--color-primary);
-    color: var(--color-text-light);
-    padding: 2.5vh 2.5vw;
-    box-sizing: border-box;
-    margin-top: 50px;
-}
-
-.footer-block {
-    width: 20vw;
-    box-sizing: border-box;
-    padding: 2.5vh 2.5vw;
-    text-align: left;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-footer a {
-    display: flex;
-    align-items: center;
-    color: var(--color-footer-link);
-    text-decoration: none;
-    overflow-wrap: break-word;
-    transition: color var(--transition-fast);
-}
-
-footer a:hover {
-    color: var(--color-link-hover);
-}
-
-footer svg {
-    margin-right: 5px;
-}
-
-/* Typography and Spacing */
-p {
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 0 auto;
-}
-
-h1, h2 {
-    max-width: 700px;
-    margin: 0 auto 15px auto;
-}
-
-section {
-    padding: 1rem;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-/* Media Queries */
-@media (max-width: 790px) {
-    /* Navigation */
-    #navbar {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    #toggle {
-        display: flex;
-    }
-    
-    .nav-button {
-        display: none;
-    }
-    
-    .logo {
-        display: none;
-    }
-
-    /* Quote */
-    .random-quote {
-        display: none;
-    }
-    
-    /* Footer */
-    .footer-block {
-        width: 80vw;
-        text-align: center;
-    }
-
-    .footer-block a {
-        justify-content: center;
-    }
-    
-    /* Content Layout */
-    .info-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .info-column .cta-button {
-        align-self: center;  /* Centers button on mobile */
-        margin: 1.5rem auto 0;
-    }
-
-    .clean-list {
-        display: inline-block;
-        text-align: left;
-    }
-    
-    /* Expandable Sections */
-    .expandable-header {
-        padding: 1rem;
-    }
-    
-    .expandable-content.expanded {
-        padding: 1rem;
-    }
-}
-
-@media (min-width: 790px) {
-    .nav-button {
-        display: flex !important;
-    }
-}
-
-/* Print Styles - Optional but recommended */
-@media print {
-    .expandable-content {
-        height: auto !important;
-        opacity: 1 !important;
-        transform: none !important;
-    }
-
-    .hero-section,
-    .cta-button,
-    #navbar {
-        display: none;
-    }
-}
-
-
-
-      </style>
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
         <title>Pendulum Psychology</title>
@@ -579,7 +91,7 @@ section {
                   <h1>David O'Donohue</h1>
                   <p class="tagline">Clinical Psychologist</p>
                   <p id="random-quote" class="random-quote"></p>
-                  <a href="https://pendulumpsychology.com.au/booking.html" class="cta-button">Book an Appointment</a>
+                  <a href="https://pendulumpsychology.com.au/booking.html" class="button button-primary">Book an Appointment</a>
               </div>
             </div>
 
@@ -595,15 +107,15 @@ section {
         <div class="info-column">
             <h2>Current Availability</h2>
             <br>
-            <p class="accepting-clients">Now accepting adult (18+) clients</p>
+            <p class="status-yes">Now accepting adult (18+) clients</p>
             <br>
             <ul class="clean-list">
-                <li><span class="no-prefix">Not</span> taking child clients</li>
-                <li><span class="no-prefix">No</span> medicolegal reports/assessments</li>
-                <li><span class="no-prefix">No</span> NDIS/insurance clients</li>
+                <li><span class="status-no">Not</span> taking child clients</li>
+                <li><span class="status-no">No</span> medicolegal reports/assessments</li>
+                <li><span class="status-no">No</span> NDIS/insurance clients</li>
             </ul>
             <br>
-            <a href="https://pendulumpsychology.com.au/booking.html" class="cta-button">Book an appointment</a>
+            <a href="https://pendulumpsychology.com.au/booking.html" class="button button-primary">Book an appointment</a>
         </div>
         
         <!-- Right Column -->
@@ -625,7 +137,7 @@ section {
       <br>
       <p>The therapy room offers a quiet space, with a comfortable chair waiting should you choose to begin this journey. The room around you is designed to be a container for whatever you might bring to our session - your experiences, your questions, your uncertainties.</p>
       
-      <a class="read-more" data-section="therapeutic-space">Learn more about our therapeutic space →</a>
+      <a class="read-more" data-section="therapeutic-space">Explore what lies within the labyrinth →</a>
     </div>
   </div>
 
@@ -639,7 +151,7 @@ section {
         <p>Our inner world might be imagined as a vast, intricate labyrinth. Some pathways are well-lit and familiar, places we know well. Other passages might remain less travelled - perhaps holding experiences or emotions that felt too overwhelming to approach before.</p>
           <br>
         <p>Within this labyrinth, we might find guardians at certain passages - parts of ourselves that have helped us survive, protecting us when we needed protection. These guardians carry their own wisdom, their own stories, their own deep knowing of what we've needed along the way.</p>
-<a class="read-more" data-section="space">Learn about the therapeutic space →</a>
+<a class="read-more" data-section="space">Discover how we navigate this space together →</a>
       </div>
     </div>
 
@@ -713,23 +225,23 @@ section {
       <br>
       <p>Should you choose to explore your inner labyrinth, we can move at a pace that feels right for you, holding space for whatever emerges, one step at a time.</p>
       <br>
-      <a href="https://pendulumpsychology.com.au/booking" class="cta-button">Begin the Journey</a>
+      <a href="https://pendulumpsychology.com.au/booking" class="button button-primary">Begin the Journey</a>
     </div>
   </div>
 
 </section>
         </main>
-    <!-- START_FOOTER --><footer>
+    <!-- START_FOOTER --><footer class="footer">
     <div class="footer-block">
-        <a href="mailto:pendulumpsychology@gmail.com">
+        <a href="mailto:pendulumpsychology@gmail.com" class="footer-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#D44638" style="width:32px;height:32px;border:0;">
                 <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
         </svg> Email</a><br>
-        <a href="https://www.instagram.com/pendulumpsychology/" target="_blank" aria-label="Visit my Instagram page">
+        <a href="https://www.instagram.com/pendulumpsychology/" target="_blank" aria-label="Visit my Instagram page" class="footer-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#E4405F" style="width:32px;height:32px;">
               <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
             </svg> Instagram </a><br>
-        <a href="https://www.facebook.com/profile.php?id=61565542601904" target="_blank" aria-label="Visit my Facebook page">
+        <a href="https://www.facebook.com/profile.php?id=61565542601904" target="_blank" aria-label="Visit my Facebook page" class="footer-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#1877F2" style="width:32px;height:32px;border:0;">
                 <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/>
             </svg> Facebook</a>
@@ -742,7 +254,7 @@ section {
     </div>
     <div class="footer-block">
         Address<br>
-        <a href="https://www.google.com/maps/search/?api=1&query=Lantern+Psychology+Centre">Lantern Psychology Centre<br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Lantern+Psychology+Centre" class="footer-link">Lantern Psychology Centre<br>
         Unit 5, 10 Thesiger Court<br>
         Deakin, ACT, 2600</a>
     </div>
@@ -1048,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
 "Who looks outside, dreams; who looks inside, awakes. - Carl Jung",
 "The universe is not outside of you. Look inside yourself; everything that you want, you already are. - Rumi",
 "Knowledge speaks, but wisdom listens. - Jimi Hendrix",
-"The wise man doesn't give the right answers, he poses the right questions. - Claude Levi-Strauss",
+// "The wise man doesn't give the right answers, he poses the right questions. - Claude Levi-Strauss",
 "You are not a drop in the ocean. You are the entire ocean in a drop. - Rumi",
 "Your hurt is welcome here. It can put down its bags and stay awhile. It won't be jostled. It won't be rushed. It won't be asked to hurt less, or to hurt differently, or to distract itself. It won't even be asked to word itself. It can just be. And we can just be together - you, me, the hurt. - Teri Quatman",
 
