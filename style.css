@@ -491,12 +491,11 @@ ul {
   border: none;
   text-align: left;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: var(--font-size-lg);
   font-weight: 500;
   color: var(--color-text);
   transition: var(--transition-bg);
   font-family: var(--font-heading);
-  font-weight: 500;
 }
 
 .expandable-header:hover {
