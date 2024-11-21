@@ -8,19 +8,19 @@ def create_html_file(file_name):
     if not file_name.endswith('.html'):
         file_name = f"{file_name}.html"
     
-    # Create JSON-LD content
-json_ld = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "TODO",
-    "description": "TODO",
-    "url": f"https://www.pendulumpsychology.com.au/{file_name}",
-    "image": "https://pendulumpsychology.com.au/android-chrome-512x512.png",
-    "author": {
-        "@type": "Person",
-        "name": "David O'Donohue"
+    # Create JSON-LD content - moved inside the function
+    json_ld = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "TODO",
+        "description": "TODO",
+        "url": f"https://pendulumpsychology.com.au/{file_name}",
+        "image": "https://pendulumpsychology.com.au/android-chrome-512x512.png",
+        "author": {
+            "@type": "Person",
+            "name": "David O'Donohue"
+        }
     }
-}
 
     template = f"""<!DOCTYPE html>
 <html lang="en-AU">
@@ -74,8 +74,7 @@ json_ld = {
         <!-- END_FOOTER -->
         <script src="https://pendulumpsychology.com.au/script.js"></script>
     </body>
-</html>
-"""
+</html>"""
 
     # Write the file
     with open(file_name, 'w') as f:
