@@ -78,7 +78,7 @@ default_html_content = f"""
         <!-- START_NAVBAR -->
         <!-- END_NAVBAR -->
         <main>
-        <section>
+        <section class="content">
         <h1>TODO: Title</h1>
         <br><br>
         <p class="italics">Last updated TODO: date</p>

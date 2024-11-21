@@ -382,7 +382,7 @@ section {
 }
 
 /* Essential Info Section */
-.essential-info {
+.content {
   background: var(--color-surface);  /* Changed from gradient to match expandable sections */
   border-radius: var(--border-radius);
   padding: 2rem;

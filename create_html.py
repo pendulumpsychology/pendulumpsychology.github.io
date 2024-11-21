@@ -46,7 +46,7 @@ TODO
         <!-- START_NAVBAR -->
         <!-- END_NAVBAR -->
         <main>
-        <section>
+        <section class="content">
         Content
         </section>
         </main>
