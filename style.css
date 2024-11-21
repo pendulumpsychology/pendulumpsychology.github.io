@@ -183,7 +183,7 @@ body, p, .nav-button {
 }
 
 /* Layout Components */
-section {
+main {
   padding: 1rem;
   max-width: var(--max-width-content);
   margin: 0 auto;
@@ -248,7 +248,7 @@ section {
 
 /* Hero Section */
 #hero {
-  height: calc(100vh - 50px);
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -561,7 +561,7 @@ ul {
   color: var(--color-text-on-primary);
   padding: 2.5vh 2.5vw;
   box-sizing: border-box;
-  margin-top: 50px;
+  margin-top: 1rem;
   font-family: var(--font-body);
   font-weight: 300;
   font-size: 0.95rem;
