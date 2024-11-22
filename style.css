@@ -183,10 +183,14 @@ body, p, .nav-button {
 }
 
 /* Layout Components */
-main {
+section {
   padding: 1rem;
   max-width: var(--max-width-content);
   margin: 0 auto;
+}
+
+main{
+  padding: 1rem;
 }
 
 .container {
