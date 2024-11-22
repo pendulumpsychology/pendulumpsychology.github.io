@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function adjustMainOffset() {
     const navbar = document.getElementById('navbar');
-    const main = document.querySelector('main');
+    const main = document.querySelector('main[id="adjust-margin"]'); // Changed this line
 
     if (navbar && main) {
       const navbarHeight = navbar.offsetHeight;
       main.style.marginTop = `${navbarHeight}px`;
     } else {
-      console.warn('Error: navbar or main element not found');
+      console.warn('Error: navbar or main element with id="adjust-margin" not found');
     }
   }
 

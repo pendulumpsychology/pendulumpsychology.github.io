@@ -65,7 +65,7 @@ def create_html_file(file_name):
     <body>
         <!-- START_NAVBAR -->
         <!-- END_NAVBAR -->
-        <main>
+        <main id="adjust-margin">
         <section class="content">
             Content
         </section>

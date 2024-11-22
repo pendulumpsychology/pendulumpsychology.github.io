@@ -77,7 +77,7 @@ default_html_content = f"""
     <body>
         <!-- START_NAVBAR -->
         <!-- END_NAVBAR -->
-        <main>
+        <main id="adjust-margin">
         <section class="content">
         <h1>TODO: Title</h1>
         <br><br>
