@@ -80,10 +80,10 @@ default_html_content = f"""
         <main id="adjust-margin">
         <section class="content">
         <h1>TODO: Title</h1>
-        <br><br>
+        <br>
         <p class="italics">Last updated TODO: date</p>
-        <br><br>
-        <p class="italics">Share this post via:</p>
+        <br>
+        <p class="italics">Share this post:</p>
         <br>
 <!-- Share buttons -->
         <div class="share-buttons">
@@ -102,6 +102,7 @@ default_html_content = f"""
         </div>
         <br>
         <img src="TODO" style="max-width:100%;"/>
+        <br><br>
         <p>
           TODO: CONTENT
           <img src="TODO" style="float: left; max-width: 200px; margin: 10px;">
