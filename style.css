@@ -139,7 +139,7 @@ h3, .expandable-header {
 }
 
 /* Body Text */
-body, p, .nav-button {
+body, p, .navbar-element {
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--font-size-base);
