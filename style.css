@@ -351,7 +351,7 @@ main {
   border: 1px solid var(--color-text);
 }
 
- .expandable-content .button {
+.button {
   display: block;
   width: fit-content;
   margin-left: auto;
