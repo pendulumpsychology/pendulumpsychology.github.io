@@ -1156,6 +1156,7 @@ function generateShareableImage() {
   tempDiv.style.height = '1080px';
   tempDiv.style.position = 'absolute';
   tempDiv.style.left = '-9999px';
+
   
   const results = calculateResults();
   const primaryElement = Object.entries(results)
@@ -1168,10 +1169,22 @@ function generateShareableImage() {
     earth: '#27ae60'
   };
 
-  const description = getElementDescription(primaryElement, quizType)
-    .split('<br><br>')
-    .slice(1, 3)
-    .join('\n\n');
+  const elementDescriptions = {
+    therapist: {
+      water: "Your therapeutic power lies in creating deeply holding spaces where clients feel truly seen. Like water, you flow with what emerges, understanding that transformation comes through acceptance and attunement.",
+      fire: "Your therapeutic power lies in actively engaging with what needs to change. Like fire, you kindle transformation while maintaining enough warmth to make breakthrough feel possible.",
+      air: "Your therapeutic power lies in offering fresh perspectives and deep insight. Like air, you help clients see their patterns clearly while maintaining the flexibility to explore new possibilities.",
+      earth: "Your therapeutic power lies in creating solid containment for sustainable growth. Like earth, you provide both practical wisdom and reliable presence, supporting steady, grounded change."
+    },
+    client: {
+      water: "You thrive in therapy that creates space for emotional depth and authentic connection. Like water, you process experiences most deeply when given room to flow naturally, finding healing through acceptance.",
+      fire: "You thrive in therapy that actively engages with transformation. Like fire, you process experiences most deeply through direct engagement, channeling your inner drive for meaningful change.",
+      air: "You thrive in therapy that explores patterns and creates new meaning. Like air, you process experiences most deeply through understanding, finding freedom in fresh perspectives.",
+      earth: "You thrive in therapy that provides clear structure and practical growth. Like earth, you process experiences most deeply through grounded approaches, building change step by step."
+    }
+  };
+
+  const description = elementDescriptions[quizType][primaryElement];
   
   tempDiv.innerHTML = `
     <div style="
@@ -1235,7 +1248,7 @@ function generateShareableImage() {
         margin-bottom: 40px;
         width: 100%;
       ">
-        <p style="font-size: 20px; line-height: 1.6; color: #333; margin: 0; font-family: Outfit, sans-serif;">
+        <p style="font-size: 24px; line-height: 1.6; color: #333; margin: 0; font-family: Outfit, sans-serif;">
           ${description}
         </p>
       </div>
