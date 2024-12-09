@@ -343,996 +343,543 @@ let answers = [];
 
 const questions = {
   therapist: [
-      {
-      text: "How do you view the therapeutic relationship and change?",
+    {
+      text: "Your fundamental stance toward client experiencing is:",
       answers: [
         {
-          text: "As a deep relational space where being witnessed transforms how we relate to ourselves",
+          text: "Being fully present with what is, without agenda",
           elements: ["water"]
         },
         {
-          text: "As a laboratory for understanding patterns and gaining insights within the relationship",
+          text: "Understanding the meaning of current patterns",
           elements: ["air"]
         },
         {
-          text: "As a contained space where clear boundaries and concrete experiences build new ways of being",
-          elements: ["fire", "earth"]
-        }
-      ]
-    },
-    {
-      text: "In sessions, your attention naturally flows to:",
-      answers: [
-        {
-          text: "The immediate bodily and relational experience unfolding in the room",
-          elements: ["earth", "water"]
-        },
-        {
-          text: "The deeper patterns and meanings emerging across our work",
-          elements: ["air"]
-        },
-        {
-          text: "The possibilities for movement and transformation",
+          text: "Actively promoting therapeutic change",
           elements: ["fire"]
-        }
-      ]
-    },
-    {
-      text: "What do clients most value about your therapeutic style?",
-      answers: [
+        },
         {
-          text: "My ability to create safety and stability through consistency",
+          text: "Building on existing strengths and resources",
           elements: ["earth"]
         },
         {
-          text: "My capacity to deeply attune to and stay with their experience",
+          text: "Creating space for both acceptance and growth",
+          elements: ["water", "fire"]
+        }
+      ]
+    },
+    {
+      text: "When working with resistance, you tend to:",
+      answers: [
+        {
+          text: "Create space to explore what the resistance protects",
           elements: ["water"]
         },
         {
-          text: "My skill in helping them gain new insights and perspectives",
+          text: "Analyse the resistance's patterns and meaning",
           elements: ["air"]
         },
         {
-          text: "My focus on facilitating meaningful change and growth",
+          text: "Actively pressure against the resistance to reach core affect",
           elements: ["fire"]
+        },
+        {
+          text: "Focus on practical ways to overcome the resistance",
+          elements: ["earth"]
         }
       ]
     },
     {
-      text: "When ruptures occur in therapy, you tend to:",
+      text: "Your way of working with emotions is to:",
       answers: [
         {
-          text: "Stay with the emotional impact, trusting that being with the rupture itself is healing",
+          text: "Create space to fully feel and process them",
           elements: ["water"]
         },
         {
-          text: "Analyse the rupture to understand deeper relational patterns",
+          text: "Understand their patterns and meanings",
           elements: ["air"]
         },
         {
-          text: "Work actively to repair while maintaining clear therapeutic boundaries",
-          elements: ["fire", "earth"]
-        }
-      ]
-    },
-    {
-      text: "When a client is overwhelmed, your first instinct is to:",
-      answers: [
+          text: "Intensify them to facilitate breakthrough",
+          elements: ["fire"]
+        },
         {
-          text: "Help them ground in present moment sensations and find stability",
+          text: "Build skills for managing them effectively",
           elements: ["earth"]
         },
         {
-          text: "Create space to fully feel and be with the overwhelm",
-          elements: ["water"]
-        },
-        {
-          text: "Look for practical ways to reduce what's overwhelming them",
-          elements: ["fire"]
-        },
-        {
-          text: "Understand what's triggering the overwhelm and its patterns",
-          elements: ["air"]
+          text: "Use them to deepen the therapeutic relationship",
+          elements: ["water", "air"]
         }
       ]
     },
     {
-      text: "How do you work with client defenses?",
+      text: "When experiencing strong countertransference, you typically:",
       answers: [
         {
-          text: "Welcome them with curiosity about what they're protecting while understanding their patterns",
+          text: "Become curious about what emotions the client might be avoiding",
           elements: ["water", "air"]
         },
         {
-          text: "Create safety and stability while gradually working through them",
-          elements: ["earth", "fire"]
-        },
-        {
-          text: "Engage with them actively, looking for transformation while respecting their protective role",
-          elements: ["fire", "water"]
-        }
-      ]
-    },
-    {
-      text: "In relation to 'not knowing' in therapy, you find yourself:",
-      answers: [
-        {
-          text: "Comfortable staying in uncertainty, seeing it as a source of genuine discovery",
-          elements: ["water"]
-        },
-        {
-          text: "Using uncertainty as information about what's happening in the relationship",
+          text: "Analyse it for insight into client patterns",
           elements: ["air"]
         },
         {
-          text: "Creating enough structure to hold uncertainty while still allowing emergence",
-          elements: ["earth", "water"]
-        },
-        {
-          text: "Working to find clarity and direction through the uncertainty",
+          text: "Use it directly to facilitate breakthrough",
           elements: ["fire"]
-        }
-      ]
-    },
-    {
-      text: "When different parts of a client seem in conflict:",
-      answers: [
-        {
-          text: "Create space for all parts while trusting their natural integration",
-          elements: ["water"]
         },
         {
-          text: "Help understand the relationship between parts and their needs",
-          elements: ["air"]
-        },
-        {
-          text: "Support movement toward change while respecting resistance",
-          elements: ["fire", "water"]
-        },
-        {
-          text: "Ground in the body and create safety for all parts",
+          text: "Notice it while maintaining therapeutic focus",
           elements: ["earth"]
         }
       ]
     },
     {
-      text: "When working with trauma, you focus most on:",
+      text: "When working with trauma, you emphasise:",
       answers: [
         {
-          text: "Creating safety and stability through clear boundaries and grounding",
+          text: "Creating safety and building resources",
           elements: ["earth"]
         },
         {
-          text: "Allowing the full experience to be felt and witnessed in relationship",
-          elements: ["water"]
-        },
-        {
-          text: "Understanding how the trauma shapes current patterns and defenses",
+          text: "Understanding and processing the narrative",
           elements: ["air"]
         },
         {
-          text: "Working actively to process and transform the trauma's impact",
+          text: "Facing and moving through core affects",
           elements: ["fire"]
+        },
+        {
+          text: "Holding space for the full experience to emerge",
+          elements: ["water"]
+        },
+        {
+          text: "Integrating understanding with emotional processing",
+          elements: ["water", "air"]
         }
       ]
     },
     {
-      text: "Your approach to therapeutic boundaries is:",
+      text: "Your relationship to client's bodily experience is:",
       answers: [
         {
-          text: "Clear and consistent - creating reliable containers for safety",
+          text: "Following their somatic experience with curiosity",
+          elements: ["water"]
+        },
+        {
+          text: "Understanding how the body carries meaning",
+          elements: ["air"]
+        },
+        {
+          text: "Using body awareness to facilitate breakthrough",
+          elements: ["fire"]
+        },
+        {
+          text: "Teaching concrete grounding techniques",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "When working with client hopelessness, you tend to:",
+      answers: [
+        {
+          text: "Stay present with the despair without trying to change it",
+          elements: ["water"]
+        },
+        {
+          text: "Explore the meaning and history of hope/hopelessness",
+          elements: ["air"]
+        },
+        {
+          text: "Challenge the beliefs maintaining hopelessness",
+          elements: ["fire"]
+        },
+        {
+          text: "Build evidence of possibility through small steps",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "When working with self-criticism, you tend to:",
+      answers: [
+        {
+          text: "Create space to fully feel and attend to the wounded parts",
+          elements: ["water"]
+        },
+        {
+          text: "Explore the historical and protective functions",
+          elements: ["air"]
+        },
+        {
+          text: "Challenge the critical voice directly",
+          elements: ["fire"]
+        },
+        {
+          text: "Develop concrete self-compassion practices",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "Your approach to therapeutic endings is to:",
+      answers: [
+        {
+          text: "Create space for all feelings about the ending to emerge",
+          elements: ["water"]
+        },
+        {
+          text: "Analyse what the ending brings up and represents",
+          elements: ["air"]
+        },
+        {
+          text: "Use the ending to consolidate changes and growth",
+          elements: ["fire"]
+        },
+        {
+          text: "Ensure practical support systems are in place",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "When clients directly ask for advice, you typically:",
+      answers: [
+        {
+          text: "Explore what it means to want guidance in this moment",
+          elements: ["water", "air"]
+        },
+        {
+          text: "Analyse the transference implications of the request",
+          elements: ["air"]
+        },
+        {
+          text: "Challenge them to find their own answers",
+          elements: ["fire"]
+        },
+        {
+          text: "Offer practical suggestions while building autonomy",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "Your view on therapeutic change is that it happens through:",
+      answers: [
+        {
+          text: "Deep emotional experiencing within a secure relationship",
+          elements: ["water"]
+        },
+        {
+          text: "Understanding unconscious patterns and conflicts",
+          elements: ["air"]
+        },
+        {
+          text: "Active confrontation of defenses and anxiety",
+          elements: ["fire"]
+        },
+        {
+          text: "Building new skills and behavioural patterns",
           elements: ["earth"]
         },
         {
-          text: "Relationally responsive - guided by what each unique relationship needs",
-          elements: ["water"]
-        },
-        {
-          text: "Intentionally therapeutic - using boundaries as tools for change",
-          elements: ["fire", "air"]
+          text: "Integration of emotional, cognitive, and relational experiences",
+          elements: ["water", "air", "earth"]
         }
       ]
     },
     {
-      text: "When working with silence, you tend to:",
+      text: "When sitting with silence, you find yourself:",
       answers: [
         {
-          text: "Let it breathe, seeing it as part of the natural therapeutic rhythm",
+          text: "Staying present with whatever emerges",
           elements: ["water"]
         },
         {
-          text: "Use it as time to notice body sensations and stay grounded",
+          text: "Reflecting on the meaning of the silence",
+          elements: ["air"]
+        },
+        {
+          text: "Looking for opportunities to create movement",
+          elements: ["fire"]
+        },
+        {
+          text: "Considering structured ways to reengage",
           elements: ["earth"]
-        },
-        {
-          text: "Listen for what it might be expressing or defending against",
-          elements: ["air"]
-        },
-        {
-          text: "Look for ways to use it productively in the work",
-          elements: ["fire"]
         }
       ]
-    },
-    {
-      text: "When a client seeks reassurance, you typically:",
-      answers: [
-        {
-          text: "Stay with the underlying feelings and needs behind the seeking",
-          elements: ["water"]
-        },
-        {
-          text: "Explore the pattern of seeking and what it means",
-          elements: ["air"]
-        },
-        {
-          text: "Balance support with encouraging their own strength",
-          elements: ["fire", "earth"]
-        }
-      ]
-    },
-    {
-      text: "When a client expresses anger toward you, you tend to:",
-      answers: [
-        {
-          text: "Stay present with their anger while holding steady boundaries",
-          elements: ["water", "earth"]
-        },
-        {
-          text: "Explore what this anger reveals about our relationship",
-          elements: ["air"]
-        },
-        {
-          text: "Look for ways to use the anger constructively for change",
-          elements: ["fire"]
-        }
-      ]
-    },
-    {
-      text: "How do you approach client goals?",
-      answers: [
-        {
-          text: "Let them emerge naturally through our work together",
-          elements: ["water"]
-        },
-        {
-          text: "Explore what these goals represent and mean",
-          elements: ["air"]
-        },
-        {
-          text: "Create clear pathways while ensuring they're grounded and achievable",
-          elements: ["fire", "earth"]
-        }
-      ]
-    },
+    }
   ],
+
   client: [
     {
-      text: "What qualities are most important to you in a therapist?",
+      text: "What feels most helpful when you're struggling?",
       answers: [
         {
-          text: "Someone who provides reliable consistency and clear boundaries",
-          elements: ["earth"]
-        },
-        {
-          text: "Someone who can deeply attune to and stay with my experience",
+          text: "Having my experience completely accepted as it is",
           elements: ["water"]
         },
         {
-          text: "Someone who helps me see new perspectives and patterns",
+          text: "Understanding why I might be struggling",
           elements: ["air"]
         },
         {
-          text: "Someone who actively guides me toward positive change",
-          elements: ["fire"]
-        }
-      ]
-    },
-    {
-      text: "What feels most healing in relationships?",
-      answers: [
-        {
-          text: "Being deeply understood and accepted exactly as I am",
-          elements: ["water"]
-        },
-        {
-          text: "Understanding myself and my patterns better",
-          elements: ["air"]
-        },
-        {
-          text: "Building new, healthier ways of relating",
-          elements: ["fire", "earth"]
-        }
-      ]
-    },
-    {
-      text: "When difficulties arise in important relationships, you most need:",
-      answers: [
-        {
-          text: "Space to feel and process the emotional impact",
-          elements: ["water"]
-        },
-        {
-          text: "To understand what patterns are being triggered",
-          elements: ["air"]
-        },
-        {
-          text: "Clear ways to repair and restore connection",
-          elements: ["fire", "earth"]
-        }
-      ]
-    },
-    {
-      text: "When feeling overwhelmed, what helps most?",
-      answers: [
-        {
-          text: "Having someone ground me in the present moment",
-          elements: ["earth"]
-        },
-        {
-          text: "Having someone stay with me in the feelings",
-          elements: ["water"]
-        },
-        {
-          text: "Getting practical help to reduce the overwhelm",
+          text: "Being encouraged to make changes",
           elements: ["fire"]
         },
         {
-          text: "Understanding what's triggering me",
-          elements: ["air"]
-        }
-      ]
-    },
-    {
-      text: "When you're protecting yourself emotionally, what feels most helpful?",
-      answers: [
-        {
-          text: "Someone being gently curious about what I'm protecting",
-          elements: ["water", "air"]
-        },
-        {
-          text: "Having space and stability to feel safe",
-          elements: ["earth", "fire"]
-        },
-        {
-          text: "Finding ways to gradually open up while respecting my needs",
-          elements: ["fire", "water"]
-        }
-      ]
-    },
-    {
-      text: "When facing uncertainty, you most need:",
-      answers: [
-        {
-          text: "Someone who can stay with me in the unknown",
-          elements: ["water"]
-        },
-        {
-          text: "Help understanding what the uncertainty brings up",
-          elements: ["air"]
-        },
-        {
-          text: "A balance of support and practical direction",
-          elements: ["earth", "fire"]
-        }
-      ]
-    },
-    {
-      text: "When different parts of you want different things:",
-      answers: [
-        {
-          text: "I need space to hear all parts without judgment",
-          elements: ["water"]
-        },
-        {
-          text: "I want to understand why I'm pulled in different directions",
-          elements: ["air"]
-        },
-        {
-          text: "I want help moving forward while respecting my hesitation",
-          elements: ["fire", "water"]
-        },
-        {
-          text: "I need to feel grounded and safe first",
-          elements: ["earth"]
-        }
-      ]
-    },
-    {
-      text: "When dealing with difficult experiences, what feels most important?",
-      answers: [
-        {
-          text: "Having stability and feeling safe",
+          text: "Getting practical help and solutions",
           elements: ["earth"]
         },
         {
-          text: "Being able to fully express and process feelings",
+          text: "Finding balance between acceptance and growth",
+          elements: ["water", "fire"]
+        }
+      ]
+    },
+    {
+      text: "When processing difficult experiences, your preferred pace is:",
+      answers: [
+        {
+          text: "Taking time to fully feel each part of the experience",
           elements: ["water"]
         },
         {
-          text: "Understanding how these experiences affect me",
+          text: "Understanding how it fits into larger life patterns",
           elements: ["air"]
         },
         {
-          text: "Finding ways to heal and move forward",
-          elements: ["fire"]
-        }
-      ]
-    },
-    {
-      text: "In supportive relationships, what matters most?",
-      answers: [
-        {
-          text: "Having clear, reliable boundaries and consistency",
-          elements: ["earth"]
-        },
-        {
-          text: "Being able to be genuine and authentic",
-          elements: ["water"]
-        },
-        {
-          text: "Growing and changing together",
-          elements: ["fire", "air"]
-        }
-      ]
-    },
-    {
-      text: "When sharing difficult things, what helps most?",
-      answers: [
-        {
-          text: "Feeling safe and grounded in the present moment",
-          elements: ["earth", "water"]
-        },
-        {
-          text: "Understanding myself better through sharing",
-          elements: ["air"]
-        },
-        {
-          text: "Finding ways to make positive changes",
-          elements: ["fire"]
-        }
-      ]
-    },
-    {
-      text: "In moments of silence with others, you prefer:",
-      answers: [
-        {
-          text: "When it feels natural and comfortable",
-          elements: ["water"]
-        },
-        {
-          text: "When it helps me feel calm and steady",
-          elements: ["earth"]
-        },
-        {
-          text: "When it helps me understand what I'm feeling",
-          elements: ["air"]
-        },
-        {
-          text: "When it leads to meaningful change",
-          elements: ["fire"]
-        }
-      ]
-    },
-    {
-      text: "When needing support, what feels most helpful?",
-      answers: [
-        {
-          text: "Having space to feel vulnerable without judgment",
-          elements: ["water"]
-        },
-        {
-          text: "Understanding why I'm struggling",
-          elements: ["air"]
-        },
-        {
-          text: "Getting encouragement while finding my own strength",
-          elements: ["fire", "earth"]
-        }
-      ]
-    },
-    {
-      text: "When a therapist gives you feedback or challenge, you prefer:",
-      answers: [
-        {
-          text: "Gentle reflection that helps me discover my own answers",
-          elements: ["water"]
-        },
-        {
-          text: "Help seeing my patterns from new angles",
-          elements: ["air"]
-        },
-        {
-          text: "Direct feedback with clear suggestions for change",
-          elements: ["fire", "earth"]
-        }
-      ]
-    },
-    {
-      text: "What's your preferred pace for therapeutic work?",
-      answers: [
-        {
-          text: "Steady and gradual, with time to feel secure",
-          elements: ["earth"]
-        },
-        {
-          text: "Following what naturally emerges without pressure",
-          elements: ["water"]
-        },
-        {
-          text: "Active and engaged, focused on making progress",
+          text: "Moving through it directly and thoroughly",
           elements: ["fire"]
         },
         {
-          text: "Thoughtful and thorough, taking time to understand",
-          elements: ["air"]
+          text: "Breaking it down into manageable steps",
+          elements: ["earth"]
         }
       ]
     },
     {
-      text: "When it comes to working toward goals in therapy:",
+      text: "In therapy, what matters most to you?",
       answers: [
         {
-          text: "I prefer to let them develop naturally through the process",
+          text: "Being deeply understood exactly as I am",
           elements: ["water"]
         },
         {
-          text: "I want to understand what my goals really mean",
+          text: "Gaining clarity about my patterns",
           elements: ["air"]
         },
         {
-          text: "I like having clear steps while staying flexible",
-          elements: ["fire", "earth"]
+          text: "Making meaningful changes in my life",
+          elements: ["fire"]
+        },
+        {
+          text: "Developing practical coping skills",
+          elements: ["earth"]
+        },
+        {
+          text: "Growing while feeling secure in relationship",
+          elements: ["water", "earth"]
+        }
+      ]
+    },
+    {
+      text: "When dealing with emotions in therapy, you prefer:",
+      answers: [
+        {
+          text: "Having space to fully feel and express them",
+          elements: ["water"]
+        },
+        {
+          text: "Understanding where they come from",
+          elements: ["air"]
+        },
+        {
+          text: "Working actively with them to create change",
+          elements: ["fire"]
+        },
+        {
+          text: "Learning ways to manage them better",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "Regarding physical sensations and body awareness in therapy:",
+      answers: [
+        {
+          text: "I want space to explore what my body is expressing",
+          elements: ["water"]
+        },
+        {
+          text: "I want to understand what my body is communicating",
+          elements: ["air"]
+        },
+        {
+          text: "I want to use body awareness to push through blocks",
+          elements: ["fire"]
+        },
+        {
+          text: "I want practical techniques for body-based regulation",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "When feeling hopeless or stuck, what feels most helpful?",
+      answers: [
+        {
+          text: "Having my feelings fully accepted without pressure to change",
+          elements: ["water"]
+        },
+        {
+          text: "Understanding the deeper meaning of my hopelessness",
+          elements: ["air"]
+        },
+        {
+          text: "Being challenged to see new possibilities",
+          elements: ["fire"]
+        },
+        {
+          text: "Taking small concrete steps forward",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "When dealing with self-critical thoughts, you find it most helpful to:",
+      answers: [
+        {
+          text: "Have space to explore the vulnerable feelings underneath",
+          elements: ["water"]
+        },
+        {
+          text: "Understand where these patterns came from",
+          elements: ["air"]
+        },
+        {
+          text: "Actively challenge the critical voice",
+          elements: ["fire"]
+        },
+        {
+          text: "Learn specific self-compassion techniques",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "When considering ending therapy, what feels most important?",
+      answers: [
+        {
+          text: "Processing the emotional impact of the ending",
+          elements: ["water"]
+        },
+        {
+          text: "Understanding what this transition means for you",
+          elements: ["air"]
+        },
+        {
+          text: "Feeling confident in your changes and growth",
+          elements: ["fire"]
+        },
+        {
+          text: "Having clear plans and support systems in place",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "When you need guidance, you prefer a therapist who:",
+      answers: [
+        {
+          text: "Helps you explore what the question means for you",
+          elements: ["water"]
+        },
+        {
+          text: "Examines patterns in when/how you seek guidance",
+          elements: ["air"]
+        },
+        {
+          text: "Empowers you to find your own answers",
+          elements: ["fire"]
+        },
+        {
+          text: "Offers practical suggestions while building your confidence",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "In moments of silence, you prefer:",
+      answers: [
+        {
+          text: "Staying with whatever emerges naturally",
+          elements: ["water"]
+        },
+        {
+          text: "Reflecting on what the silence might mean",
+          elements: ["air"]
+        },
+        {
+          text: "Using the time to focus on changes you want",
+          elements: ["fire"]
+        },
+        {
+          text: "Having some structure or direction",
+          elements: ["earth"]
+        }
+      ]
+    },
+    {
+      text: "What helps you feel most supported in therapy?",
+      answers: [
+        {
+          text: "When my therapist deeply attunes to my experience",
+          elements: ["water"]
+        },
+        {
+          text: "When we explore and understand patterns together",
+          elements: ["air"]
+        },
+        {
+          text: "When I'm encouraged to push my comfort zone",
+          elements: ["fire"]
+        },
+        {
+          text: "When I receive clear guidance and tools",
+          elements: ["earth"]
+        },
+        {
+          text: "When I feel both supported and challenged",
+          elements: ["water", "fire"]
+        }
+      ]
+    },
+    {
+      text: "Your ideal pace of therapeutic change would be:",
+      answers: [
+        {
+          text: "Following what naturally unfolds without pushing",
+          elements: ["water"]
+        },
+        {
+          text: "Taking time to understand before making changes",
+          elements: ["air"]
+        },
+        {
+          text: "Moving quickly toward transformation",
+          elements: ["fire"]
+        },
+        {
+          text: "Making steady, measured progress",
+          elements: ["earth"]
         }
       ]
     }
   ]
 };
-
-// let questions = {
-//   therapist: [
-//   {
-//       text: "How do you view the therapeutic relationship?",
-//       answers: [
-//         {
-//           text: "As a container for change - maintaining clear boundaries and roles helps create safety for transformation",
-//           elements: ["earth", "fire"]
-//         },
-//         {
-//           text: "As the primary vehicle for healing - the relationship itself is what transforms",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "As a laboratory for understanding patterns - examining transference and countertransference reveals important insights",
-//           elements: ["air"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When sitting with a client's pain, what feels most natural to you?",
-//       answers: [
-//         {
-//           text: "Offering practical steps toward change",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Creating space for them to fully feel and express their experience",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Helping them understand the patterns and meaning behind their pain",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Bringing their attention to present moment sensations and grounding",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "What resonates most with your approach to therapy?",
-//       answers: [
-//         {
-//           text: "Creating practical steps and seeing tangible progress",
-//           elements: ["fire", "earth"]
-//         },
-//         {
-//           text: "Being deeply present with whatever emerges",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Understanding patterns and gaining insights",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Building reliable foundations through steady work",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When a client is overwhelmed, your first instinct is to:",
-//       answers: [
-//         {
-//           text: "Help them connect with their body and the present moment",
-//           elements: ["earth"]
-//         },
-//         {
-//           text: "Slow things down and create space for whatever they're feeling",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Look for practical ways to reduce what's overwhelming them",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Help them understand what's driving the overwhelm",
-//           elements: ["air"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "In your therapeutic work, you find yourself:",
-//       answers: [
-//         {
-//           text: "Most comfortable when there are clear structures and expectations",
-//           elements: ["earth"]
-//         },
-//         {
-//           text: "Naturally flowing with whatever emerges in the relationship",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Actively setting and using boundaries as therapeutic tools",
-//           elements: ["fire", "earth"]
-//         },
-//         {
-//           text: "Creating frameworks for understanding",
-//           elements: ["air"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "The purpose of therapy feels most like:",
-//       answers: [
-//         {
-//           text: "Creating a stable base for growth",
-//           elements: ["earth"]
-//         },
-//         {
-//           text: "Witnessing and accompanying another's journey",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Facilitating meaningful change",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Expanding awareness and understanding",
-//           elements: ["air"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When working with trauma, you tend to:",
-//       answers: [
-//         {
-//           text: "Focus on establishing safety and stability",
-//           elements: ["earth"]
-//         },
-//         {
-//           text: "Hold space for the client's experience without rushing",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Look for opportunities for healing and integration",
-//           elements: ["fire", "water"]
-//         },
-//         {
-//           text: "Help understand patterns of response and coping",
-//           elements: ["air"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "In sessions, you find your attention naturally goes to:",
-//       answers: [
-//         {
-//           text: "The physical and sensory experience",
-//           elements: ["earth"]
-//         },
-//         {
-//           text: "The emotional undertones and relational dynamics",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Signs of potential for change or movement",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Emerging patterns and meanings",
-//           elements: ["air"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When clients feel stuck, you find yourself:",
-//       answers: [
-//         {
-//           text: "Helping them ground and notice what's happening now",
-//           elements: ["earth"]
-//         },
-//         {
-//           text: "Making space for the stuckness itself",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Looking for ways to create movement",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Understanding the function of the stuckness",
-//           elements: ["air", "water"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "Your biggest strength as a therapist is:",
-//       answers: [
-//         {
-//           text: "Providing consistency and stability",
-//           elements: ["earth"]
-//         },
-//         {
-//           text: "Creating a space where clients feel deeply understood",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Helping clients take meaningful action in their lives",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Offering new perspectives and insights",
-//           elements: ["air"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When working with resistance, you tend to:",
-//       answers: [
-//         {
-//           text: "Help ground and steady the resistance in the present moment",
-//           elements: ["earth"]
-//         },
-//         {
-//           text: "See it as protection and explore what it's guarding",
-//           elements: ["water", "air"]
-//         },
-//         {
-//           text: "Look for ways to work with or around it",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Understand its patterns and meaning in the client's life",
-//           elements: ["air"]
-//         }
-//       ]
-//     }
-//   ],
-
-//   client: [
-//     {
-//       text: "When you're struggling with something difficult, what feels most helpful?",
-//       answers: [
-//         {
-//           text: "Having someone help me take action to change things",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Having someone really listen and understand how I feel",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Getting new perspectives and understanding why I'm struggling",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Having someone help me stay grounded and present",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "What would feel most valuable to you in therapy?",
-//       answers: [
-//         {
-//           text: "Making concrete changes in my life",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Being truly seen and accepted as I am",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Understanding myself and my patterns better",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Finding stability and security",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When exploring painful experiences, you prefer:",
-//       answers: [
-//         {
-//           text: "Finding ways to move forward and heal",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Taking time to fully feel and process the emotions",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Understanding how these experiences shaped you",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Staying connected to the present moment",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "Your ideal therapist would:",
-//       answers: [
-//         {
-//           text: "Give me practical strategies and encourage action",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Create space for me to explore my feelings",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Help me gain insights and new perspectives",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Provide consistency and stability",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When facing decisions or uncertainties, you most need:",
-//       answers: [
-//         {
-//           text: "Clear direction and steps forward",
-//           elements: ["fire", "earth"]
-//         },
-//         {
-//           text: "Space to feel into what's right for me",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Help understanding all the aspects involved",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "A steady foundation to work from",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "In terms of change, what feels most true?",
-//       answers: [
-//         {
-//           text: "I want to take active steps toward my goals",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "I need to feel accepted before I can change",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "I need to understand before I can move forward",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "I prefer small, steady changes",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When emotions are overwhelming, you tend to want:",
-//       answers: [
-//         {
-//           text: "Something concrete to do about them",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Someone to be with me in them",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "To understand where they're coming from",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Help staying grounded through them",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "What makes you feel most supported?",
-//       answers: [
-//         {
-//           text: "Having clear plans and directions",
-//           elements: ["fire", "earth"]
-//         },
-//         {
-//           text: "Feeling deeply understood",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Gaining new insights and perspectives",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Having reliable consistency",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "The kind of therapeutic relationship you're looking for is:",
-//       answers: [
-//         {
-//           text: "Active and encouraging",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Deep and accepting",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Thoughtful and insightful",
-//           elements: ["air"]
-//         },
-//         {
-//           text: "Steady and reliable",
-//           elements: ["earth"]
-//         }
-//       ]
-//     },
-//     {
-//       text: "When you're feeling stuck, what helps most?",
-//       answers: [
-//         {
-//           text: "Taking action, even if small",
-//           elements: ["fire"]
-//         },
-//         {
-//           text: "Having my stuckness accepted without pressure",
-//           elements: ["water"]
-//         },
-//         {
-//           text: "Understanding what's keeping me stuck",
-//           elements: ["air", "water"]
-//         },
-//         {
-//           text: "Finding solid ground to stand on",
-//           elements: ["earth"]
-//         }
-//       ]
-//     }
-//   ]
-// };
 
 // Initialize quiz
 function startQuiz(type) {
@@ -1510,10 +1057,8 @@ function previewShareableImage() {
     earth: '#27ae60'
   };
 
-  const description = getElementDescription(primaryElement, quizType)
-    .split('<br><br>')
-    .slice(1, 3)
-    .join('\n\n');
+  const paragraphs = getElementDescription(primaryElement, quizType).split('<br><br>');
+  const description = [paragraphs[1], paragraphs[3]].join('\n\n');
 
   // Add content to preview
   previewContent.innerHTML = `
@@ -1584,6 +1129,7 @@ function previewShareableImage() {
   previewContainer.appendChild(previewContent);
   document.body.appendChild(previewContainer);
 }
+
 
 function generateShareableImage() {
   const tempDiv = document.createElement('div');
@@ -1681,7 +1227,7 @@ function generateShareableImage() {
         text-align: center;
       ">
         <p style="font-size: 20px; color: #666; margin: 0 0 5px 0; font-family: Outfit, sans-serif;">Take the quiz at:</p>
-        <p style="font-size: 24px; color: #333; margin: 0; font-family: Outfit, sans-serif;">pendulumpsychology.com.au</p>
+        <p style="font-size: 24px; color: #333; margin: 0; font-family: Outfit, sans-serif;">pendulumpsychology.com.au/blog/atla_quiz</p>
       </div>
     </div>
   `;
@@ -1703,6 +1249,45 @@ function generateShareableImage() {
   });
 }
 
+// New helper function for secondary element insights
+function getSecondaryElementInsight(primary, secondary, type) {
+  return `Your ${secondary} elements adds ${getSecondaryElementDescription(primary, secondary, type)}`;
+}
+
+// New function for secondary element descriptions
+function getSecondaryElementDescription(primary, secondary, type) {
+  const combinations = {
+    therapist: {
+      water: {
+        air: "depth of understanding to your attunement",
+        fire: "transformative potential to your holding space",
+        earth: "groundedness to your emotional presence"
+      },
+      air: {
+        water: "emotional sensitivity to your insights",
+        fire: "catalytic energy to your understanding",
+        earth: "practical application to your analysis"
+      },
+      fire: {
+        water: "relational depth to your transformative work",
+        air: "insight to your change process",
+        earth: "sustainable structure to your interventions"
+      },
+      earth: {
+        water: "emotional attunement to your structured approach",
+        air: "deeper understanding to your practical work",
+        fire: "transformative energy to your steady containment"
+      }
+    },
+    client: {
+      // Similar structure for client combinations
+      // [Add client-specific combination descriptions]
+    }
+  };
+  
+  return combinations[type][primary][secondary] || "complementary qualities to your therapeutic style";
+}
+
 function showResults() {
   const results = calculateResults();
   const primaryElement = Object.entries(results)
@@ -1712,7 +1297,7 @@ function showResults() {
   const shareTitle = `I'm a ${primaryElement.charAt(0).toUpperCase() + primaryElement.slice(1)} ${quizType}!`;
   const shareUrl = encodeURIComponent('https://pendulumpsychology.com.au/blog/atla_quiz');
   const shareText = encodeURIComponent(`${shareTitle} Take this Avatar: The Last Airbender therapeutic style quiz to discover your element!`);
-    
+  
   document.getElementById('quiz-container').style.display = 'none';
   document.getElementById('results-container').style.display = 'block';
   
@@ -1739,6 +1324,19 @@ function showResults() {
     <div class="element-description">
       <h3>What this means for you:</h3>
       <p>${getElementDescription(primaryElement, quizType)}</p>
+    </div>
+    <br>
+    <div class="secondary-elements">
+      <h3>Your Element Blend:</h3>
+      ${Object.entries(results)
+        .sort(([,a], [,b]) => b - a)
+        .slice(1, 3)
+        .map(([element, percentage]) => `
+          <div class="secondary-element">
+            <h4>${element.charAt(0).toUpperCase() + element.slice(1)} (${percentage}%)</h4>
+            <p>${getSecondaryElementInsight(primaryElement, element, quizType)}</p>
+          </div>
+        <br>`).join('')}
     </div>
     
     <div class="share-section">
@@ -1790,25 +1388,25 @@ function showResults() {
 
 // Helper function to get element descriptions
 function getElementDescription(element, type) {
-  let elementDescriptions = {
+  const elementDescriptions = {
   therapist: {
-    water: "In the Avatar universe, water represents adaptability, fluidity, and emotional depth. Water is the element of change through connection.<br><br>As a water-oriented therapist, you embody a deeply receptive and intuitive presence in the therapeutic space. Your natural ability to attune to the emotional currents beneath the surface allows you to create a uniquely holding environment where clients feel truly seen and understood.<br><br>You excel at navigating the depths of emotional experience, neither pushing nor pulling but moving with whatever arises. Like water itself, you can hold both intense emotion and peaceful stillness, adapting your therapeutic presence to meet each moment's needs.<br><br>Your clients benefit from your capacity to stay present with difficult feelings without trying to fix or change them, trusting in the transformative power of deep emotional attunement.<br><br>Your therapeutic style particularly shines in working with grief, trauma, and relationship difficulties, where your ability to create a safe container for emotional exploration allows natural healing to emerge through the therapeutic relationship.",
-    
-    air: "In the Avatar universe, air represents freedom, flexibility, and clarity. Air is the element of understanding patterns and connections.<br><br>As an air-oriented therapist, you bring a unique combination of intellectual clarity and psychological insight to your work. Your natural ability to see patterns and connections helps clients gain new perspectives on long-standing issues, illuminating the threads that connect different aspects of their experience.<br><br>You excel at creating a therapeutic space where curiosity and understanding flourish, helping clients develop greater awareness of their internal processes and relational dynamics. Like air itself, your presence brings lightness and movement to heavy situations, offering fresh perspectives without imposing rigid interpretations.<br><br>Your clients benefit from your capacity to hold complexity while maintaining clarity, making space for both intellectual understanding and emotional insight.<br><br>Your therapeutic style is particularly effective in working with anxiety, recurring patterns, and identity exploration, where your ability to help clients see their situations from multiple angles creates new possibilities for growth and change.",
-    
-    fire: "In the Avatar universe, fire represents energy, transformation, and inner drive. Fire is the element of active change and growth.<br><br>As a fire-oriented therapist, you bring vital energy and transformative presence to the therapeutic relationship. Your natural ability to recognise and catalyse potential for change helps clients access their own inner resources for growth and healing.<br><br>You excel at maintaining a delicate balance between challenging and supporting, knowing when to kindle the flames of change and when to contain them. Like fire itself, you bring warmth and illumination to the therapeutic process, helping clients find their own source of motivation and strength.<br><br>Your clients benefit from your capacity to maintain momentum in the therapeutic journey while respecting the need for integration and consolidation.<br><br>Your therapeutic style is particularly powerful in working with depression, life transitions, and personal development, where your ability to spark and sustain meaningful change helps clients move from stagnation to transformation. You naturally integrate insight with action, helping clients not just understand their patterns but actively engage in creating new ones.",
-    
-    earth: "In the Avatar universe, earth represents stability, endurance, and groundedness. Earth is the element of substance and foundation.<br><br>As an earth-oriented therapist, you create a profoundly stable and containing therapeutic environment. Your natural ability to remain steady in the face of intense emotions or chaos provides clients with the secure base they need for deep therapeutic work.<br><br>You excel at helping clients build sustainable change through consistent, grounded presence and clear therapeutic boundaries. Like earth itself, you offer both support and resistance, providing the right combination of holding and pushback that allows for genuine growth.<br><br>Your clients benefit from your capacity to maintain consistency while adapting to their individual needs, creating a reliable container that can hold both vulnerability and strength.<br><br>Your therapeutic style is particularly effective in working with complex trauma, attachment issues, and overwhelming life circumstances, where your ability to provide steady, reliable presence helps clients develop their own internal stability. You naturally integrate body-based awareness with emotional processing, helping clients find genuine security through connection with both their physical and emotional experience."
+    water: "In the Avatar universe, water represents adaptability, depth, and flow. Water is the element of transformation through attunement and connection.<br><br>As a water-oriented therapist, you create a deeply attuned therapeutic space where change emerges through relationship and presence. Your natural capacity to be with whatever arises - whether emotions, silence, or resistance - allows clients to feel deeply met and understood.<br><br>Like water, you adapt to each client's unique process while maintaining your therapeutic depth. You trust that healing emerges naturally when experiences can be fully felt and held within a secure relationship.<br><br>Your approach particularly shines in:<ul class='clean-list'><li>Creating safety for deep emotional processing</li><li>Working with attachment and relationship</li><li>Allowing defensive patterns to be explored without pressure</li><li>Supporting clients through uncertainty and vulnerability</li><li>Using the therapeutic relationship itself as a vehicle for change</li></ul>",
+
+    air: "In the Avatar universe, air represents freedom, clarity, and connection. Air is the element of understanding patterns and meaning.<br><br>As an air-oriented therapist, you bring a unique combination of perspective and depth to your work. Your natural ability to see patterns and make connections helps illuminate the deeper meanings in clients' experiences.<br><br>Like air, you help create space around stuck patterns, offering new perspectives while remaining flexible in your thinking. You're particularly attuned to the unconscious dynamics and symbolic meanings that shape experience.<br><br>Your approach particularly shines in:<ul class='clean-list'><li>Exploring the deeper meaning of symptoms and patterns</li><li>Working with unconscious material and dreams</li><li>Understanding the multiple layers of resistance</li><li>Making connections between past and present</li><li>Using the therapeutic relationship as a lens for understanding patterns</li></ul>",
+
+    fire: "In the Avatar universe, fire represents transformation, vitality, and drive. Fire is the element of change through active engagement.<br><br>As a fire-oriented therapist, you bring an energetic and transformative presence to the work. You naturally see opportunities for breakthrough and aren't afraid to challenge defenses when therapeutically appropriate.<br><br>Like fire, you provide both warmth and intensity, knowing when to kindle the flames of transformation and when to contain them. You trust that many clients need active engagement with their defenses to access deeper truths and emotions.<br><br>Your approach particularly shines in:<ul class='clean-list'><li>Working actively with resistance and defenses</li><li>Facilitating emotional breakthroughs</li><li>Challenging avoidance patterns</li><li>Maintaining therapeutic momentum</li><li>Using the therapeutic relationship to illuminate and challenge patterns</li></ul>",
+
+    earth: "In the Avatar universe, earth represents groundedness, stability, and substance. Earth is the element of change through steady, tangible steps.<br><br>As an earth-oriented therapist, you create a solid and containing therapeutic environment that supports practical growth. Your natural ability to remain steady and structured helps clients build real-world changes while feeling securely held.<br><br>Like earth itself, you provide both support and healthy resistance, offering clear boundaries and concrete interventions while maintaining reliable presence. You trust in the power of steady, incremental change.<br><br>Your approach particularly shines in:<ul class='clean-list'><li>Creating clear therapeutic structure and boundaries</li><li>Building concrete coping skills and resources</li><li>Maintaining focus on therapeutic goals</li><li>Supporting gradual, sustainable change</li><li>Using the therapeutic relationship to provide secure containment</li></ul>"
   },
-  
+
   client: {
-    water: "In the Avatar universe, water represents adaptability, fluidity, and emotional depth. Water is the element of change through connection.<br><br>You are drawn to a therapeutic approach that honours the depth and complexity of emotional experience. In therapy, you value having space to explore your feelings without pressure to change or fix them, allowing natural transformation to emerge through being deeply understood.<br><br>You tend to process experiences on multiple levels - emotional, relational, and intuitive - and benefit most from a therapist who can stay present with all of these dimensions. Like water itself, your healing journey often involves flowing with rather than fighting against your experiences, finding strength in emotional authenticity and genuine connection.<br><br>You may find yourself particularly drawn to therapeutic work that allows for deep emotional exploration, values the wisdom of your felt experience, and creates space for both vulnerability and resilience to emerge naturally.<br><br>The therapeutic relationship itself is often a crucial part of your healing, as you tend to grow and transform through experiences of genuine emotional attunement and acceptance.",
-    
-    air: "In the Avatar universe, air represents freedom, flexibility, and clarity. Air is the element of understanding patterns and connections.<br><br>You are drawn to a therapeutic approach that engages both intellectual understanding and emotional insight. In therapy, you value gaining new perspectives and understanding the patterns that shape your experiences, finding growth through increased awareness and clarity.<br><br>You tend to process experiences through making connections and seeing larger patterns, benefiting most from a therapist who can help you explore multiple viewpoints while staying grounded in your lived experience. Like air itself, your healing journey often involves finding freedom through understanding, gaining new perspectives that allow for different ways of being.<br><br>You may find yourself particularly drawn to therapeutic work that combines emotional exploration with intellectual insight, valuing both the felt experience of your challenges and the understanding of their broader context.<br><br>You tend to grow through developing new frameworks for understanding your experiences, finding transformation in the space between insight and embodied change.",
-    
-    fire: "In the Avatar universe, fire represents energy, transformation, and inner drive. Fire is the element of active change and growth.<br><br>You are drawn to a therapeutic approach that actively engages with the process of transformation. In therapy, you value having clear direction and purpose while maintaining enough flexibility to allow for organic change.<br><br>You tend to process experiences through action and engagement, benefiting most from a therapist who can help you channel your energy for change while respecting your need for integration. Like fire itself, your healing journey often involves harnessing your inner motivation and drive, finding ways to transform challenges into opportunities for growth.<br><br>You may find yourself particularly drawn to therapeutic work that balances active change with deep understanding, valuing both the insight that comes from exploration and the growth that comes from engaged practice.<br><br>You tend to grow through combining understanding with action, finding transformation through actively engaging with new ways of being while maintaining connection with your authentic self.",
-    
-    earth: "In the Avatar universe, earth represents stability, endurance, and groundedness. Earth is the element of substance and foundation.<br><br>You are drawn to a therapeutic approach that provides clear structure and reliable support. In therapy, you value having a stable foundation from which to explore and grow, finding safety in consistency and clear boundaries.<br><br>You tend to process experiences through grounded, practical engagement, benefiting most from a therapist who can provide steady support while encouraging sustainable growth. Like earth itself, your healing journey often involves building new foundations step by step, finding strength in stability and genuine security.<br><br>You may find yourself particularly drawn to therapeutic work that emphasises building reliable internal resources, valuing both the emotional exploration and the practical skills that support lasting change.<br><br>You tend to grow through establishing stable connections with yourself and others, finding transformation through the steady development of new patterns and resources. The therapeutic relationship serves as a secure base from which you can gradually explore and integrate new ways of being."
+    water: "In the Avatar universe, water represents adaptability, depth, and flow. Water is the element of transformation through acceptance and connection.<br><br>You value having space to fully experience and process your feelings without pressure to change. You tend to heal and grow best when you feel deeply understood and accepted exactly as you are.<br><br>Like water, your path to change often flows naturally when you have room to be with your experience in a containing relationship. You appreciate therapy that allows time and space for emotions, silence, and natural unfolding.<br><br>You might find yourself particularly drawn to therapy that:<ul class='clean-list'><li>Creates space for deep emotional processing</li><li>Values the therapeutic relationship itself</li><li>Allows defenses and resistance to be explored gently</li><li>Works at your natural pace</li><li>Emphasizes acceptance and understanding</li></ul>",
+
+    air: "In the Avatar universe, air represents freedom, clarity, and connection. Air is the element of understanding patterns and meaning.<br><br>You value gaining deeper insight into your patterns and experiences. You tend to heal and grow best when you can understand the meaning behind your struggles and see them from new perspectives.<br><br>Like air, your path to change often involves creating space around stuck patterns through understanding and awareness. You appreciate therapy that engages with the deeper meanings and unconscious aspects of your experience.<br><br>You might find yourself particularly drawn to therapy that:<ul class='clean-list'><li>Explores the deeper meaning of symptoms and patterns</li><li>Works with dreams and unconscious material</li><li>Helps understand resistance and defenses</li><li>Makes connections between past and present</li><li>Uses the therapeutic relationship to understand patterns</li></ul>",
+
+    fire: "In the Avatar universe, fire represents transformation, vitality, and drive. Fire is the element of change through active engagement.<br><br>You value active movement toward change and growth. You tend to heal and grow best when engaging directly with challenges and pushing through barriers.<br><br>Like fire, your path to change often involves transformation through active engagement rather than just understanding or acceptance. You appreciate therapy that maintains momentum and isn't afraid to challenge you when needed.<br><br>You might find yourself particularly drawn to therapy that:<ul class='clean-list'><li>Works actively with resistance and defenses</li><li>Facilitates emotional breakthroughs</li><li>Challenges avoidance patterns</li><li>Maintains focus on change</li><li>Uses the therapeutic relationship to illuminate and challenge patterns</li></ul>",
+
+    earth: "In the Avatar universe, earth represents groundedness, stability, and substance. Earth is the element of change through steady, tangible steps.<br><br>You value having clear structure and practical support in therapy. You tend to heal and grow best when you can see concrete progress and have reliable boundaries.<br><br>Like earth itself, your path to change often involves building new patterns step by step while maintaining stability. You appreciate therapy that offers clear direction and practical tools while providing consistent support.<br><br>You might find yourself particularly drawn to therapy that:<ul class='clean-list'><li>Provides clear structure and boundaries</li><li>Teaches concrete coping skills</li><li>Maintains focus on goals</li><li>Supports gradual, sustainable change</li><li>Offers reliable, consistent support</li></ul>"
   }
 };
   
