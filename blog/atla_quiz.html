@@ -1200,6 +1200,18 @@ function showResults() {
     .sort(([,a], [,b]) => b - a);
   const primaryElement = sortedElements[0][0];
   const secondaryElement = sortedElements[1][0];
+
+  dataLayer.push({
+  'event': 'quiz_completion',
+  'quiz_type': quizType,  // 'client' or 'therapist'
+  'primary_element': primaryElement, // their main element
+  'element_scores': {
+    'water': results.water,
+    'fire': results.fire,
+    'air': results.air,
+    'earth': results.earth
+  }
+});
     
   const shareTitle = encodeURIComponent(`I'm a ${primaryElement.charAt(0).toUpperCase() + primaryElement.slice(1)} ${quizType}!`);
   const shareUrl = encodeURIComponent('https://pendulumpsychology.com.au/blog/atla_quiz');

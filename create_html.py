@@ -8,7 +8,7 @@ def create_html_file(file_name):
     if not file_name.endswith('.html'):
         file_name = f"{file_name}.html"
     
-    # Create JSON-LD content - moved inside the function
+    # Create JSON-LD content
     json_ld = {
         "@context": "https://schema.org",
         "@type": "WebPage",
@@ -26,11 +26,11 @@ def create_html_file(file_name):
 <html lang="en-AU">
     <head>
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+<script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':
+new Date().getTime(),event:'gtm.js'}});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WNQFJVGM');</script>
+}})(window,document,'script','dataLayer','GTM-WNQFJVGM');</script>
 <!-- End Google Tag Manager -->
         <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0'>
         <link rel="apple-touch-icon" sizes="180x180" href="https://pendulumpsychology.com.au/apple-touch-icon.png">
@@ -82,10 +82,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     with open(file_name, 'w') as f:
         f.write(template)
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Create a new HTML file with proper metadata and structure.")
     parser.add_argument('file_name', help="The name of the HTML file to be created.")
+    args = parser.parse_args()
+
+    create_html_file(args.file_name)
+    print(f"Created {args.file_name}")elp="The name of the HTML file to be created.")
     args = parser.parse_args()
 
     create_html_file(args.file_name)
