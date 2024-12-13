@@ -1203,14 +1203,12 @@ function showResults() {
 
   dataLayer.push({
   'event': 'quiz_completion',
-  'quiz_type': quizType,  // 'client' or 'therapist'
-  'primary_element': primaryElement, // their main element
-  'element_scores': {
-    'water': results.water,
-    'fire': results.fire,
-    'air': results.air,
-    'earth': results.earth
-  }
+  'quiz_type': quizType,
+  'primary_element': primaryElement,
+  'water_score': results.water,
+  'fire_score': results.fire,
+  'air_score': results.air,
+  'earth_score': results.earth
 });
     
   const shareTitle = encodeURIComponent(`I'm a ${primaryElement.charAt(0).toUpperCase() + primaryElement.slice(1)} ${quizType}!`);
