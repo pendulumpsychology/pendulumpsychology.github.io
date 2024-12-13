@@ -1201,10 +1201,6 @@ function showResults() {
   const primaryElement = sortedElements[0][0];
   const secondaryElement = sortedElements[1][0];
 
-  console.log('Quiz Type:', quizType);
-  console.log('Primary Element:', primaryElement);
-  console.log('Results:', results);
-
   dataLayer.push({
   'event': 'quiz_completion',
   'quiz_type': quizType,
