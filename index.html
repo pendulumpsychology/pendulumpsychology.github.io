@@ -8,6 +8,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WNQFJVGM');</script>
 <!-- End Google Tag Manager -->
+
+<!-- AOS Library CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<!-- AOS Library JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+
         <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0'>
         <link rel="apple-touch-icon" sizes="180x180" href="https://pendulumpsychology.com.au/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="https://pendulumpsychology.com.au/favicon-32x32.png">
@@ -69,6 +76,33 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         ]
             }
         </script>
+        <style>
+          [data-aos] {
+  pointer-events: none; /* Prevents flicker on hover during animation */
+}
+
+[data-aos].aos-animate {
+  pointer-events: auto; /* Restores pointer events after animation */
+}
+
+/* Optional: Add fade-in for page load */
+body {
+  opacity: 0;
+  animation: fadeInPage 1s ease-out forwards;
+}
+
+@keyframes fadeInPage {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  [data-aos-delay] {
+    transition-delay: 0s !important;
+  }
+}
+        </style>
     </head>
     <body>
 <!-- Google Tag Manager (noscript) -->
@@ -92,16 +126,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div id="hero-bg1" class="hero-bg"></div>
               <div id="hero-bg2" class="hero-bg"></div>
               <div class="hero-content">
-                  <h1>David O'Donohue</h1>
-                  <p class="tagline">Clinical Psychologist</p>
-                  <p id="random-quote" class="random-quote"></p>
-                  <a href="https://pendulumpsychology.com.au/booking" class="button button-primary">Book an Appointment</a>
+                  <h1 data-aos="fade-up">David O'Donohue</h1>
+                  <p class="tagline" data-aos="fade-up" data-aos-delay="200">Clinical Psychologist</p>
+                  <p id="random-quote" class="random-quote" data-aos="fade-up" data-aos-delay="300"></p>
+                  <a href="https://pendulumpsychology.com.au/booking" class="button button-primary" data-aos="fade-up" data-aos-delay="400">Book an Appointment</a>
               </div>
             </div>
             <main>
             <!-- Keep your existing hero section with rotating backgrounds/quotes -->
             
-            <section class="content-section">
+            <section class="content-section"  data-aos="fade-up">
               <!-- Essential Information (Always Visible) -->
               <div class="essential-info content">
                 <h1 class="main-title">Welcome to Pendulum Psychology</h1>
@@ -125,14 +159,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     
                     <!-- Right Column -->
                     <div class="info-column">
-                        <img src="profile.webp" alt="David O'Donohue" class="avatar">
+                        <img src="https://pendulumpsychology.com.au/profile.webp" alt="David O'Donohue" class="avatar">
                         <p class="introduction">Hello, I'm David O'Donohue, a clinical psychologist offering guidance for those ready to explore their inner world.</p>
                     </div>
                 </div>
               </div>
 
               <!-- First Layer: Begin Your Journey -->
-              <div class="expandable-section">
+              <div class="expandable-section" data-aos="fade-up" data-aos-delay="100">
                 <button class="expandable-header">
                   Begin Your Journey
                   <span class="chevron">></span>
@@ -146,7 +180,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             
               <!-- Second Layer: The Call Within -->
-              <div class="expandable-section">
+              <div class="expandable-section" data-aos="fade-up" data-aos-delay="200">
                 <button class="expandable-header">
                   The Call Within
                   <span class="chevron">></span>
@@ -158,7 +192,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             
               <!-- Third Layer: Paths of Protection -->
-              <div class="expandable-section">
+              <div class="expandable-section" data-aos="fade-up" data-aos-delay="300">
                 <button class="expandable-header">
                   Paths of Protection
                   <span class="chevron">></span>
@@ -172,7 +206,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             
               <!-- Fourth Layer: A Space for Coming Home -->
-              <div class="expandable-section">
+              <div class="expandable-section" data-aos="fade-up" data-aos-delay="400">
                 <button class="expandable-header">
                   A Space for Coming Home
                   <span class="chevron">></span>
@@ -186,7 +220,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             
               <!-- Fifth Layer: The Courage to Listen -->
-              <div class="expandable-section">
+              <div class="expandable-section" data-aos="fade-up" data-aos-delay="500">
                 <button class="expandable-header">
                   The Courage to Listen
                   <span class="chevron">></span>
@@ -198,7 +232,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             
               <!-- Sixth Layer: A Space of Welcome -->
-              <div class="expandable-section">
+              <div class="expandable-section" data-aos="fade-up" data-aos-delay="600">
                 <button class="expandable-header">
                   A Space of Welcome
                   <span class="chevron">></span>
@@ -210,7 +244,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             
               <!-- Seventh Layer: Beginning -->
-              <div class="expandable-section">
+              <div class="expandable-section" data-aos="fade-up" data-aos-delay="700">
                 <button class="expandable-header">
                   Beginning
                   <span class="chevron">></span>
@@ -221,7 +255,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <a href="https://pendulumpsychology.com.au/booking" class="button button-primary">Begin the Journey</a>
                 </div>
               </div>
-              <div class="expandable-section">
+              <div class="expandable-section" data-aos="fade-up" data-aos-delay="800">
                 <button class="expandable-header">
                   Supervision
                   <span class="chevron">></span>
@@ -614,6 +648,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   preloadImages(imagesList);
   setupHeroBackgroundAndQuotes(imagesList, quotes);
+          </script>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // Initialize AOS with gentle settings
+              AOS.init({
+                duration: 1000,      // Slightly longer duration for a gentler feel
+                once: true,         // Animation occurs only once
+                offset: 50,         // Start animation when element is 50px from viewport
+                easing: 'ease-out', // Gentle easing
+                delay: 100,         // Small delay for a more natural feel
+              });
+            });
           </script>
     </body>
 </html>
