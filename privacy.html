@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Pendulum Psychology</title>
+    <meta name="description" content="Privacy policy for Pendulum Psychology, outlining how we collect, use, and store your personal information.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://pendulumpsychology.com.au/privacy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://pendulumpsychology.com.au/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://pendulumpsychology.com.au/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://pendulumpsychology.com.au/favicon-16x16.png">
+    <link rel="manifest" href="https://pendulumpsychology.com.au/site.webmanifest">
+    <meta name="theme-color" content="#122C2E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Franklin:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cream: #F7F4ED;
+            --cream-dark: #EDE8DF;
+            --teal-deepest: #122C2E;
+            --teal-dark: #17474A;
+            --teal-mid: #1B6B6E;
+            --teal-accent: #238C8F;
+            --teal-light: #7AB3B5;
+            --text-dark: #1A2C2D;
+            --text-body: #4A6062;
+            --text-light: #7A9496;
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Libre Franklin', system-ui, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            color: var(--text-dark);
+            background-color: var(--cream);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999; opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat; background-size: 256px 256px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+            color: var(--text-body);
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            transition: color 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { color: var(--teal-mid); }
+        .back-link svg { width: 16px; height: 16px; }
+
+        .privacy-page {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 4rem 2rem 5rem;
+        }
+
+        .privacy-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 400;
+            color: var(--teal-deepest);
+            margin-bottom: 0.4rem;
+            line-height: 1.2;
+        }
+
+        .privacy-subtitle {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: var(--teal-mid);
+            margin-bottom: 0.3rem;
+        }
+
+        .privacy-updated {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 3rem;
+        }
+
+        .privacy-divider {
+            border: none;
+            border-top: 1px solid rgba(26, 44, 45, 0.1);
+            margin-bottom: 2.5rem;
+        }
+
+        .privacy-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .privacy-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--teal-deepest);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .privacy-section p {
+            font-size: 0.92rem;
+            color: var(--text-body);
+            line-height: 1.85;
+            margin-bottom: 0.75rem;
+        }
+
+        .privacy-section p:last-child { margin-bottom: 0; }
+
+        .privacy-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0.75rem;
+        }
+
+        .privacy-section ul li {
+            font-size: 0.92rem;
+            color: var(--text-body);
+            line-height: 1.85;
+            padding: 0.15rem 0 0.15rem 1.2rem;
+            position: relative;
+        }
+
+        .privacy-section ul li::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 4px;
+            background: var(--teal-light);
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+        }
+
+        .privacy-section a {
+            color: var(--teal-mid);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .privacy-section a:hover { text-decoration: underline; }
+
+        .complaints-block {
+            background: rgba(27, 107, 110, 0.04);
+            border-left: 3px solid var(--teal-light);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .complaints-block p {
+            font-size: 0.88rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .complaints-block p:last-child { margin-bottom: 0; }
+
+        @media (max-width: 768px) {
+            .privacy-page { padding: 3rem 1.25rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+    <main class="privacy-page">
+        <a href="https://pendulumpsychology.com.au/" class="back-link">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="8" x2="4" y2="8"/><polyline points="7,4 4,8 7,12"/>
+            </svg>
+            Back to Pendulum Psychology
+        </a>
+
+        <h1 class="privacy-title">Privacy Policy</h1>
+        <p class="privacy-subtitle">Pendulum Psychology &mdash; David O&rsquo;Donohue, Clinical Psychologist</p>
+        <p class="privacy-updated">Last updated: April 2026</p>
+
+        <hr class="privacy-divider">
+
+        <div class="privacy-section">
+            <h2>About this policy</h2>
+            <p>This policy describes how Pendulum Psychology collects, uses, discloses, and stores your personal information. It is bound by the Australian Privacy Principles (APPs) set out in the Privacy Act 1988 (Cth), the Health Records (Privacy and Access) Act 1997 (ACT), and the Australian Psychological Society Code of Ethics (2007).</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>What personal information we collect</h2>
+            <p>In order to provide psychological services, we may collect the following types of information:</p>
+            <ul>
+                <li>Your name, date of birth, address, phone number, and email address</li>
+                <li>Emergency contact details</li>
+                <li>Referral information (including from GPs, psychiatrists, or other health professionals)</li>
+                <li>Medicare, DVA, or private health insurance details</li>
+                <li>Relevant medical and mental health history</li>
+                <li>Session notes and clinical records</li>
+                <li>Any other information you provide during the course of assessment or treatment</li>
+            </ul>
+            <p>Much of this information is classified as &ldquo;sensitive information&rdquo; under the Privacy Act, including health information. We will only collect sensitive information with your consent, or where required or authorised by law.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>How we collect your information</h2>
+            <p>We collect personal information directly from you wherever possible &mdash; through intake forms, during sessions, and via correspondence. We may also collect information from third parties such as your GP, referring professional, or other treating practitioners, with your knowledge and consent unless otherwise required by law.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Why we collect, use, and disclose your information</h2>
+            <p>Your personal information is collected and used for the primary purpose of providing psychological services, including assessment, diagnosis, treatment planning, and ongoing care. We may also use or disclose your information for directly related secondary purposes that you would reasonably expect, such as:</p>
+            <ul>
+                <li>Communicating with your GP or other members of your care team (with your consent)</li>
+                <li>Processing Medicare, DVA, or private health insurance claims</li>
+                <li>Meeting professional supervision requirements (using de-identified information)</li>
+                <li>Complying with legal obligations, including mandatory reporting requirements under child protection legislation, and court orders</li>
+            </ul>
+            <p>We will not use or disclose your personal information for purposes unrelated to your care without your consent, unless required or authorised by law.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Limits to confidentiality</h2>
+            <p>There are legal and ethical circumstances in which confidentiality may be limited. These include:</p>
+            <ul>
+                <li>Where there is a serious and imminent risk to your life or health, or to the life or health of another person</li>
+                <li>Where there is a mandatory obligation to report suspected child abuse or neglect</li>
+                <li>Where disclosure is required by law or court order</li>
+                <li>Where disclosure is necessary for the management of a health service complaint</li>
+            </ul>
+            <p>These limits will be discussed with you at the start of treatment.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>How we store and protect your information</h2>
+            <p>Your personal information is stored securely using the following systems:</p>
+            <ul>
+                <li><strong>Halaxy</strong> &mdash; an encrypted, cloud-based practice management system designed for health professionals and compliant with the Privacy Act 1988 (Cth). Halaxy is used for client records, scheduling, and billing.</li>
+                <li><strong>Heidi Health</strong> &mdash; an AI-assisted clinical documentation tool used to support session note-taking. Heidi Health processes audio in real time to generate clinical notes, and does not retain audio recordings after processing. Data is encrypted in transit and at rest, and stored within Australian-based infrastructure.</li>
+            </ul>
+            <p>Access to your records in both systems is restricted to authorised personnel only. We take reasonable steps to protect your information from misuse, interference, loss, and unauthorised access, modification, or disclosure.</p>
+            <p>Any hard-copy documents are stored securely and destroyed by cross-cut shredding when no longer required.</p>
+            <p>Clinical records are retained for a minimum of 7 years after the last contact for adult clients, or until the client turns 25 (whichever is longer) for clients who were minors at the time of treatment, in accordance with professional and legal requirements.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Accessing and correcting your information</h2>
+            <p>You have the right to request access to the personal information we hold about you, and to request corrections if you believe it is inaccurate, out of date, or incomplete. Requests should be made in writing to the practice. We will respond within 30 days. Access may be refused in limited circumstances permitted under the Privacy Act, and we will provide reasons if this occurs.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Anonymity and pseudonymity</h2>
+            <p>Where it is lawful and practicable, you may deal with us anonymously or under a pseudonym. However, in most cases this will not be possible given the nature of psychological services.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Notifiable data breaches</h2>
+            <p>In the event of a data breach that is likely to result in serious harm, we will comply with the Notifiable Data Breaches scheme under the Privacy Act. This includes notifying affected individuals and the Office of the Australian Information Commissioner (OAIC) as required.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Complaints</h2>
+            <p>If you believe your personal information has been handled in a way that is inconsistent with this policy or the Australian Privacy Principles, please raise your concern with us directly so we can work to resolve it.</p>
+            <p>If you are not satisfied with our response, you may contact:</p>
+            <div class="complaints-block">
+                <p><strong>Office of the Australian Information Commissioner (OAIC)</strong><br>Phone: 1300 363 992 &mdash; <a href="https://www.oaic.gov.au">www.oaic.gov.au</a></p>
+                <p><strong>ACT Human Rights Commission</strong> (for complaints under the Health Records Act)<br>Phone: (02) 6205 2222 &mdash; <a href="https://www.hrc.act.gov.au">www.hrc.act.gov.au</a></p>
+                <p><strong>Australian Health Practitioner Regulation Agency (AHPRA)</strong><br>Phone: 1300 419 495 &mdash; <a href="https://www.ahpra.gov.au">www.ahpra.gov.au</a></p>
+            </div>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Changes to this policy</h2>
+            <p>This policy may be updated from time to time to reflect changes in legislation or practice procedures. The current version will always be available on this page.</p>
+        </div>
+
+        <div class="privacy-section">
+            <h2>Contact</h2>
+            <p><strong>Pendulum Psychology</strong><br>David O&rsquo;Donohue &mdash; Clinical Psychologist<br>Unit 5, 10 Thesiger Court, Deakin, ACT 2600<br><a href="mailto:pendulumpsychology@gmail.com">pendulumpsychology@gmail.com</a></p>
+        </div>
+    </main>
+</body>
+</html>
