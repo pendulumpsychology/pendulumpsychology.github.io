@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Supervision Roster</title>
+<meta name="description" content="Shares out who presents at supervision.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f5f5b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Supervision">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+:root{
+  --bg:#f5f3ee;--card:#ffffff;--ink:#1d2a2c;--muted:#66706f;--line:#e2ded5;
+  --accent:#1f5f5b;--accent-ink:#ffffff;--accent-soft:#e3efed;
+  --ok:#2c7a4b;--warn:#a45d0a;--warn-soft:#fbf0e1;--danger:#a3372b;
+  --radius:12px;--shadow:0 1px 2px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#141a1b;--card:#1d2526;--ink:#e7ecea;--muted:#9aa6a4;--line:#2f3a3b;
+  --accent:#6fb7ae;--accent-ink:#0f1617;--accent-soft:#213432;
+  --ok:#7cc79a;--warn:#e7b066;--warn-soft:#3a2e1d;--danger:#e78a7e;
+  --shadow:none;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+main{max-width:640px;margin:0 auto;padding:16px 16px 48px}
+header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 16px}
+header.top h1{font-size:22px;margin:0;letter-spacing:-.01em}
+header.top .who{color:var(--muted);font-size:14px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:28px 0 10px;font-weight:600}
+p{margin:8px 0}
+a{color:var(--accent)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:0 0 10px;box-shadow:var(--shadow)}
+.card.invite{border:2px solid var(--accent);background:var(--accent-soft)}
+.card.invite h3{margin:0 0 4px;font-size:19px}
+.card.notice{border-left:4px solid var(--accent)}
+.card.warn{background:var(--warn-soft);border-color:var(--warn)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row.spread{justify-content:space-between}
+.session .when{font-weight:600}
+.session .status{font-size:14px;color:var(--muted)}
+.session .status.ok{color:var(--ok)}
+.session .status.warn{color:var(--warn)}
+button,.button{font:inherit;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);
+  padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-block;line-height:1.2}
+button.primary,.button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+button.big{padding:14px 18px;font-size:17px;flex:1 1 0;min-width:140px}
+button.link{border:none;background:none;color:var(--accent);padding:0;text-decoration:underline}
+button.danger{color:var(--danger)}
+button:disabled{opacity:.5;cursor:default}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 11px;max-width:100%}
+input[type=checkbox]{width:18px;height:18px;padding:0}
+label.field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+form.stack{display:flex;flex-direction:column;gap:12px}
+form.inline{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end}
+.list-names{display:flex;flex-direction:column;gap:8px}
+.list-names button{text-align:left;padding:14px 16px;font-size:17px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{font-size:12px;color:var(--muted);font-weight:600}
+td.n,th.n{text-align:right}
+details summary{cursor:pointer;color:var(--accent)}
+details ul{padding-left:20px;margin:8px 0}
+.flash{position:sticky;top:8px;z-index:5}
+.slots{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 6px}
+.slot{background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:3px 12px;font-size:14px}
+.slot-empty{border:1px dashed var(--line);color:var(--muted);border-radius:999px;padding:2px 12px;font-size:14px}
+.warn-text{color:var(--warn)}
+.switcher{margin:-4px 0 14px}
+.switcher select{width:100%}
+.list-names button:disabled{opacity:.6}
+.badge{font-size:12px;border-radius:999px;padding:2px 8px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.badge.ok{color:var(--ok);border-color:var(--ok)}
+.badge.warn{color:var(--warn);border-color:var(--warn)}
+.device{border-top:1px solid var(--line);padding:8px 0;font-size:14px}
+.steps{padding-left:22px}
+.steps li{margin:8px 0}
+.share-icon{display:inline-block;vertical-align:-3px}
+footer{margin-top:36px;color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:6px}
+.center{text-align:center}
+.spinner{margin:80px auto;width:28px;height:28px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<main id="app"><div class="spinner" aria-label="Loading"></div></main>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
