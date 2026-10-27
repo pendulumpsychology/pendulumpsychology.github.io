@@ -542,7 +542,8 @@ function mainView() {
       <tbody>${tally}</tbody></table></div>
     <details><summary>How presenters are chosen</summary><ul>
       <li>Anyone can put their hand up for an open spot at any time.</li>
-      <li>${g.offerLeadDays} days before each session, any spots still open are offered to the people with the fewest presentations (past plus booked). If that's tied, whoever presented longest ago is asked first.</li>
+      <li>Open spots in the next session are offered straight away, however far off it is. Later sessions are offered once they're within ${g.offerLeadDays} days, or once the session before them has happened.</li>
+      <li>Spots go to the people with the fewest presentations (past plus booked). If that's tied, whoever presented longest ago is asked first.</li>
       <li>You have ${g.replyHours} hours to answer, with one reminder before the deadline.</li>
       <li>"Can't this time", or no answer, counts as a pass and the next person is asked.</li>
       <li>If the spots fill up before you answer, you're told it's full and it doesn't count against you.</li>
@@ -607,7 +608,7 @@ function adminView() {
   if (!adminState) return '<div class="spinner" aria-label="Loading"></div>';
   const a = adminState;
   const g = a.group;
-  const responseWord = { pending: 'waiting', accepted: 'yes', declined: 'no', expired: 'no reply', withdrawn: 'withdrawn', full: 'filled before reply', dropped: 'pulled out', unreachable: 'skipped (no notifications)' };
+  const responseWord = { pending: 'waiting', accepted: 'yes', declined: 'no', expired: 'no reply', withdrawn: 'withdrawn', full: 'filled before reply', dropped: 'pulled out', unreachable: 'skipped (no notifications)', retry: 'skipped (no notifications), reconsidered later' };
 
   const sessions = a.sessions.map((s) => {
     const notIn = a.members.filter((m) => m.active && !s.presenters.some((p) => p.id === m.id));
@@ -672,7 +673,7 @@ function adminView() {
       <label class="field">Group name<input name="name" value="${esc(g.name)}" required maxlength="80"></label>
       <div class="row">
         <label class="field">Presenters per session<input type="number" name="spots" min="1" max="10" value="${g.spots}" style="width:110px"></label>
-        <label class="field">Days of notice<input type="number" name="offerLeadDays" min="3" max="60" value="${g.offerLeadDays}" style="width:110px"></label>
+        <label class="field">Also invite for later sessions within (days)<input type="number" name="offerLeadDays" min="3" max="60" value="${g.offerLeadDays}" style="width:110px"></label>
         <label class="field">Hours to answer<input type="number" name="replyHours" min="12" max="168" value="${g.replyHours}" style="width:110px"></label>
       </div>
       <div><button ${busy ? 'disabled' : ''}>Save settings</button></div></form></div>
