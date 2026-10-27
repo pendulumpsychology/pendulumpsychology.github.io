@@ -17,8 +17,17 @@ const store = {
   setObj(k, o) { this.set(k, JSON.stringify(o)); },
 };
 
-const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+// What the page can tell about where it's running.
+const UA = navigator.userAgent;
+const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; // opened from the home-screen icon
+const isIOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPadOS reports as a Mac
+const isAndroid = /Android/i.test(UA);
+const OS = isIOS ? 'ios' : isAndroid ? 'android' : 'computer';
+const iosVersion = (() => { const m = UA.match(/OS (\d+)_(\d+)/); return m ? Number(m[1]) + Number(m[2]) / 100 : null; })();
+const iosTooOld = isIOS && iosVersion !== null && iosVersion < 16.04; // web push on iPhone needs iOS 16.4+
+// In-app browsers (opened from a link in Messenger, Instagram, Gmail etc.) can't add to the home screen.
+const inAppBrowser = /FBAN|FBAV|FB_IAB|Instagram|Line\/|LinkedInApp|Snapchat|MicroMessenger|GSA\/|\bwv\)/.test(UA);
+const iosBrowser = !isIOS ? null : /CriOS/.test(UA) ? 'Chrome' : /FxiOS/.test(UA) ? 'Firefox' : /EdgiOS/.test(UA) ? 'Edge' : 'Safari';
 const pushSupported = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
 
 const el = document.getElementById('app');
@@ -40,6 +49,7 @@ let groupList = null;
 let joinGroup = null;      // { id, name }
 let memberList = null;
 
+let notifyStep = false;    // show the notifications step right after signing up
 let openPanel = null;      // which inline form is open: 'add' | 'edit-<id>' | 'admin-yes'
 let flash = null;
 let busy = false;
@@ -225,12 +235,13 @@ function render() {
   }
   if (isAdminView()) { el.innerHTML = adminView(); return; }
   if (joining) {
-    const firstEver = !Object.keys(devices).length;
-    el.innerHTML = (firstEver && isIOS && !standalone && !store.get(K_SKIP_INSTALL)) ? installView() : joinView();
+    // On a phone, set up the home-screen app before signing up, unless the page is already running as it.
+    const needsInstall = OS !== 'computer' && !standalone && !store.get(K_SKIP_INSTALL);
+    el.innerHTML = needsInstall ? installView() : joinView();
     return;
   }
   if (!state) { el.innerHTML = '<div class="spinner" aria-label="Loading"></div>'; return; }
-  el.innerHTML = mainView();
+  el.innerHTML = (notifyStep && pushStatus() === 'off') ? notifyStepView() : mainView();
 }
 
 function flashHtml() {
@@ -240,20 +251,78 @@ function flashHtml() {
 
 const SHARE_ICON = `<svg class="share-icon" width="18" height="20" viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.8" aria-label="Share icon"><path d="M9 14V2M5 6l4-4 4 4"/><path d="M4 9H2v11h14V9h-2"/></svg>`;
 
+const MENU_ICON = '<strong aria-label="menu">⋮</strong>';
+
+// Shown on a phone before signing up, when the page is open in the browser rather than from the home-screen icon.
 function installView() {
-  return `<header class="top"><h1>Supervision roster</h1></header>
-    <div class="card">
-      <h3 style="margin-top:0">Add this to your home screen first</h3>
-      <p>On iPhone, notifications only work from the home-screen app. It takes four taps:</p>
+  const head = '<header class="top"><h1>Supervision roster</h1></header>';
+  const already = `<p class="muted small">Already added it? Close this and open <strong>Supervision</strong> from your home screen instead.</p>`;
+
+  if (inAppBrowser) {
+    return `${head}<div class="card warn">
+      <h3 style="margin-top:0">Open this in ${isIOS ? 'Safari' : 'Chrome'} first</h3>
+      <p>This page has opened inside another app (for example from a message or email link). That app can't add it to your home screen.</p>
       <ol class="steps">
-        <li>Tap the Share button ${SHARE_ICON} in Safari's toolbar.</li>
-        <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
-        <li>Tap <strong>Add</strong>.</li>
-        <li>Close Safari and open <strong>Supervision</strong> from your home screen. You'll sign in there.</li>
+        <li>Look for a <strong>⋯</strong> or ${MENU_ICON} menu, or a compass icon, near the top or bottom of the screen.</li>
+        <li>Choose <strong>Open in ${isIOS ? 'Safari' : 'Chrome'}</strong> (it may say <strong>Open in browser</strong>).</li>
       </ol>
-      <p class="muted small">If you sign in here in Safari first, the home-screen app will ask you again, because iPhone keeps them separate.</p>
+      <p>If you can't find it, copy this address into ${isIOS ? 'Safari' : 'Chrome'}:<br><strong>${esc(location.origin + location.pathname)}</strong></p>
+    </div>`;
+  }
+
+  if (isIOS) {
+    const where = iosBrowser === 'Safari'
+      ? `Tap the Share button ${SHARE_ICON}. It's in the toolbar at the bottom of Safari (on iPad, at the top).`
+      : `Tap the Share button ${SHARE_ICON}. In ${iosBrowser} it's at the top right, next to the address bar.`;
+    return `${head}
+      ${iosTooOld ? `<div class="card warn"><strong>Your iPhone needs an update for notifications.</strong> Notifications need iOS 16.4 or later; this iPhone has iOS ${String(iosVersion).replace('.', '.')}. Update in Settings → General → Software Update, then come back. You can still set up the app now.</div>` : ''}
+      <div class="card">
+        <h3 style="margin-top:0">First, add this to your home screen</h3>
+        <p>On iPhone, notifications only work from the home-screen app, and it saves you finding this link again. It takes four taps:</p>
+        <ol class="steps">
+          <li>${where}</li>
+          <li>Scroll down the list and tap <strong>Add to Home Screen</strong>. (If you don't see it, tap <strong>Edit Actions</strong> at the bottom of the list and add it.)</li>
+          <li>Tap <strong>Add</strong> at the top right.</li>
+          <li>Close ${iosBrowser} and tap the new <strong>Supervision</strong> icon on your home screen. You'll sign up there.</li>
+        </ol>
+        <p class="muted small">Please don't sign up here in ${iosBrowser} first: iPhone keeps the home-screen app separate, so you'd have to do it twice.</p>
+        ${already}
+      </div>
+      <p class="center"><button class="link small" data-act="skip-install">Skip: use it in ${iosBrowser} without notifications</button></p>`;
+  }
+
+  // Android
+  const oneTap = installEvent
+    ? `<p><button class="primary big" data-act="install">Add to home screen</button></p>
+       <p class="small muted">Then tap <strong>Install</strong> (or <strong>Add</strong>) when asked.</p>`
+    : '';
+  return `${head}<div class="card">
+      <h3 style="margin-top:0">First, add this to your home screen</h3>
+      <p>It saves you finding this link again, and makes notifications more reliable.</p>
+      ${oneTap}
+      ${installEvent ? '<p class="small muted" style="margin-bottom:0">Or do it from the browser menu:</p>' : ''}
+      <ol class="steps">
+        <li>Tap the menu ${MENU_ICON} at the top right of Chrome (in Samsung Internet, the ☰ menu at the bottom right).</li>
+        <li>Tap <strong>Add to home screen</strong> or <strong>Install app</strong>.</li>
+        <li>Tap <strong>Install</strong> or <strong>Add</strong>.</li>
+        <li>Close the browser and tap the new <strong>Supervision</strong> icon on your home screen. You'll sign up there.</li>
+      </ol>
+      ${already}
     </div>
-    <p class="center"><button class="link" data-act="skip-install">Continue in Safari without notifications</button></p>`;
+    <p class="center"><button class="link small" data-act="skip-install">Skip: sign up in the browser</button></p>`;
+}
+
+// Straight after signing up: one screen for notifications before the roster.
+function notifyStepView() {
+  return `<header class="top"><div><div class="muted small">Supervision roster</div><h1>${esc(state.group.name)}</h1></div><span class="who">${esc(state.me.name)}</span></header>
+    ${flashHtml()}
+    <div class="card">
+      <h3 style="margin-top:0">Last step: turn on notifications</h3>
+      <p>This is how you'll hear when you're asked to present, when dates are added or moved, and who's presenting. You'll only get notifications about this roster.</p>
+      <p>Tap the button, then tap <strong>Allow</strong> when your phone asks.</p>
+      <p><button class="primary big" data-act="enable-push" ${busy ? 'disabled' : ''}>Turn on notifications</button></p>
+      <p class="center"><button class="link small" data-act="notify-skip">Skip for now</button></p>
+    </div>`;
 }
 
 function joinView() {
@@ -268,15 +337,18 @@ function joinView() {
             ${esc(g.name)} <span class="muted small">· ${g.members} member${g.members === 1 ? '' : 's'}${mine.has(String(g.id)) ? ' · you\'re in this group' : ''}</span></button>`).join('')
         : '<p class="muted">No groups yet.</p>')
       : '<div class="spinner"></div>';
-    body = `<div class="card"><h3 style="margin-top:0">Which supervision group are you in?</h3>
+    const computerNote = OS === 'computer'
+      ? '<div class="card"><p class="small muted" style="margin:0">On a computer this works in the browser, and notifications appear while the browser is open. A phone is usually easier: open this same link on your phone to set it up there.</p></div>'
+      : '';
+    body = `${computerNote}<div class="card"><h3 style="margin-top:0">Which supervision group are you in?</h3>
       <div class="list-names">${list}</div></div>
       <div class="card"><p style="margin-top:0">Not listed? You can add your group.</p>
       <button data-act="create-start">Start a new group</button></div>
       <p>${cancel}</p>`;
   } else if (step === 'create') {
     body = `<div class="card"><h3 style="margin-top:0">Start a new group</h3><form class="stack" data-form="create-group">
-      <label class="field">Group name, as members will see it in the list
-        <input name="name" required maxlength="80" placeholder="e.g. ISTDP Canberra"></label>
+      <label class="field">Group name: your cohort and group, as members will recognise it
+        <input name="name" required maxlength="80" placeholder="e.g. 1/26A"></label>
       <p class="small muted" style="margin:0">Next you'll add yourself as a member. You don't have to be the group's admin.</p>
       <div class="row"><button class="primary" ${busy ? 'disabled' : ''}>Create group</button>
       <button type="button" class="link" data-act="back-groups">Back</button></div>
@@ -394,6 +466,28 @@ function sessionCard(u) {
     ${askedLine}
     ${action ? `<div class="row" style="margin-top:8px">${action}</div>` : ''}
     ${editing ? sessionForm('session-edit', u) : ''}
+    ${adminHere() ? adminSpotControls(u) : ''}
+  </div>`;
+}
+
+// Admins can manage spots straight from the roster, e.g. for members who don't use the app.
+function adminHere() { return !!adminTokens[current]; }
+
+function adminSpotControls(u) {
+  const free = state.tally.filter((t) => !u.presenters.some((p) => p.id === t.id));
+  const panel = `spots-${u.id}`;
+  if (openPanel !== panel) {
+    return `<p style="margin:10px 0 0"><button class="link small" data-act="panel" data-panel="${panel}">Admin: add or remove presenters</button></p>`;
+  }
+  return `<div class="admin-box">
+    <div class="small muted" style="margin-bottom:6px">Admin: changes here notify the group. Removing someone doesn't count as a pass.</div>
+    ${u.presenters.map((p) => `<div class="row spread device"><span>${esc(p.name)}</span>
+      <button class="link small danger" data-act="admin-remove" data-id="${u.id}" data-member="${p.id}" data-name="${esc(p.name)}" ${busy ? 'disabled' : ''}>Remove</button></div>`).join('')}
+    ${u.open > 0 && free.length ? `<form class="inline" data-form="admin-add" data-id="${u.id}" style="margin-top:8px">
+      <select name="memberId">${free.map((t) => `<option value="${t.id}">${esc(t.name)}</option>`).join('')}</select>
+      <button class="primary" ${busy ? 'disabled' : ''}>Add to a spot</button></form>` : ''}
+    ${u.open === 0 ? '<p class="small muted">All spots are filled. Remove someone to add someone else.</p>' : ''}
+    <p class="small muted" style="margin-bottom:0">Someone not on the list? Add them by name on the Group admin page first. <button class="link small" data-act="panel" data-panel="">Close</button></p>
   </div>`;
 }
 
@@ -613,6 +707,7 @@ function signedIn(r) {
   saveDevices();
   setCurrent(r.groupId);
   joining = false; step = 'groups'; state = null; openPanel = null;
+  notifyStep = true;
   say(null);
 }
 
@@ -645,7 +740,11 @@ el.addEventListener('click', (ev) => {
       adminAsked[current] = 1; store.setObj(K_ADMIN_ASKED, adminAsked);
       say('No problem. If you change your mind, it\'s under Group admin at the bottom.'); render();
       break;
-    case 'enable-push': act(enablePush); break;
+    case 'enable-push': act(async () => { const m = await enablePush(); notifyStep = false; return m; }); break;
+    case 'notify-skip':
+      notifyStep = false;
+      say('You can turn notifications on any time from the top of this screen.'); render();
+      break;
     case 'test-push': act(async () => (await api('test-push', {})).message); break;
     case 'accept': act(async () => (await api('respond', { offerId: id, action: 'accept' })).message); break;
     case 'decline':
@@ -676,7 +775,14 @@ el.addEventListener('click', (ev) => {
       break;
     case 'install':
       installEvent.prompt();
-      installEvent.userChoice.finally(() => { installEvent = null; render(); });
+      installEvent.userChoice.then((c) => {
+        if (c && c.outcome === 'accepted') say('Added. Now close the browser and open Supervision from your home screen.');
+      }).finally(() => { installEvent = null; render(); });
+      break;
+    case 'admin-remove':
+      if (!confirm(`Remove ${d.name} from this session? It won't count as a pass.`)) return;
+      adminGroup = current;
+      act(async () => (await api('admin/action', { action: 'remove_presenter', id, memberId: Number(d.member) }, { admin: true })).message, { closePanel: false });
       break;
     case 'admin-logout':
       saveAdminToken(adminGroup, null); adminState = null; say(null); refresh();
@@ -750,6 +856,10 @@ el.addEventListener('submit', (ev) => {
       });
       break;
     case 'add-session': adminAct({ action: 'add_session', date: v.date, time: v.time, note: v.note }); break;
+    case 'admin-add':
+      adminGroup = current;
+      act(async () => (await api('admin/action', { action: 'add_presenter', id, memberId: Number(v.memberId), notify: true }, { admin: true })).message, { closePanel: false });
+      break;
     case 'add-presenter': adminAct({ action: 'add_presenter', id, memberId: Number(v.memberId), notify: !!v.notify }); break;
     case 'add-member': adminAct({ action: 'add_member', name: v.name }); break;
     case 'rename': adminAct({ action: 'rename_member', id, name: v.name }); break;

@@ -1,7 +1,7 @@
 // Service worker: shows push notifications, opens the app when one is tapped,
 // and keeps a copy of the app's files so it opens quickly and offline.
 
-const CACHE = 'roster-v3';
+const CACHE = 'roster-v5';
 const SHELL = ['./', './index.html', './app.js', './config.js', './manifest.webmanifest', './icon-192.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (event) => {
