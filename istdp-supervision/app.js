@@ -318,7 +318,7 @@ function notifyStepView() {
     ${flashHtml()}
     <div class="card">
       <h3 style="margin-top:0">Last step: turn on notifications</h3>
-      <p>This is how you'll hear when you're asked to present, when dates are added or moved, and who's presenting. You'll only get notifications about this roster.</p>
+      <p>This is how you'll hear when it's your turn to be asked to present. That's the only time you'll get a notification: nothing about who else is presenting or dates being added.</p>
       <p>Tap the button, then tap <strong>Allow</strong> when your phone asks.</p>
       <p><button class="primary big" data-act="enable-push" ${busy ? 'disabled' : ''}>Turn on notifications</button></p>
       <p class="center"><button class="link small" data-act="notify-skip">Skip for now</button></p>
@@ -397,7 +397,7 @@ function notificationCard() {
   if (texts[s]) return `<div class="card warn">${esc(texts[s])}</div>`;
   const err = state.device.pushError ? `<p class="small">${esc(state.device.pushError)}</p>` : '';
   return `<div class="card warn"><strong>Turn on notifications</strong>
-    <p>So you know when you're asked to present and when dates change. You'll only get notifications about this roster.</p>${err}
+    <p>So you know when you're asked to present. That's the only time you'll get one.</p>${err}
     <button class="primary" data-act="enable-push" ${busy ? 'disabled' : ''}>Turn on notifications</button></div>`;
 }
 
@@ -438,7 +438,7 @@ function sessionForm(form, s) {
       <label class="field">Note (optional)<input name="note" maxlength="200" placeholder="e.g. online, or a different room" value="${isEdit ? esc(s.note || '') : ''}"></label>
       <div class="row"><button class="primary" ${busy ? 'disabled' : ''}>${isEdit ? 'Save' : 'Add date'}</button>
         <button type="button" class="link" data-act="panel" data-panel="">Close</button></div>
-      ${isEdit ? '<p class="small muted" style="margin:0">Everyone is notified if the date or time changes. People already presenting stay booked and can pull out if it doesn\'t suit.</p>' : '<p class="small muted" style="margin:0">Everyone is notified about the new date.</p>'}
+      ${isEdit ? '<p class="small muted" style="margin:0">People already presenting stay booked. Nobody is notified about the change, so let them know if the new date might not suit.</p>' : '<p class="small muted" style="margin:0">Open spots are offered when this becomes the next session, or once it\'s within 14 days.</p>'}
     </form>
     ${isEdit ? `<p><button class="danger small" data-act="session-cancel" data-id="${s.id}" data-label="${esc(s.label)}">Cancel this session</button></p>` : ''}`;
 }
@@ -480,7 +480,7 @@ function adminSpotControls(u) {
     return `<p style="margin:10px 0 0"><button class="link small" data-act="panel" data-panel="${panel}">Admin: add or remove presenters</button></p>`;
   }
   return `<div class="admin-box">
-    <div class="small muted" style="margin-bottom:6px">Admin: changes here notify the group. Removing someone doesn't count as a pass.</div>
+    <div class="small muted" style="margin-bottom:6px">Admin: removing someone doesn't count as a pass. Nobody is notified about these changes.</div>
     ${u.presenters.map((p) => `<div class="row spread device"><span>${esc(p.name)}</span>
       <button class="link small danger" data-act="admin-remove" data-id="${u.id}" data-member="${p.id}" data-name="${esc(p.name)}" ${busy ? 'disabled' : ''}>Remove</button></div>`).join('')}
     ${u.open > 0 && free.length ? `<form class="inline" data-form="admin-add" data-id="${u.id}" style="margin-top:8px">
@@ -620,9 +620,8 @@ function adminView() {
       ${s.status === 'cancelled' ? '' : `<details><summary class="small">Change</summary>
         ${notIn.length ? `<form class="inline" data-form="add-presenter" data-id="${s.id}" style="margin-top:8px">
           <select name="memberId">${notIn.map((m) => `<option value="${m.id}">${esc(m.name)}</option>`).join('')}</select>
-          ${s.past ? '' : '<label class="small row"><input type="checkbox" name="notify" checked> notify group</label>'}
           <button>Add presenter</button></form>` : ''}
-        ${s.past ? '<p class="small muted">Past session: changes here only correct the record.</p>' : `<div class="row" style="margin-top:8px"><button class="danger" data-act="admin" data-action="cancel_session" data-id="${s.id}" data-confirm="Cancel this session? Everyone in the group will be notified.">Cancel session</button></div>`}
+        ${s.past ? '<p class="small muted">Past session: changes here only correct the record.</p>' : `<div class="row" style="margin-top:8px"><button class="danger" data-act="admin" data-action="cancel_session" data-id="${s.id}" data-confirm="Cancel this session? Nobody is notified, so let the group know.">Cancel session</button></div>`}
       </details>`}
     </div>`;
   }).join('') || '<p class="muted">No sessions yet. Members add dates from the roster screen.</p>';
@@ -630,13 +629,16 @@ function adminView() {
   const members = a.members.map((m) => `<div class="card" ${m.active ? '' : 'style="opacity:.6"'}>
       <div class="row spread"><strong>${esc(m.name)}</strong>
         <span class="row">${m.active ? (m.reachable ? '<span class="badge ok">notifications OK</span>' : '<span class="badge warn">no working notifications</span>') : '<span class="badge">inactive</span>'}</span></div>
-      <div class="small muted">${m.presented} presented · ${m.booked} booked · ${m.passes} passes</div>
+      <div class="small muted">${m.presented} presented${m.prior ? ` (${m.prior} before the app)` : ''} · ${m.booked} booked · ${m.passes} passes</div>
       ${m.multipleActive ? '<p class="small">More than one device used in the last 30 days. That\'s normal for a phone plus a computer, or a new phone; it could also be someone tapping the wrong name.</p>' : ''}
       ${m.devices.map((d) => `<div class="device"><div class="row spread"><span>${esc(d.label || 'Device')}</span>
           <button class="link small" data-act="admin" data-action="signout_device" data-id="${d.id}" data-confirm="Sign out this device? It will ask 'registered before?' next time it opens this group.">Sign out</button></div>
           <div class="small muted">${d.joinedVia === 'new' ? 'Registered as new' : 'Picked name from list'} · added ${esc(d.added)} · last seen ${esc(d.lastSeen)} · notifications ${d.push ? 'on' : 'off'}${d.pushError ? ` (${esc(d.pushError)})` : ''}</div></div>`).join('') || '<div class="device small muted">No devices signed in.</div>'}
       <details><summary class="small">Edit</summary>
         <form class="inline" data-form="rename" data-id="${m.id}" style="margin-top:8px"><input name="name" value="${esc(m.name)}" required><button>Rename</button></form>
+        <form class="inline" data-form="set-prior" data-id="${m.id}" style="margin-top:8px">
+          <label class="field">Presentations before the app<input type="number" name="prior" min="0" max="200" value="${m.prior || 0}" style="width:110px"></label>
+          <button>Save</button></form>
         <div class="row" style="margin-top:8px">
           <button data-act="admin" data-action="test_push" data-id="${m.id}">Send test notification</button>
           <button data-act="admin" data-action="set_active" data-id="${m.id}" data-active="${m.active ? '' : '1'}">${m.active ? 'Deactivate' : 'Reactivate'}</button>
@@ -664,7 +666,15 @@ function adminView() {
         <label class="field">Note (optional)<input name="note"></label>
         <button>Add</button></form>
       <p class="small muted">Members can also add and move dates themselves from the roster screen.</p></details>
-    <h2>Members</h2>${members}
+    <h2>Members</h2>
+    ${a.members.length ? `<details class="card"><summary>Set presentations before the app (all members)</summary>
+      <p class="small muted">For presentations that happened before the group used this app. They're added to each person's Presented count, which decides who's asked next.</p>
+      <form class="stack" data-form="set-prior-all">
+        ${a.members.filter((m) => m.active).map((m) => `<label class="row spread"><span>${esc(m.name)}</span>
+          <input type="number" name="p${m.id}" min="0" max="200" value="${m.prior || 0}" style="width:90px"></label>`).join('')}
+        <div><button class="primary" ${busy ? 'disabled' : ''}>Save all</button></div>
+      </form></details>` : ''}
+    ${members}
     <div class="card"><form class="inline" data-form="add-member">
       <label class="field">Add a member by name<input name="name" required></label><button>Add</button></form>
       <p class="small muted">Optional. People can also join the group themselves in the app.</p></div>
@@ -761,7 +771,7 @@ el.addEventListener('click', (ev) => {
       act(async () => (await api('drop', { sessionId: id })).message);
       break;
     case 'session-cancel':
-      if (!confirm(`Cancel the session on ${d.label}? Everyone will be notified.`)) return;
+      if (!confirm(`Cancel the session on ${d.label}? Nobody is notified, so let the group know.`)) return;
       act(async () => (await api('session-cancel', { sessionId: id })).message);
       break;
     case 'away-delete': act(async () => (await api('away-delete', { id })).message); break;
@@ -864,6 +874,14 @@ el.addEventListener('submit', (ev) => {
     case 'add-presenter': adminAct({ action: 'add_presenter', id, memberId: Number(v.memberId), notify: !!v.notify }); break;
     case 'add-member': adminAct({ action: 'add_member', name: v.name }); break;
     case 'rename': adminAct({ action: 'rename_member', id, name: v.name }); break;
+    case 'set-prior': adminAct({ action: 'set_prior', id, prior: Number(v.prior) }); break;
+    case 'set-prior-all':
+      act(async () => {
+        const changed = adminState.members.filter((m) => m.active && Number(v[`p${m.id}`]) !== (m.prior || 0));
+        for (const m of changed) await api('admin/action', { action: 'set_prior', id: m.id, prior: Number(v[`p${m.id}`]) }, { admin: true });
+        return changed.length ? `Saved ${changed.length} change${changed.length === 1 ? '' : 's'}.` : 'No changes.';
+      });
+      break;
     case 'merge':
       if (!confirm('Merge these two? Everything from the first name moves to the second, and the first name is removed.')) return;
       adminAct({ action: 'merge_members', fromId: id, intoId: Number(v.intoId) });
