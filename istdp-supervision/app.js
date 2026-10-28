@@ -443,6 +443,17 @@ function sessionForm(form, s) {
     ${isEdit ? `<p><button class="danger small" data-act="session-cancel" data-id="${s.id}" data-label="${esc(s.label)}">Cancel this session</button></p>` : ''}`;
 }
 
+// Where people on the app stand for a session: waiting on a reply, or can't.
+function standsHtml(u, meId) {
+  if (u.open === 0) return '';
+  const lines = [];
+  const asked = (u.asked || []).filter((a) => a.id !== meId);
+  if (asked.length) lines.push(`<strong>Waiting on:</strong> ${asked.map((a) => `${esc(a.name)} (reply by ${esc(a.deadline)})`).join(', ')}`);
+  if ((u.cant || []).length) lines.push(`<strong>Can't:</strong> ${u.cant.map((c) => `${esc(c.name)} (${esc(c.how)})`).join(', ')}`);
+  if (!lines.length) return '';
+  return `<div class="stands small">${lines.map((l) => `<div>${l}</div>`).join('')}</div>`;
+}
+
 function sessionCard(u) {
   const names = u.presenters.map((p) => (p.id === state.me.id ? '<strong>You</strong>' : esc(p.name)));
   const empty = Array.from({ length: u.open }, () => '<span class="slot-empty">open</span>');
@@ -463,7 +474,7 @@ function sessionCard(u) {
     ${u.note ? `<div class="small muted">${esc(u.note)}</div>` : ''}
     <div class="slots">${slots}</div>
     <div class="status ${cls}">${esc(u.statusText)}</div>
-    ${askedLine}
+    ${standsHtml(u, state.me.id)}
     ${action ? `<div class="row" style="margin-top:8px">${action}</div>` : ''}
     ${editing ? sessionForm('session-edit', u) : ''}
     ${adminHere() ? adminSpotControls(u) : ''}
@@ -616,6 +627,7 @@ function adminView() {
       <div class="when">${esc(s.label)}</div>${s.note ? `<div class="small muted">${esc(s.note)}</div>` : ''}
       <div class="status ${s.open === 0 ? 'ok' : ''}">${esc(s.statusText)}</div>
       ${s.presenters.length ? `<div class="small">Presenting: ${s.presenters.map((p) => `${esc(p.name)}${s.status === 'cancelled' ? '' : ` <button class="link small" data-act="admin" data-action="remove_presenter" data-id="${s.id}" data-member="${p.id}" data-confirm="Remove ${esc(p.name)} from this session? No pass is recorded.">remove</button>`}`).join(' · ')}</div>` : ''}
+      ${standsHtml(s, null)}
       ${s.history.length ? `<div class="small muted">Invitations: ${s.history.map((o) => `${esc(o.name)}: ${esc(responseWord[o.response] || o.response)}`).join(' · ')}</div>` : ''}
       ${s.status === 'cancelled' ? '' : `<details><summary class="small">Change</summary>
         ${notIn.length ? `<form class="inline" data-form="add-presenter" data-id="${s.id}" style="margin-top:8px">
